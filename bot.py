@@ -5,7 +5,6 @@ import ast
 import os
 
 
-
 SLYTHERIN = "slytherin"
 RAVENCLAW = "ravenclaw"
 GRYFFINDOR = "gryffindor"
@@ -22,7 +21,6 @@ client = discord.Client()
 participants = {}
 
 
-
 def load_participants():
     global participants
 
@@ -31,11 +29,9 @@ def load_participants():
         participants = ast.literal_eval(file_text)
 
 
-
 def save_participants():
-    with open("data.json",'w',encoding = 'utf-8') as f:
+    with open("data.json", 'w', encoding='utf-8') as f:
         f.write(str(participants))
-
 
 
 def get_house(user):
@@ -76,11 +72,10 @@ def get_paticipants(house):
     return members
 
 
-
 def calculate_personal_score(user_id):
     p = participants[user_id]
-    return p["daily"] + p["post"] + p["beta"] + p["workshop"] + p["comment"] + p["excred"]
-
+    core_points = p["daily"] + p["post"] + p["beta"]
+    return core_points + p["workshop"] + p["comment"] + p["excred"]
 
 
 def join(user):
@@ -88,7 +83,8 @@ def join(user):
     TODO: Implement deadline for joining
     """
     if user.id in participants.keys():
-        raise Exception("You have already joined the house cup for this month.")
+        raise Exception(
+            "You have already joined the house cup for this month.")
 
     house = get_house(user)
 
@@ -106,8 +102,8 @@ def join(user):
 
     participants[user.id] = participant
 
-    return "Welcome to the House Cup {0.author.mention}! May the odds be ever in " + house.capitalize() + "'s favor."
-
+    return "Welcome to the House Cup {0.author.mention}! " \
+           "May the odds be ever in " + house.capitalize() + "'s favor."
 
 
 def log_score(text, user):
@@ -125,11 +121,13 @@ def log_score(text, user):
         raise Exception("Please join the house cup with `~join`")
 
     house = participants[user.id]["house"].capitalize()
-    valid_categories = "Valid arguments to `~log` are `daily`, `post`, `beta`, `workshop`, `comment`, and `excred`"
+    valid_categories = "Valid arguments to `~log` are `daily`, `post`," \
+                       " `beta`, `workshop`, `comment`, and `excred`"
 
     # Check if valid inputs
     if len(args) < 2:
-        raise Exception("Please provide a category to log your points in. " + valid_categories)
+        raise Exception(
+            "Please provide a category to log your points in. " + valid_categories)
 
     category = args[1].lower()
     if category not in [DAILY, POST, BETA, WORKSHOP, COMMENT, EXCRED]:
@@ -138,37 +136,44 @@ def log_score(text, user):
     # Add points where appropriate
     if category == DAILY:
         participants[user.id][DAILY] = participants[user.id][DAILY] + 5
-        msg = "Congratulations on doing something today—take 5 points for " + house + "! :heart:"
+        msg = "Congratulations on doing something today—" \
+              "take 5 points for " + house + "! :heart:"
     if category == POST:
         participants[user.id][POST] = participants[user.id][POST] + 10
         msg = "YESSS!!! :eyes: :eyes: 10 points to " + house + "!"
     if category == BETA:
         participants[user.id][BETA] = participants[user.id][BETA] + 10
-        msg = "You're a better beta than Harry is an omega. :wink:\n10 points to " + house + "!"
+        msg = "You're a better beta than Harry is an omega. :wink:\n" \
+              "10 points to " + house + "!"
     if category == WORKSHOP:
         participants[user.id][WORKSHOP] = participants[user.id][WORKSHOP] + 30
-        msg = "Thank you for putting your work up for the weekly workshop ~~gangbang~~. Take a whopping 30 points for " + house + "!"
+        msg = "Thank you for putting your work up for the weekly workshop " \
+              "~~gangbang~~. Take a whopping 30 points for " + house + "!"
     if category == COMMENT:
         participants[user.id][COMMENT] = participants[user.id][COMMENT] + 5
-        msg = "Comments are so appreciated. :sparkling_heart: 5 points to " + house + "!"
+        msg = "Comments are so appreciated. :sparkling_heart: 5 points to" \
+              " " + house + "!"
     if category == EXCRED:
         if len(args) <= 2:
-            raise Exception("Please provide an amount for the extra credit, like `~log excred 10`")
+            raise Exception(
+                "Please provide an amount for the extra credit, like `~log excred 10`")
         if not args[2].isdigit():
-            raise Exception("Extra credit amount must be a number. Try something like `~log excred 10`")
+            raise Exception(
+                "Extra credit amount must be a number. Try something like `~log excred 10`")
         amount = int(args[2])
         new_excred_total = participants[user.id][EXCRED] + amount
         if new_excred_total >= 50:
             new_excred_total = 50
-            msg = "Your extra credit score has been set to the maximum, 50. Thank you for contributing so much! :heart:"
+            msg = "Your extra credit score has been set to the maximum, 50." \
+                  " Thank you for contributing so much! :heart:"
         elif amount == 0:
-            raise Exception("Please provide the amount of extra credit points earned. For example: `~log excred 20`")
+            raise Exception(
+                "Please provide the amount of extra credit points earned. For example: `~log excred 20`")
         else:
             msg = str(amount) + " points to " + house + " for extra credit work!"
         participants[user.id][EXCRED] = new_excred_total
 
     return msg
-
 
 
 def points(user, message):
@@ -182,26 +187,28 @@ def points(user, message):
         person_id = message.mentions[0].id
         person_mention = message.mentions[0].mention
     elif len(message.mentions) > 1:
-        raise Exception("You can only look up the points of one user at a time.")
+        raise Exception(
+            "You can only look up the points of one user at a time.")
     elif len(args) > 1 and len(message.mentions) == 0:
-        raise Exception("In order to look up the points of someone else, you must mention them. For example: `~points @person`. Or, to look at your own score, use `~ponts`")
+        raise Exception(
+            "In order to look up the points of someone else, you must mention them. For example: `~points @person`. Or, to look at your own score, use `~ponts`")
 
     if person_id not in participants:
-        raise Exception(person_mention + " is not currently participating in the house cup. :sob:")
+        raise Exception(
+            person_mention + " is not currently participating in the house cup. :sob:")
 
     person = participants[person_id]
 
     msg = person_mention + "'s points are:\n" \
-          "```Total: " + str(calculate_personal_score(person_id)) + "\n\n" \
+          "```\nTotal: " + str(calculate_personal_score(person_id)) + "\n\n" \
           "Daily: " + str(person["daily"]) + "\n" \
           "Post: " + str(person["post"]) + "\n" \
           "Beta: " + str(person["beta"]) + "\n" \
           "Workshop: " + str(person["workshop"]) + "\n" \
           "Comment: " + str(person["comment"]) + "\n" \
-          "Extra Credit: " + str(person["excred"]) + "```"
+          "Extra Credit: " + str(person["excred"]) + "\n```"
 
     return msg
-
 
 
 def dumbledore():
@@ -215,7 +222,6 @@ def dumbledore():
     embed.set_thumbnail(
         url="https://media1.tenor.com/images/f59d48f20907d137a3c6aaba9ab31f7e/tenor.gif?itemid=3495399")
     return embed
-
 
 
 @client.event
@@ -256,13 +262,11 @@ async def on_message(message):
         await client.send_message(message.channel, msg.format(message))
 
 
-
 async def list_recs():
     await client.wait_until_ready()
     print("Current servers:")
     for server in client.servers:
         print(server.name)
-
 
 
 @client.event
