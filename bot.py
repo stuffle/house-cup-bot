@@ -3,12 +3,15 @@ import discord
 import asyncio
 import ast
 import os
+import re
+import random
 
 
 SLYTHERIN = "slytherin"
 RAVENCLAW = "ravenclaw"
 GRYFFINDOR = "gryffindor"
 HUFFLEPUFF = "hufflepuff"
+HOUSES = [SLYTHERIN, GRYFFINDOR, RAVENCLAW, HUFFLEPUFF]
 
 DAILY = "daily"
 POST = "post"
@@ -68,8 +71,12 @@ def get_paticipants(house):
         member = participants[p]
         if member["house"] == house:
             members.append(member)
-    print("Mebers: of " + house + str(members))
     return members
+
+
+def get_userid_from_mention(mention):
+    user_id = re.sub('[!<>@]', '', mention)
+    return user_id
 
 
 def calculate_personal_score(user_id):
@@ -211,17 +218,51 @@ def points(user, message):
     return msg
 
 
+def house_points(user, message):
+    text = message.content
+    args = text.split()
+    house = get_house(user)
+    msg = ""
+
+    if len(args) > 1:
+        possible_house = args[1]
+        if possible_house not in HOUSES:
+            raise Exception(possible_house + " is not a valid house. Try `~housepoints slytherin`")
+        else:
+            house = possible_house
+
+    # Sort by total points
+    members = get_paticipants(house)
+    points_and_members = []
+    for member in members:
+        total_points = calculate_personal_score(get_userid_from_mention(member["mention"]))
+        points_and_members.append((member, total_points))
+    sorted_members = sorted(points_and_members, key=lambda tup: tup[1], reverse=True)
+
+    house_total = sum([tup[1] for tup in sorted_members])
+    msg = "__**" + house.capitalize() + ":** " + str(house_total) + "__\n"
+
+    # Add each member to return message
+    for member, total_points in sorted_members:
+        msg = msg + "`" + member["name"] + "`: " + str(total_points) + "\n"
+
+    return msg
+
+
 def dumbledore():
     """
-    TODO: Replace with CHRain's code
+    Written by CHRain
     """
-    embed = discord.Embed(
-        description="yada yada ding dong",
-        color=0x000000)
-    embed.set_author(name="Dumbledore:")
-    embed.set_thumbnail(
-        url="https://media1.tenor.com/images/f59d48f20907d137a3c6aaba9ab31f7e/tenor.gif?itemid=3495399")
-    return embed
+    quotes = {
+        " I’ m afraid after I take points from you,the likely result will be death caused by angry housemates,but do not fret. After all,to the well - organized mind, death is but the next great adventure. Good Luck. 50 points from Gryffindor! " : " https://media.giphy.com/media/720g7C1jz13wI/giphy.gif ",
+        " Do you feel pain? Pain from losing house points, yet again? Remember, The fact that you can feel pain like this is your greatest strength. 50 points from Gryffindor! " : " https://media.giphy.com/media/xqn7gb9F4tl2U/giphy.gif ",
+        " 20 points from gryffindor!Anguish.It’ s an emotion all of us, must face at one point in our lives I’ m afraid.As a man who has lived that life I give you wisdom: We must try not to sink beneath our anguish, but battle on. " : " https://media.giphy.com/media/14q7kvYacWa2I0/giphy.gif ",
+        " Your act of kindness warms my heart and soothes my soul. Thank you little one, for typing the dumbledore command. It's lucky it's dark. I haven't blushed so much since Madam Pomfrey told me she liked my new earmuffs. 10 points to Gryffindor. " : " https://media.giphy.com/media/AOrThUuuOoDCg/giphy.gif ",
+        " 30 points to Gryffindor! Congratulations!  Off you trot, I am sure your Gryffindor housemates are waiting to celebrate with you, and it would be a shame to deprive them of this excellent excuse to make a great deal of mess and noise " : " https://media.giphy.com/media/OU1marLMNNtnO/giphy.gif "
+    }
+    secure_random = random.SystemRandom()
+    quote, gif = random.sample(quotes.items(), 1)[0]
+    return quote + gif
 
 
 @client.event
@@ -251,9 +292,11 @@ async def on_message(message):
         elif text.startswith("~points"):
             msg = points(user, message)
 
+        elif text.startswith("~housepoints"):
+            msg = house_points(user, message)
+
         elif text == "~dumbledore":
-            embed = dumbledore()
-            await client.send_message(message.channel, embed=embed)
+            msg = dumbledore()
     except Exception as ex:
         msg = "{0.author.mention}: " + str(ex)
         print(str(ex))
