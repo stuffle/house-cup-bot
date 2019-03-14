@@ -19,6 +19,9 @@ BETA = "beta"
 WORKSHOP = "workshop"
 COMMENT = "comment"
 EXCRED = "excred"
+CATEGORIES = [DAILY, POST, BETA, WORKSHOP, COMMENT, EXCRED]
+VALID_CATEGORIES = "Valid arguments to this command are `daily`, `post`," \
+                   " `beta`, `workshop`, `comment`, and `excred`"
 
 client = discord.Client()
 participants = {}
@@ -74,6 +77,22 @@ def get_paticipants(house):
     return members
 
 
+def sort_participants(members, category):
+    """
+    Returns a list of (participant, points)
+    """
+    members_and_points = []
+    for member in members:
+        points = 0
+        if category == "total":
+            points = calculate_personal_score(
+                get_userid_from_mention(member["mention"]))
+        else:
+            points = member[category]
+        members_and_points.append((member, points))
+    return sorted(members_and_points, key=lambda tup: tup[1], reverse=True)
+
+
 def get_userid_from_mention(mention):
     user_id = re.sub('[!<>@]', '', mention)
     return user_id
@@ -83,6 +102,22 @@ def calculate_personal_score(user_id):
     p = participants[user_id]
     core_points = p["daily"] + p["post"] + p["beta"]
     return core_points + p["workshop"] + p["comment"] + p["excred"]
+
+
+def dumbledore():
+    """
+    Written by CHRain
+    """
+    quotes = {
+        " I’m afraid after I take points from you, the likely result will be death caused by angry housemates, but do not fret. After all, to the well-organized mind, death is but the next great adventure. Good Luck. 50 points from Gryffindor! " : " https://media.giphy.com/media/720g7C1jz13wI/giphy.gif ",
+        " Do you feel pain? Pain from losing house points, yet again? Remember, the fact that you can feel pain like this is your greatest strength. 50 points from Gryffindor! " : " https://media.giphy.com/media/xqn7gb9F4tl2U/giphy.gif ",
+        " 20 points from Gryffindor! Anguish. It’s an emotion all of us must face at one point in our lives, I’m afraid. As a man who has lived that life, I give you wisdom: we must try not to sink beneath our anguish, but battle on. " : " https://media.giphy.com/media/14q7kvYacWa2I0/giphy.gif ",
+        " Your act of kindness warms my heart and soothes my soul. Thank you little one, for typing the dumbledore command. It's lucky it's dark. I haven't blushed so much since Madam Pomfrey told me she liked my new earmuffs. 10 points to Gryffindor. " : " https://media.giphy.com/media/AOrThUuuOoDCg/giphy.gif ",
+        " 30 points to Gryffindor! Congratulations! Off you trot, I am sure your Gryffindor housemates are waiting to celebrate with you, and it would be a shame to deprive them of this excellent excuse to make a great deal of mess and noise. " : " https://media.giphy.com/media/OU1marLMNNtnO/giphy.gif "
+    }
+    secure_random = random.SystemRandom()
+    quote, gif = random.sample(quotes.items(), 1)[0]
+    return quote + gif
 
 
 def join(user):
@@ -128,17 +163,15 @@ def log_score(text, user):
         raise Exception("Please join the house cup with `~join`")
 
     house = participants[user.id]["house"].capitalize()
-    valid_categories = "Valid arguments to `~log` are `daily`, `post`," \
-                       " `beta`, `workshop`, `comment`, and `excred`"
 
     # Check if valid inputs
     if len(args) < 2:
         raise Exception(
-            "Please provide a category to log your points in. " + valid_categories)
+            "Please provide a category to log your points in. " + VALID_CATEGORIES)
 
     category = args[1].lower()
-    if category not in [DAILY, POST, BETA, WORKSHOP, COMMENT, EXCRED]:
-        raise Exception("Unrecognized Category. " + valid_categories)
+    if category not in CATEGORIES:
+        raise Exception("Unrecognized Category. " + VALID_CATEGORIES)
 
     # Add points where appropriate
     if category == DAILY:
@@ -233,42 +266,56 @@ def house_points(user, message):
 
     # Sort by total points
     members = get_paticipants(house)
-    points_and_members = []
-    for member in members:
-        total_points = calculate_personal_score(get_userid_from_mention(member["mention"]))
-        points_and_members.append((member, total_points))
-    sorted_members = sorted(points_and_members, key=lambda tup: tup[1], reverse=True)
+    sorted_members = sort_participants(members, "total")
 
+    # TODO: Use real house total based on points calculation
     house_total = sum([tup[1] for tup in sorted_members])
     msg = "__**" + house.capitalize() + ":** " + str(house_total) + "__\n"
 
     # Add each member to return message
     for member, total_points in sorted_members:
-        msg = msg + "`" + member["name"] + "`: " + str(total_points) + "\n"
+        msg = msg + "`" + member["name"].capitalize() + "`: " + str(total_points) + "\n"
 
     return msg
 
 
-def dumbledore():
+def leader_board(user, message):
     """
-    Written by CHRain
+    Show top 5 students in a given category
     """
-    quotes = {
-        " I’m afraid after I take points from you, the likely result will be death caused by angry housemates, but do not fret. After all, to the well-organized mind, death is but the next great adventure. Good Luck. 50 points from Gryffindor! " : " https://media.giphy.com/media/720g7C1jz13wI/giphy.gif ",
-        " Do you feel pain? Pain from losing house points, yet again? Remember, the fact that you can feel pain like this is your greatest strength. 50 points from Gryffindor! " : " https://media.giphy.com/media/xqn7gb9F4tl2U/giphy.gif ",
-        " 20 points from Gryffindor! Anguish. It’s an emotion all of us must face at one point in our lives, I’m afraid. As a man who has lived that life, I give you wisdom: we must try not to sink beneath our anguish, but battle on. " : " https://media.giphy.com/media/14q7kvYacWa2I0/giphy.gif ",
-        " Your act of kindness warms my heart and soothes my soul. Thank you little one, for typing the dumbledore command. It's lucky it's dark. I haven't blushed so much since Madam Pomfrey told me she liked my new earmuffs. 10 points to Gryffindor. " : " https://media.giphy.com/media/AOrThUuuOoDCg/giphy.gif ",
-        " 30 points to Gryffindor! Congratulations! Off you trot, I am sure your Gryffindor housemates are waiting to celebrate with you, and it would be a shame to deprive them of this excellent excuse to make a great deal of mess and noise. " : " https://media.giphy.com/media/OU1marLMNNtnO/giphy.gif "
-    }
-    secure_random = random.SystemRandom()
-    quote, gif = random.sample(quotes.items(), 1)[0]
-    return quote + gif
+    text = message.content
+    args = text.split()
+    house = get_house(user)
+    category = "total"
+    valid_args = "Valid arguments to `~leaderboard` are `daily`, `post`," \
+                 " `beta`, `workshop`, `comment`, `excred`, and `total`"
+    msg = ""
+
+    if len(args) > 1:
+        category = args[1]
+        if category not in CATEGORIES + ["total"]:
+            raise Exception(valid_args)
+
+    sorted_members = sort_participants(participants.values(), category)[:5]
+    print(sorted_members)
+
+    msg = "__**Top 5 Students for " + category.capitalize() + " Points:**__\n"
+
+    # Add each member to return message
+    number = 1
+    for member, points in sorted_members:
+        formatted_number = "**" + str(number) + ".** "
+        formatted_name = "`" + member["name"].capitalize() + "`: "
+        msg = msg + formatted_number + formatted_name + str(points) + "\n"
+        number += 1
+
+    return msg
 
 
 @client.event
 async def on_message(message):
     user = message.author
-    text = message.content
+    text = message.content.lower()
     msg = ""
 
     # Prevent the bot from replying to itself
@@ -294,6 +341,9 @@ async def on_message(message):
 
         elif text.startswith("~housepoints"):
             msg = house_points(user, message)
+
+        elif text.startswith("~leaderboard"):
+            msg = leader_board(user, message)
 
         elif text == "~dumbledore":
             msg = dumbledore()
