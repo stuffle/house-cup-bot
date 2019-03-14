@@ -20,6 +20,13 @@ WORKSHOP = "workshop"
 COMMENT = "comment"
 EXCRED = "excred"
 CATEGORIES = [DAILY, POST, BETA, WORKSHOP, COMMENT, EXCRED]
+CATEGORY_TO_POINTS = {
+    DAILY: 5,
+    POST: 10,
+    BETA: 10,
+    WORKSHOP: 30,
+    COMMENT: 5
+}
 VALID_CATEGORIES = "Valid arguments to this command are `daily`, `post`," \
                    " `beta`, `workshop`, `comment`, and `excred`"
 
@@ -173,24 +180,23 @@ def log_score(text, user):
     if category not in CATEGORIES:
         raise Exception("Unrecognized Category. " + VALID_CATEGORIES)
 
+    if category != EXCRED:
+        points = CATEGORY_TO_POINTS[category]
+        participants[user.id][category] = participants[user.id][category] + points
+
     # Add points where appropriate
     if category == DAILY:
-        participants[user.id][DAILY] = participants[user.id][DAILY] + 5
         msg = "Congratulations on doing something today—" \
               "take 5 points for " + house + "! :heart:"
     if category == POST:
-        participants[user.id][POST] = participants[user.id][POST] + 10
         msg = "YESSS!!! :eyes: :eyes: 10 points to " + house + "!"
     if category == BETA:
-        participants[user.id][BETA] = participants[user.id][BETA] + 10
         msg = "You're a better beta than Harry is an omega. :wink:\n" \
               "10 points to " + house + "!"
     if category == WORKSHOP:
-        participants[user.id][WORKSHOP] = participants[user.id][WORKSHOP] + 30
         msg = "Thank you for putting your work up for the weekly workshop " \
               "~~gangbang~~. Take a whopping 30 points for " + house + "!"
     if category == COMMENT:
-        participants[user.id][COMMENT] = participants[user.id][COMMENT] + 5
         msg = "Comments are so appreciated. :sparkling_heart: 5 points to" \
               " " + house + "!"
     if category == EXCRED:
@@ -212,6 +218,51 @@ def log_score(text, user):
         else:
             msg = str(amount) + " points to " + house + " for extra credit work!"
         participants[user.id][EXCRED] = new_excred_total
+
+    return msg
+
+
+def remove_score(text, user):
+    msg = ""
+    print("Running remove")
+    args = text.split()
+    amount = 0
+
+    if user.id not in participants:
+        raise Exception("You can't remove points because you're not in the house cup. :sob:")
+
+    house = participants[user.id]["house"].capitalize()
+
+    # Check if valid inputs
+    if len(args) < 2:
+        raise Exception(
+            "Please provide a category to remove points from " + VALID_CATEGORIES)
+
+    category = args[1].lower()
+    if category not in CATEGORIES:
+        raise Exception("Unrecognized Category. " + VALID_CATEGORIES)
+
+    points = 0
+    if category == EXCRED:
+        if len(args) <= 2:
+            raise Exception(
+                "Please provide an amount for the extra credit, like `~remove excred 10`")
+        if not args[2].isdigit():
+            raise Exception(
+                "Extra credit amount must be a number. Try something like `~remove excred 10`")
+        amount = int(args[2])
+        if amount <= 0:
+            raise Exception(
+                "Please provide the amount of extra credit points to remove as a positive integer. For example: `~remove excred 20`")
+        points = amount
+    else:
+        points = CATEGORY_TO_POINTS[category]
+    new_points = participants[user.id][category] - points
+    if new_points < 0:
+        raise("No points were taken from you because this would set your total in " + str(category).capitalize() + " to a negative number.")
+    else:
+        participants[user.id][category] = new_points
+        msg = str(points) + " points were removed from " + house + ". RIP."
 
     return msg
 
@@ -334,6 +385,10 @@ async def on_message(message):
 
         elif text.startswith("~log"):
             msg = "{0.author.mention}: " + log_score(text, user)
+            save_participants()
+
+        elif text.startswith("~remove"):
+            msg = "{0.author.mention}: " + remove_score(text, user)
             save_participants()
 
         elif text.startswith("~points"):
