@@ -30,6 +30,9 @@ CATEGORY_TO_POINTS = {
 VALID_CATEGORIES = "Valid arguments to this command are `daily`, `post`," \
                    " `beta`, `workshop`, `comment`, and `excred`"
 
+DOCS_LINK = "https://docs.google.com/document/d/1z03xR7jpi-oXwmI9N1XpU6N9" \
+            "0BnXmj5ptyASdWnIkNA/edit?usp=sharing"
+
 client = discord.Client()
 participants = {}
 
@@ -399,6 +402,9 @@ async def on_message(message):
 
         elif text.startswith("~leaderboard"):
             msg = leader_board(user, message)
+
+        elif text.startswith("~help"):
+            msg = "{0.author.mention}: " + DOCS_LINK
 
         elif text == "~dumbledore":
             msg = dumbledore()
