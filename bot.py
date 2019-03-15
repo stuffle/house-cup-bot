@@ -13,10 +13,10 @@ GRYFFINDOR = "gryffindor"
 HUFFLEPUFF = "hufflepuff"
 HOUSES = [SLYTHERIN, GRYFFINDOR, RAVENCLAW, HUFFLEPUFF]
 HOUSE_TO_EMOJI = {
-    SLYTHERIN: ":green_heart::snake:",
-    RAVENCLAW: ":blue_heart::eagle:",
-    GRYFFINDOR: ":heart::lion:",
-    HUFFLEPUFF: ":yellow_heart::hugging:"
+    SLYTHERIN: ":snake:",
+    RAVENCLAW: ":eagle:",
+    GRYFFINDOR: ":lion:",
+    HUFFLEPUFF: ":hugging:"
 }
 HOUSE_TO_HEART = {
     SLYTHERIN: ":green_heart:",
@@ -126,6 +126,12 @@ def calculate_personal_score(user_id):
     return core_points + p["workshop"] + p["comment"] + p["excred"]
 
 
+def format_name(number, name):
+    formatted_number = "**" + str(number) + "** "
+    formatted_name = "`" + name.capitalize() + "`: "
+    return formatted_number + formatted_name
+
+
 def dumbledore():
     """
     Written by CHRain
@@ -139,7 +145,11 @@ def dumbledore():
     }
     secure_random = random.SystemRandom()
     quote, gif = random.sample(quotes.items(), 1)[0]
-    return quote + gif
+
+    embed = discord.Embed(description=quote)
+    embed.set_author(name="Dumbledore:")
+    embed.set_image(url=gif)
+    return embed
 
 
 def join(user):
@@ -236,10 +246,10 @@ def log_score(text, user):
     if category == EXCRED:
         if len(args) <= 2:
             raise Exception(
-                "Please provide an amount for the extra credit, like `~log excred 10`")
+                "Please provide an amount for the extra credit, like `~excred 10`")
         if not args[2].isdigit():
             raise Exception(
-                "Extra credit amount must be a number. Try something like `~log excred 10`")
+                "Extra credit amount must be a number. Try something like `~excred 10`")
         amount = int(args[2])
         new_excred_total = participants[user.id][EXCRED] + amount
         if new_excred_total >= 50:
@@ -248,7 +258,7 @@ def log_score(text, user):
                   " Thank you for contributing so much! :heart:"
         elif amount == 0:
             raise Exception(
-                "Please provide the amount of extra credit points earned. For example: `~log excred 20`")
+                "Please provide the amount of extra credit points earned. For example: `~excred 20`")
         else:
             msg = str(amount) + " points to " + house + " for extra credit work!"
         participants[user.id][EXCRED] = new_excred_total
@@ -324,15 +334,21 @@ def points(user, message):
 
     person = participants[person_id]
 
-    msg = person_mention + "'s points are:\n" \
-          "```\nTotal: " + str(calculate_personal_score(person_id)) + "\n\n" \
-          "Daily: " + str(person["daily"]) + "\n" \
-          "Post: " + str(person["post"]) + "\n" \
-          "Beta: " + str(person["beta"]) + "\n" \
-          "Workshop: " + str(person["workshop"]) + "\n" \
-          "Comment: " + str(person["comment"]) + "\n" \
-          "Extra Credit: " + str(person["excred"]) + "\n```"
+    who_message = person_mention + "'s points are:"
+    total_message = "__**Total:  " + str(
+        calculate_personal_score(person_id)) + "**__"
+    daily_message = format_name(
+        ":white_sun_small_cloud:", DAILY) + str(person[DAILY])
+    post_message = format_name(":book:", POST) + str(person[POST])
+    beta_message = format_name(":pencil:", BETA) + str(person[BETA])
+    comment_message = format_name(":keyboard:", COMMENT) + str(person[COMMENT])
+    workshop_message = format_name(
+        ":sweat_smile:", WORKSHOP) + str(person[WORKSHOP])
+    excred_message = format_name(":avocado:", EXCRED) + str(person[EXCRED])
 
+    msg = "\n".join([who_message, total_message, daily_message, post_message,
+                     beta_message, comment_message, workshop_message,
+                     excred_message])
     return msg
 
 
@@ -355,13 +371,19 @@ def house_points(user, message):
 
     # TODO: Use real house total based on points calculation
     house_total = calculate_house_score(house)
-    msg = "__**" + house.capitalize() + ":** " + str(house_total) + "__\n"
+    heart = HOUSE_TO_HEART[house] + " "
+    house_title = heart + "__**" + house.capitalize() + ":** "
+    msg = house_title + str(house_total) + "__ " + heart + "\n"
 
     # Add each member to return message
+    rank = 1
     for member, total_points in sorted_members:
-        msg = msg + "`" + member["name"].capitalize() + "`: " + str(total_points) + "\n"
+        formatted_name = format_name(rank, member["name"])
+        msg = msg + formatted_name + str(total_points) + "\n"
+        rank += 1
 
-    return msg
+    emoji_line = HOUSE_TO_EMOJI[house] * 7
+    return msg + emoji_line
 
 
 def leader_board(user, message):
@@ -388,9 +410,9 @@ def leader_board(user, message):
     # Add each member to return message
     number = 1
     for member, points in sorted_members:
-        formatted_number = "**" + str(number) + ".** "
-        formatted_name = "`" + member["name"].capitalize() + "`: "
-        msg = msg + formatted_number + formatted_name + str(points) + "\n"
+        heart = "  " + HOUSE_TO_HEART[member["house"]]
+        formatted_name = format_name(number, member["name"])
+        msg = msg + formatted_name + str(points) + heart + "\n"
         number += 1
 
     return msg
@@ -431,17 +453,18 @@ def standings():
     sorted_houses = sorted(
         house_and_score, key=lambda tup: tup[1], reverse=True)
     first_place_house, first_place_score = sorted_houses[0]
-    winners_emoji = HOUSE_TO_EMOJI[first_place_house]
+    heart = HOUSE_TO_HEART[first_place_house]
+    winners_emoji = heart + HOUSE_TO_EMOJI[first_place_house]
 
     msg = " **__Current Standings:__** " + winners_emoji + "\n"
     number = 1
     for house, score in sorted_houses:
-        formatted_number = "**" + str(number) + ".** "
-        formatted_house = "`" + str(house.capitalize()) + "`: "
-        msg = msg + formatted_number + formatted_house + str(score) + "\n"
+        formatted_house = format_name(number, house)
+        msg = msg + formatted_house + str(score) + "\n"
         number += 1
 
-    return msg
+    emoji_line = HOUSE_TO_EMOJI[first_place_house] * 7
+    return msg + emoji_line
 
 
 @client.event
@@ -475,6 +498,31 @@ async def on_message(message):
             msg = "{0.author.mention}: " + log_score(text, user)
             save_participants()
 
+        elif text.startswith("~daily"):
+            msg = "{0.author.mention}: " + log_score("~log daily", user)
+            save_participants()
+
+        elif text.startswith("~post"):
+            msg = "{0.author.mention}: " + log_score("~log post", user)
+            save_participants()
+
+        elif text.startswith("~beta"):
+            msg = "{0.author.mention}: " + log_score("~log beta", user)
+            save_participants()
+
+        elif text.startswith("~comment"):
+            msg = "{0.author.mention}: " + log_score("~log comment", user)
+            save_participants()
+
+        elif text.startswith("~workshop"):
+            msg = "{0.author.mention}: " + log_score("~log workshop", user)
+            save_participants()
+
+        elif text.startswith("~excred"):
+            msg = "{0.author.mention}: " + log_score(
+                  "~log " + text[1:], user)
+            save_participants()
+
         elif text.startswith("~remove"):
             msg = "{0.author.mention}: " + remove_score(text, user)
             save_participants()
@@ -489,14 +537,17 @@ async def on_message(message):
             msg = leader_board(user, message)
 
         elif text.startswith("~standings"):
-            msg = "{0.author.mention}:\n" + standings()
+            msg = standings()
 
         elif text.startswith("~help"):
             msg = "{0.author.mention}: Instructions on bot usage and the" \
                   " house cup itself are in: " + DOCS_LINK
 
         elif text == "~dumbledore":
-            msg = dumbledore()
+            embed = dumbledore()
+            await client.send_message(message.channel, embed=embed)
+            return
+
     except Exception as ex:
         msg = "{0.author.mention}: " + str(ex)
         print(str(ex))
