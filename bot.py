@@ -12,6 +12,18 @@ RAVENCLAW = "ravenclaw"
 GRYFFINDOR = "gryffindor"
 HUFFLEPUFF = "hufflepuff"
 HOUSES = [SLYTHERIN, GRYFFINDOR, RAVENCLAW, HUFFLEPUFF]
+HOUSE_TO_EMOJI = {
+    SLYTHERIN: ":green_heart::snake:",
+    RAVENCLAW: ":blue_heart::eagle:",
+    GRYFFINDOR: ":heart::lion:",
+    HUFFLEPUFF: ":yellow_heart::hugging:"
+}
+HOUSE_TO_HEART = {
+    SLYTHERIN: ":green_heart:",
+    RAVENCLAW: ":blue_heart:",
+    GRYFFINDOR: ":heart:",
+    HUFFLEPUFF: ":yellow_heart:"
+}
 
 DAILY = "daily"
 POST = "post"
@@ -158,6 +170,25 @@ def join(user):
            "May the odds be ever in " + house.capitalize() + "'s favor."
 
 
+def leave(user):
+    msg = "{0.author.mention}: You can check out any time you like. " \
+          "But you can never leave! :musical_note: \n\n" \
+          "But if you insist, know that your score will be wiped out. " \
+          "Use  `~actuallyleave`  :sob:"
+    return msg
+
+
+def actually_leave(user):
+    if user.id not in participants:
+        raise Exception("You can't leave a contest you're not in.")
+
+    del participants[user.id]
+
+    msg = "{0.author.mention}: You have left the house cup. :sob:\n" \
+          "To rejoin (if it's not too late), use `~join`"
+    return msg
+
+
 def log_score(text, user):
     """
     Record house points.
@@ -190,7 +221,7 @@ def log_score(text, user):
     # Add points where appropriate
     if category == DAILY:
         msg = "Congratulations on doing something today—" \
-              "take 5 points for " + house + "! :heart:"
+              "take 5 points for " + house + "! " + HOUSE_TO_HEART[house.lower()]
     if category == POST:
         msg = "YESSS!!! :eyes: :eyes: 10 points to " + house + "!"
     if category == BETA:
@@ -323,7 +354,7 @@ def house_points(user, message):
     sorted_members = sort_participants(members, "total")
 
     # TODO: Use real house total based on points calculation
-    house_total = sum([tup[1] for tup in sorted_members])
+    house_total = calculate_house_score(house)
     msg = "__**" + house.capitalize() + ":** " + str(house_total) + "__\n"
 
     # Add each member to return message
@@ -351,7 +382,6 @@ def leader_board(user, message):
             raise Exception(valid_args)
 
     sorted_members = sort_participants(participants.values(), category)[:5]
-    print(sorted_members)
 
     msg = "__**Top 5 Students for " + category.capitalize() + " Points:**__\n"
 
@@ -361,6 +391,54 @@ def leader_board(user, message):
         formatted_number = "**" + str(number) + ".** "
         formatted_name = "`" + member["name"].capitalize() + "`: "
         msg = msg + formatted_number + formatted_name + str(points) + "\n"
+        number += 1
+
+    return msg
+
+
+def calculate_house_score(house):
+    house_score = 0.0
+    members = get_paticipants(house)
+    sorted_members = sort_participants(members, "total")
+    sorted_points = [x[1] for x in sorted_members]
+
+    while len(sorted_points) < 3:
+        sorted_points.append(0)
+
+    for index, points in enumerate(sorted_points):
+        iteration = index + 1
+        denominator = 2**iteration
+
+        """
+        If we're on the last iteration, use the previous number in the
+        geometric sum so that the weights sum to 1
+         """
+        if iteration == len(sorted_points):
+            denominator = 2**index
+
+        weight = 1 / denominator
+        house_score += weight * float(points)
+
+    return house_score
+
+
+def standings():
+    house_and_score = []
+    for house in HOUSES:
+        score = calculate_house_score(house)
+        house_and_score.append((house, score))
+
+    sorted_houses = sorted(
+        house_and_score, key=lambda tup: tup[1], reverse=True)
+    first_place_house, first_place_score = sorted_houses[0]
+    winners_emoji = HOUSE_TO_EMOJI[first_place_house]
+
+    msg = " **__Current Standings:__** " + winners_emoji + "\n"
+    number = 1
+    for house, score in sorted_houses:
+        formatted_number = "**" + str(number) + ".** "
+        formatted_house = "`" + str(house.capitalize()) + "`: "
+        msg = msg + formatted_number + formatted_house + str(score) + "\n"
         number += 1
 
     return msg
@@ -386,6 +464,13 @@ async def on_message(message):
             save_participants()
             print(participants)
 
+        elif text.startswith("~leave"):
+            msg = leave(user)
+
+        elif text.startswith("~actuallyleave"):
+            msg = actually_leave(user)
+            save_participants()
+
         elif text.startswith("~log"):
             msg = "{0.author.mention}: " + log_score(text, user)
             save_participants()
@@ -403,8 +488,12 @@ async def on_message(message):
         elif text.startswith("~leaderboard"):
             msg = leader_board(user, message)
 
+        elif text.startswith("~standings"):
+            msg = "{0.author.mention}:\n" + standings()
+
         elif text.startswith("~help"):
-            msg = "{0.author.mention}: " + DOCS_LINK
+            msg = "{0.author.mention}: Instructions on bot usage and the" \
+                  " house cup itself are in: " + DOCS_LINK
 
         elif text == "~dumbledore":
             msg = dumbledore()
