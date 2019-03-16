@@ -25,3 +25,18 @@ def dumbledore():
     }
 
     return get_random_embed(quotes, "Dumbledore")
+
+
+def snape(house, mention):
+    """
+    Written by CHRain
+    """
+    house = house.capitalize()
+    snape_dict = {
+        "You’re a fool for typing this command. You’re just like the rest of the dunderheads that I have to face on a daily basis, always nattering and giggling like gossips. Wha—stop looking at me like that! 10 points from " + house + "! for looking at your professor rudely!" : "https://media.giphy.com/media/4jXIVkgjhIQbS/giphy.gif",
+        "I heard from a little birdie that you have been slacking lately. . . silence! Whatever it is you want to say, I don’t want to hear it. There is no point in apportioning blame. What is done, is done. 10 points from " + house + "! For...disappointing your professor." : "https://media.giphy.com/media/UAJpANY0bGPhS/giphy.gif",
+        "10 points from " + house + "! I told you to not type this command. I do not take cheek from anyone . . . not even from ‘the great " + mention + ".’" : "https://media.giphy.com/media/ZIopqe1msuIFi/giphy.gif",
+        "Your work as of late has suspiciously improved and while I have my suspicions as to why this happened, it would be remiss of me to not award your efforts, false or not. 10 points to " + house + ". ...do not think that my doubts have been eased " + mention + ", I’m watching you." : "https://media.giphy.com/media/13gxK9D2PkTVgk/giphy.gif"
+  }
+
+  return get_random_embed(snape_dict, "Severus Snape")

@@ -6,7 +6,7 @@ import os
 import re
 import random
 
-from humor_commands import dumbledore
+from humor_commands import *
 
 
 SLYTHERIN = "slytherin"
@@ -65,6 +65,11 @@ def save_participants():
 
 
 def get_house(user):
+    user_id = user.id
+
+    if user_id in participants.keys():
+        return participants[user_id]["house"]
+
     role_names = [role.name.lower() for role in user.roles]
 
     house = ""
@@ -87,7 +92,7 @@ def get_house(user):
             "You need to join a house to participate in the house cup.")
     if houses > 1:
         raise Exception(
-            "You cannot enter the house cup with multiple house roles.")
+            "You cannot participate in the house cup with multiple house roles.")
 
     return house
 
@@ -452,6 +457,7 @@ def standings():
 @client.event
 async def on_message(message):
     user = message.author
+    mention = user.mention
     text = message.content.lower()
     msg = ""
 
@@ -525,8 +531,14 @@ async def on_message(message):
             msg = "{0.author.mention}: Instructions on bot usage and the" \
                   " house cup itself are in: " + DOCS_LINK
 
-        elif text == "~dumbledore":
+        elif text.startswith("~dumbledore"):
             embed = dumbledore()
+            await client.send_message(message.channel, embed=embed)
+            return
+
+        elif text.startswith("~snape"):
+            house = get_house(user)
+            embed = snape(house, mention)
             await client.send_message(message.channel, embed=embed)
             return
 
