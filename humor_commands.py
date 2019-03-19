@@ -12,16 +12,18 @@ def get_random_embed(quote_dict, author):
     return embed
 
 
-def dumbledore():
+def dumbledore(house, mention):
     """
     Written by CHRain
     """
+    house = house.capitalize()
+
     quotes = {
-        " I’m afraid after I take points from you, the likely result will be death caused by angry housemates, but do not fret. After all, to the well-organized mind, death is but the next great adventure. Good Luck. 50 points from Gryffindor! " : " https://media.giphy.com/media/720g7C1jz13wI/giphy.gif ",
-        " Do you feel pain? Pain from losing house points, yet again? Remember, the fact that you can feel pain like this is your greatest strength. 50 points from Gryffindor! " : " https://media.giphy.com/media/xqn7gb9F4tl2U/giphy.gif ",
-        " 20 points from Gryffindor! Anguish. It’s an emotion all of us must face at one point in our lives, I’m afraid. As a man who has lived that life, I give you wisdom: we must try not to sink beneath our anguish, but battle on. " : " https://media.giphy.com/media/14q7kvYacWa2I0/giphy.gif ",
-        " Your act of kindness warms my heart and soothes my soul. Thank you little one, for typing the dumbledore command. It's lucky it's dark. I haven't blushed so much since Madam Pomfrey told me she liked my new earmuffs. 10 points to Gryffindor. " : " https://media.giphy.com/media/AOrThUuuOoDCg/giphy.gif ",
-        " 30 points to Gryffindor! Congratulations! Off you trot, I am sure your Gryffindor housemates are waiting to celebrate with you, and it would be a shame to deprive them of this excellent excuse to make a great deal of mess and noise. " : " https://media.giphy.com/media/OU1marLMNNtnO/giphy.gif "
+        " I’m afraid after I take points from you, the likely result will be death caused by angry housemates, but do not fret. After all, to the well-organized mind, death is but the next great adventure. Good Luck, " + mention + ". 50 points from " + house + "!" : " https://media.giphy.com/media/720g7C1jz13wI/giphy.gif ",
+        " Do you feel pain, " + mention + "? Pain from losing house points, yet again? Remember, the fact that you can feel pain like this is your greatest strength. 50 points from " + house + "." : " https://media.giphy.com/media/xqn7gb9F4tl2U/giphy.gif ",
+        " 20 points from" + house + "! Anguish. It’s an emotion all of us must face at one point in our lives, I’m afraid. As a man who has lived that life, I give you wisdom: we must try not to sink beneath our anguish, but battle on. " : " https://media.giphy.com/media/14q7kvYacWa2I0/giphy.gif ",
+        " Your act of kindness warms my heart and soothes my soul. Thank you, " + mention + ", for typing the dumbledore command. It's lucky it's dark. I haven't blushed so much since Madam Pomfrey told me she liked my new earmuffs. 10 points to " + house + "." : " https://media.giphy.com/media/AOrThUuuOoDCg/giphy.gif ",
+        " 30 points to " + house +  "! Congratulations, " + mention + ". Off you trot, I am sure your " + house + " housemates are waiting to celebrate with you, and it would be a shame to deprive them of this excellent excuse to make a great deal of mess and noise. " : " https://media.giphy.com/media/OU1marLMNNtnO/giphy.gif "
     }
 
     return get_random_embed(quotes, "Dumbledore")
@@ -37,6 +39,6 @@ def snape(house, mention):
         "I heard from a little birdie that you have been slacking lately. . . silence! Whatever it is you want to say, I don’t want to hear it. There is no point in apportioning blame. What is done, is done. 10 points from " + house + "! For...disappointing your professor." : "https://media.giphy.com/media/UAJpANY0bGPhS/giphy.gif",
         "10 points from " + house + "! I told you to not type this command. I do not take cheek from anyone . . . not even from ‘the great " + mention + ".’" : "https://media.giphy.com/media/ZIopqe1msuIFi/giphy.gif",
         "Your work as of late has suspiciously improved and while I have my suspicions as to why this happened, it would be remiss of me to not award your efforts, false or not. 10 points to " + house + ". ...do not think that my doubts have been eased " + mention + ", I’m watching you." : "https://media.giphy.com/media/13gxK9D2PkTVgk/giphy.gif"
-  }
+    }
 
-  return get_random_embed(snape_dict, "Severus Snape")
+    return get_random_embed(snape_dict, "Severus Snape")

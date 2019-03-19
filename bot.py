@@ -532,7 +532,8 @@ async def on_message(message):
                   " house cup itself are in: " + DOCS_LINK
 
         elif text.startswith("~dumbledore"):
-            embed = dumbledore()
+            house = get_house(user)
+            embed = dumbledore(house, mention)
             await client.send_message(message.channel, embed=embed)
             return
 
