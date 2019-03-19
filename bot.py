@@ -51,6 +51,10 @@ client = discord.Client()
 participants = {}
 
 
+class HouseCupException(Exception):
+    pass
+
+
 def load_participants():
     global participants
 
@@ -88,10 +92,10 @@ def get_house(user):
         houses += 1
 
     if houses == 0:
-        raise Exception(
+        raise HouseCupException(
             "You need to join a house to participate in the house cup.")
     if houses > 1:
-        raise Exception(
+        raise HouseCupException(
             "You cannot participate in the house cup with multiple house roles.")
 
     return house
@@ -144,7 +148,7 @@ def join(user):
     TODO: Implement deadline for joining
     """
     if user.id in participants.keys():
-        raise Exception(
+        raise HouseCupException(
             "You have already joined the house cup for this month.")
 
     house = get_house(user)
@@ -177,7 +181,7 @@ def leave(user):
 
 def actually_leave(user):
     if user.id not in participants:
-        raise Exception("You can't leave a contest you're not in.")
+        raise HouseCupException("You can't leave a contest you're not in.")
 
     del participants[user.id]
 
@@ -198,18 +202,18 @@ def log_score(text, user):
     amount = 0
 
     if user.id not in participants:
-        raise Exception("Please join the house cup with `~join`")
+        raise HouseCupException("Please join the house cup with `~join`")
 
     house = participants[user.id]["house"].capitalize()
 
     # Check if valid inputs
     if len(args) < 2:
-        raise Exception(
+        raise HouseCupException(
             "Please provide a category to log your points in. " + VALID_CATEGORIES)
 
     category = args[1].lower()
     if category not in CATEGORIES:
-        raise Exception("Unrecognized Category. " + VALID_CATEGORIES)
+        raise HouseCupException("Unrecognized Category. " + VALID_CATEGORIES)
 
     if category != EXCRED:
         points = CATEGORY_TO_POINTS[category]
@@ -232,10 +236,10 @@ def log_score(text, user):
               " " + house + "!"
     if category == EXCRED:
         if len(args) <= 2:
-            raise Exception(
+            raise HouseCupException(
                 "Please provide an amount for the extra credit, like `~excred 10`")
         if not args[2].isdigit():
-            raise Exception(
+            raise HouseCupException(
                 "Extra credit amount must be a number. Try something like `~excred 10`")
         amount = int(args[2])
         new_excred_total = participants[user.id][EXCRED] + amount
@@ -244,7 +248,7 @@ def log_score(text, user):
             msg = "Your extra credit score has been set to the maximum, 50." \
                   " Thank you for contributing so much! :heart:"
         elif amount == 0:
-            raise Exception(
+            raise HouseCupException(
                 "Please provide the amount of extra credit points earned. For example: `~excred 20`")
         else:
             msg = str(amount) + " points to " + house + " for extra credit work!"
@@ -260,30 +264,30 @@ def remove_score(text, user):
     amount = 0
 
     if user.id not in participants:
-        raise Exception("You can't remove points because you're not in the house cup. :sob:")
+        raise HouseCupException("You can't remove points because you're not in the house cup. :sob:")
 
     house = participants[user.id]["house"].capitalize()
 
     # Check if valid inputs
     if len(args) < 2:
-        raise Exception(
+        raise HouseCupException(
             "Please provide a category to remove points from " + VALID_CATEGORIES)
 
     category = args[1].lower()
     if category not in CATEGORIES:
-        raise Exception("Unrecognized Category. " + VALID_CATEGORIES)
+        raise HouseCupException("Unrecognized Category. " + VALID_CATEGORIES)
 
     points = 0
     if category == EXCRED:
         if len(args) <= 2:
-            raise Exception(
+            raise HouseCupException(
                 "Please provide an amount for the extra credit, like `~remove excred 10`")
         if not args[2].isdigit():
-            raise Exception(
+            raise HouseCupException(
                 "Extra credit amount must be a number. Try something like `~remove excred 10`")
         amount = int(args[2])
         if amount <= 0:
-            raise Exception(
+            raise HouseCupException(
                 "Please provide the amount of extra credit points to remove as a positive integer. For example: `~remove excred 20`")
         points = amount
     else:
@@ -309,14 +313,14 @@ def points(user, message):
         person_id = message.mentions[0].id
         person_mention = message.mentions[0].mention
     elif len(message.mentions) > 1:
-        raise Exception(
+        raise HouseCupException(
             "You can only look up the points of one user at a time.")
     elif len(args) > 1 and len(message.mentions) == 0:
-        raise Exception(
+        raise HouseCupException(
             "In order to look up the points of someone else, you must mention them. For example: `~points @person`. Or, to look at your own score, use `~ponts`")
 
     if person_id not in participants:
-        raise Exception(
+        raise HouseCupException(
             person_mention + " is not currently participating in the house cup. :sob:")
 
     person = participants[person_id]
@@ -348,7 +352,7 @@ def house_points(user, message):
     if len(args) > 1:
         possible_house = args[1]
         if possible_house not in HOUSES:
-            raise Exception(possible_house + " is not a valid house. Try `~housepoints slytherin`")
+            raise HouseCupException(possible_house + " is not a valid house. Try `~housepoints slytherin`")
         else:
             house = possible_house
 
@@ -388,7 +392,7 @@ def leader_board(user, message):
     if len(args) > 1:
         category = args[1]
         if category not in CATEGORIES + ["total"]:
-            raise Exception(valid_args)
+            raise HouseCupException(valid_args)
 
     sorted_members = sort_participants(participants.values(), category)[:5]
 
@@ -543,9 +547,15 @@ async def on_message(message):
             await client.send_message(message.channel, embed=embed)
             return
 
-    except Exception as ex:
+    except HouseCupException as ex:
         msg = "{0.author.mention}: " + str(ex)
-        print(str(ex))
+        print(user.name + ": " + str(ex))
+    except Exception as ex:
+        msg = "Oh no! Something went wrong and I couldn't complete your "\
+              " command. I'm so sorry! :sob: Ping stuffle if you need " \
+              "help."
+        await client.send_message(message.channel, msg.format(message))
+        raise(ex)
 
     if msg:
         await client.send_message(message.channel, msg.format(message))
