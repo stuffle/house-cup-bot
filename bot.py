@@ -26,6 +26,12 @@ HOUSE_TO_HEART = {
     GRYFFINDOR: ":heart:",
     HUFFLEPUFF: ":yellow_heart:"
 }
+HOUSE_TO_ADJECTIVE = {
+    SLYTHERIN: "cunning",
+    RAVENCLAW: "wise",
+    GRYFFINDOR: "brave",
+    HUFFLEPUFF: "loyal"
+}
 
 DAILY = "daily"
 POST = "post"
@@ -33,7 +39,8 @@ BETA = "beta"
 WORKSHOP = "workshop"
 COMMENT = "comment"
 EXCRED = "excred"
-CATEGORIES = [DAILY, POST, BETA, WORKSHOP, COMMENT, EXCRED]
+MOD_ADJUST = "mod_adjust"
+CATEGORIES = [DAILY, POST, BETA, WORKSHOP, COMMENT, EXCRED, MOD_ADJUST]
 CATEGORY_TO_POINTS = {
     DAILY: 5,
     POST: 10,
@@ -133,8 +140,8 @@ def get_userid_from_mention(mention):
 
 def calculate_personal_score(user_id):
     p = participants[user_id]
-    core_points = p["daily"] + p["post"] + p["beta"]
-    return core_points + p["workshop"] + p["comment"] + p["excred"]
+    core_points = p[DAILY] + p[POST] + p[BETA] + p[WORKSHOP]
+    return core_points + p[COMMENT] + p[EXCRED] + p[MOD_ADJUST]
 
 
 def format_name(number, name):
@@ -157,12 +164,13 @@ def join(user):
         "name": user.name,
         "mention": user.mention,
         "house": house,
-        "daily": 0,
-        "post": 0,
-        "beta": 0,
-        "workshop": 0,
-        "comment": 0,
-        "excred": 0
+        DAILY: 0,
+        POST: 0,
+        BETA: 0,
+        WORKSHOP: 0,
+        COMMENT: 0,
+        EXCRED: 0,
+        MOD_ADJUST: 0
     }
 
     participants[user.id] = participant
@@ -274,7 +282,7 @@ def remove_score(text, user):
             "Please provide a category to remove points from " + VALID_CATEGORIES)
 
     category = args[1].lower()
-    if category not in CATEGORIES:
+    if category not in CATEGORIES or category == MOD_ADJUST:
         raise HouseCupException("Unrecognized Category. " + VALID_CATEGORIES)
 
     points = 0
@@ -294,7 +302,8 @@ def remove_score(text, user):
         points = CATEGORY_TO_POINTS[category]
     new_points = participants[user.id][category] - points
     if new_points < 0:
-        raise("No points were taken from you because this would set your total in " + str(category).capitalize() + " to a negative number.")
+        raise(
+            "No points were taken from you because this would set your total in " + str(category).capitalize() + " to a negative number.")
     else:
         participants[user.id][category] = new_points
         msg = str(points) + " points were removed from " + house + ". RIP."
@@ -302,26 +311,130 @@ def remove_score(text, user):
     return msg
 
 
-def points(user, message):
-    text = message.content
-    args = text.split()
-    person_id = user.id
-    person_mention = user.mention
-    msg = ""
+def get_mention_user(needs_mention, mentions):
+    """
+    Checks that there is only one mentioned user, if needed,
+    and that that person is in the House Cup.
+    """
+    person_id = 0
+    person_mention = None
 
-    if len(message.mentions) == 1:
-        person_id = message.mentions[0].id
-        person_mention = message.mentions[0].mention
-    elif len(message.mentions) > 1:
+    if len(mentions) == 1:
+        person_id = mentions[0].id
+        person_mention = mentions[0]
+    elif len(mentions) > 1:
         raise HouseCupException(
             "You can only look up the points of one user at a time.")
-    elif len(args) > 1 and len(message.mentions) == 0:
+    elif not needs_mention:
+        return None
+    elif len(mentions) == 0:
         raise HouseCupException(
-            "In order to look up the points of someone else, you must mention them. For example: `~points @person`. Or, to look at your own score, use `~ponts`")
+            "You must mention someone to use this command.")
 
     if person_id not in participants:
         raise HouseCupException(
-            person_mention + " is not currently participating in the house cup. :sob:")
+            person_mention.mention + " is not currently participating in the house cup. :sob:")
+
+    return person_mention
+
+
+def award(user, message):
+    text = message.content
+    args = text.split()
+    msg = ""
+
+    is_mod = user.permissions_in(message.channel).administrator
+    if not is_mod:
+        raise HouseCupException(
+            "Nice try, but only mods can award other people points.")
+
+    award_error = "Please provide a user mention and an amount of points, " \
+                  "eg `~award @RedHorse 10`"
+
+    if len(args) != 3:
+        raise HouseCupException(award_error)
+
+    person_id = user.id
+    person_mention = user.mention
+
+    mentioned = get_mention_user(True, message.mentions)
+    if mentioned:
+        person_id = mentioned.id
+        person_mention = mentioned.mention
+
+    if not args[2].isdigit():
+        raise HouseCupException(award_error)
+    amount = int(args[2])
+
+    new_amount = participants[person_id][MOD_ADJUST] + amount
+    participants[person_id][MOD_ADJUST] = new_amount
+
+    house = participants[person_id]["house"]
+    adjective = HOUSE_TO_ADJECTIVE[house]
+    msg = "The Mods have spoken, and " + str(amount) + " " \
+        "points have been awarded to " + house.capitalize() + " for" \
+        " " + person_mention + "'s " + adjective + " service."
+    return msg
+
+
+def deduct(user, message):
+    """
+    Mostly copy pasted from award.
+    """
+    text = message.content
+    args = text.split()
+    msg = ""
+
+    is_mod = user.permissions_in(message.channel).administrator
+    if not is_mod:
+        raise HouseCupException(
+            "Nice try, but only mods can deduct other people's points.")
+
+    deduct_error = "Please provide a user mention and an amount of points, " \
+                  "eg `~deduct @person 10`"
+
+    if len(args) != 3:
+        raise HouseCupException(deduct_error)
+
+    person_id = user.id
+    person_mention = user.mention
+
+    mentioned = get_mention_user(True, message.mentions)
+    if mentioned:
+        person_id = mentioned.id
+        person_mention = mentioned.mention
+
+    if not args[2].isdigit():
+        raise HouseCupException(deduct_error)
+    amount = int(args[2])
+
+    new_amount = participants[person_id][MOD_ADJUST] - amount
+    participants[person_id][MOD_ADJUST] = new_amount
+
+    house = participants[person_id]["house"]
+    adjective = HOUSE_TO_ADJECTIVE[house]
+    msg = "The Word of the Mods is thus: you have been naughty."\
+        " " + str(amount) + " " \
+        "points from " + house.capitalize() + " for" \
+        " " + person_mention + "'s bad deeds."
+    return msg
+
+
+def points(user, message):
+    text = message.content
+    args = text.split()
+
+    person_id = user.id
+    person_mention = user.mention
+
+    mentioned = get_mention_user(False, message.mentions)
+    if mentioned:
+        person_id = mentioned.id
+        person_mention = mentioned.mention
+    elif len(args) > 1:
+        raise HouseCupException(
+            "To look up another user's points, mention them.")
+    msg = ""
 
     person = participants[person_id]
 
@@ -340,6 +453,10 @@ def points(user, message):
     msg = "\n".join([who_message, total_message, daily_message, post_message,
                      beta_message, comment_message, workshop_message,
                      excred_message])
+
+    if person[MOD_ADJUST] != 0:
+        msg = msg + "\n" + format_name(":innocent:", MOD_ADJUST) + str(person[MOD_ADJUST])
+
     return msg
 
 
@@ -350,7 +467,7 @@ def house_points(user, message):
     msg = ""
 
     if len(args) > 1:
-        possible_house = args[1]
+        possible_house = args[1].lower()
         if possible_house not in HOUSES:
             raise HouseCupException(possible_house + " is not a valid house. Try `~housepoints slytherin`")
         else:
@@ -386,11 +503,12 @@ def leader_board(user, message):
     house = get_house(user)
     category = "total"
     valid_args = "Valid arguments to `~leaderboard` are `daily`, `post`," \
-                 " `beta`, `workshop`, `comment`, `excred`, and `total`"
+                 " `beta`, `workshop`, `comment`, `excred`, `mod_adjust`, " \
+                 "and `total`"
     msg = ""
 
     if len(args) > 1:
-        category = args[1]
+        category = args[1].lower()
         if category not in CATEGORIES + ["total"]:
             raise HouseCupException(valid_args)
 
@@ -458,6 +576,13 @@ def standings():
     return msg + emoji_line
 
 
+def migrate():
+    for p in participants:
+        print(p)
+        participants[p][MOD_ADJUST] = 0
+    print(participants)
+
+
 @client.event
 async def on_message(message):
     user = message.author
@@ -488,6 +613,14 @@ async def on_message(message):
 
         elif text.startswith("~log"):
             msg = "{0.author.mention}: " + log_score(text, user)
+            save_participants()
+
+        elif text.startswith("~award"):
+            msg = award(user, message)
+            save_participants()
+
+        elif text.startswith("~deduct"):
+            msg = deduct(user, message)
             save_participants()
 
         elif text.startswith("~daily"):
@@ -530,6 +663,10 @@ async def on_message(message):
 
         elif text.startswith("~standings"):
             msg = standings()
+
+        elif text.startswith("~migrate"):
+            msg = migrate()
+            save_participants()
 
         elif text.startswith("~help"):
             msg = "{0.author.mention}: Instructions on bot usage and the" \
