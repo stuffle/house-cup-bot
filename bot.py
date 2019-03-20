@@ -7,6 +7,7 @@ import re
 import random
 
 from humor_commands import *
+from help import *
 
 
 IS_TEST_ENV = os.environ.get("IS_TEST_ENV")
@@ -58,9 +59,6 @@ CATEGORY_TO_POINTS = {
 }
 VALID_CATEGORIES = "Valid arguments to this command are `daily`, `post`," \
                    " `beta`, `workshop`, `comment`, and `excred`"
-
-DOCS_LINK = "https://docs.google.com/document/d/1z03xR7jpi-oXwmI9N1XpU6N9" \
-            "0BnXmj5ptyASdWnIkNA/edit?usp=sharing"
 
 client = discord.Client()
 participants = {}
@@ -587,6 +585,12 @@ def standings():
 
 
 def migrate():
+    is_mod = user.permissions_in(message.channel).administrator
+    if not is_mod:
+        raise HouseCupException(
+            "Only stuffle can run migrations.")
+        # Todo: Make that true, or better yet, do migrations not in the bot.
+
     for p in participants:
         print(p)
         participants[p][MOD_ADJUST] = 0
@@ -680,8 +684,9 @@ async def on_message(message):
             save_participants()
 
         elif text.startswith("help"):
-            msg = "{0.author.mention}: Instructions on bot usage and the" \
-                  " house cup itself are in: " + DOCS_LINK
+            embed = help_command(message)
+            await client.send_message(message.channel, embed=embed)
+            return
 
         elif text.startswith("dumbledore"):
             house = get_house(user)
