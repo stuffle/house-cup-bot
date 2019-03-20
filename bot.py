@@ -9,6 +9,14 @@ import random
 from humor_commands import *
 
 
+IS_TEST_ENV = os.environ.get("IS_TEST_ENV")
+PREFIX = "~"
+if IS_TEST_ENV:
+    PREFIX = "$"
+DATA_FILE = "data.json"
+if IS_TEST_ENV:
+    DATA_FILE = "test_data.json"
+
 SLYTHERIN = "slytherin"
 RAVENCLAW = "ravenclaw"
 GRYFFINDOR = "gryffindor"
@@ -65,13 +73,13 @@ class HouseCupException(Exception):
 def load_participants():
     global participants
 
-    with open("data.json", encoding='utf-8') as f:
+    with open(DATA_FILE, encoding='utf-8') as f:
         file_text = f.read()
         participants = ast.literal_eval(file_text)
 
 
 def save_participants():
-    with open("data.json", 'w', encoding='utf-8') as f:
+    with open(DATA_FILE, 'w', encoding='utf-8') as f:
         f.write(str(participants))
 
 
@@ -183,7 +191,7 @@ def leave(user):
     msg = "{0.author.mention}: You can check out any time you like. " \
           "But you can never leave! :musical_note: \n\n" \
           "But if you insist, know that your score will be wiped out. " \
-          "Use  `~actuallyleave`  :sob:"
+          "Use  `" + PREFIX + "actuallyleave`  :sob:"
     return msg
 
 
@@ -194,7 +202,7 @@ def actually_leave(user):
     del participants[user.id]
 
     msg = "{0.author.mention}: You have left the house cup. :sob:\n" \
-          "To rejoin (if it's not too late), use `~join`"
+          "To rejoin (if it's not too late), use `" + PREFIX + "join`"
     return msg
 
 
@@ -210,7 +218,8 @@ def log_score(text, user):
     amount = 0
 
     if user.id not in participants:
-        raise HouseCupException("Please join the house cup with `~join`")
+        raise HouseCupException(
+            "Please join the house cup with `" + PREFIX + "join`")
 
     house = participants[user.id]["house"].capitalize()
 
@@ -234,7 +243,7 @@ def log_score(text, user):
     if category == POST:
         msg = "YESSS!!! :eyes: :eyes: 10 points to " + house + "!"
     if category == BETA:
-        msg = "You're a better beta than Harry is an omega. :wink:\n" \
+        msg = "You're a better beta than Harry is an omega. " \
               "10 points to " + house + "!"
     if category == WORKSHOP:
         msg = "Thank you for putting your work up for the weekly workshop " \
@@ -245,10 +254,10 @@ def log_score(text, user):
     if category == EXCRED:
         if len(args) <= 2:
             raise HouseCupException(
-                "Please provide an amount for the extra credit, like `~excred 10`")
+                "Please provide an amount for the extra credit, like `" + PREFIX + "excred 10`")
         if not args[2].isdigit():
             raise HouseCupException(
-                "Extra credit amount must be a number. Try something like `~excred 10`")
+                "Extra credit amount must be a number. Try something like `" + PREFIX + "excred 10`")
         amount = int(args[2])
         new_excred_total = participants[user.id][EXCRED] + amount
         if new_excred_total >= 50:
@@ -257,7 +266,7 @@ def log_score(text, user):
                   " Thank you for contributing so much! :heart:"
         elif amount == 0:
             raise HouseCupException(
-                "Please provide the amount of extra credit points earned. For example: `~excred 20`")
+                "Please provide the amount of extra credit points earned. For example: `" + PREFIX + "excred 20`")
         else:
             msg = str(amount) + " points to " + house + " for extra credit work!"
         participants[user.id][EXCRED] = new_excred_total
@@ -289,14 +298,14 @@ def remove_score(text, user):
     if category == EXCRED:
         if len(args) <= 2:
             raise HouseCupException(
-                "Please provide an amount for the extra credit, like `~remove excred 10`")
+                "Please provide an amount for the extra credit, like `" + PREFIX + "remove excred 10`")
         if not args[2].isdigit():
             raise HouseCupException(
-                "Extra credit amount must be a number. Try something like `~remove excred 10`")
+                "Extra credit amount must be a number. Try something like `" + PREFIX + "remove excred 10`")
         amount = int(args[2])
         if amount <= 0:
             raise HouseCupException(
-                "Please provide the amount of extra credit points to remove as a positive integer. For example: `~remove excred 20`")
+                "Please provide the amount of extra credit points to remove as a positive integer. For example: `" + PREFIX + "remove excred 20`")
         points = amount
     else:
         points = CATEGORY_TO_POINTS[category]
@@ -349,7 +358,7 @@ def award(user, message):
             "Nice try, but only mods can award other people points.")
 
     award_error = "Please provide a user mention and an amount of points, " \
-                  "eg `~award @RedHorse 10`"
+                  "eg `" + PREFIX + "award @RedHorse 10`"
 
     if len(args) != 3:
         raise HouseCupException(award_error)
@@ -391,7 +400,7 @@ def deduct(user, message):
             "Nice try, but only mods can deduct other people's points.")
 
     deduct_error = "Please provide a user mention and an amount of points, " \
-                  "eg `~deduct @person 10`"
+                  "eg `" + PREFIX + "deduct @person 10`"
 
     if len(args) != 3:
         raise HouseCupException(deduct_error)
@@ -469,7 +478,8 @@ def house_points(user, message):
     if len(args) > 1:
         possible_house = args[1].lower()
         if possible_house not in HOUSES:
-            raise HouseCupException(possible_house + " is not a valid house. Try `~housepoints slytherin`")
+            raise HouseCupException(
+                possible_house + " is not a valid house. Try `" + PREFIX + "housepoints slytherin`")
         else:
             house = possible_house
 
@@ -502,7 +512,7 @@ def leader_board(user, message):
     args = text.split()
     house = get_house(user)
     category = "total"
-    valid_args = "Valid arguments to `~leaderboard` are `daily`, `post`," \
+    valid_args = "Valid arguments to `" + PREFIX + "leaderboard` are `daily`, `post`," \
                  " `beta`, `workshop`, `comment`, `excred`, `mod_adjust`, " \
                  "and `total`"
     msg = ""
@@ -595,90 +605,91 @@ async def on_message(message):
         return
 
     # Ignore all messages not directed at bot
-    if not message.content.startswith("~"):
+    if not message.content.startswith(PREFIX):
         return
+    text = text[1:]
 
     try:
-        if text == "~join":
+        if text.startswith("join"):
             msg = join(user)
             save_participants()
             print(participants)
 
-        elif text.startswith("~leave"):
+        elif text.startswith("leave"):
             msg = leave(user)
 
-        elif text.startswith("~actuallyleave"):
+        elif text.startswith("actuallyleave"):
             msg = actually_leave(user)
             save_participants()
 
-        elif text.startswith("~log"):
+        elif text.startswith("log"):
             msg = "{0.author.mention}: " + log_score(text, user)
             save_participants()
 
-        elif text.startswith("~award"):
+        elif text.startswith("award"):
             msg = award(user, message)
             save_participants()
 
-        elif text.startswith("~deduct"):
+        elif text.startswith("deduct"):
             msg = deduct(user, message)
             save_participants()
 
-        elif text.startswith("~daily"):
-            msg = "{0.author.mention}: " + log_score("~log daily", user)
+        elif text.startswith("daily"):
+            msg = "{0.author.mention}: " + log_score("log daily", user)
             save_participants()
 
-        elif text.startswith("~post"):
-            msg = "{0.author.mention}: " + log_score("~log post", user)
+        elif text.startswith("post"):
+            msg = "{0.author.mention}: " + log_score("log post", user)
             save_participants()
 
-        elif text.startswith("~beta"):
-            msg = "{0.author.mention}: " + log_score("~log beta", user)
+        elif text.startswith("beta"):
+            msg = "{0.author.mention}: " + log_score("log beta", user)
             save_participants()
 
-        elif text.startswith("~comment"):
-            msg = "{0.author.mention}: " + log_score("~log comment", user)
+        elif text.startswith("comment"):
+            msg = "{0.author.mention}: " + log_score("log comment", user)
             save_participants()
 
-        elif text.startswith("~workshop"):
-            msg = "{0.author.mention}: " + log_score("~log workshop", user)
+        elif text.startswith("workshop"):
+            msg = "{0.author.mention}: " + log_score("log workshop", user)
             save_participants()
 
-        elif text.startswith("~excred"):
+        elif text.startswith("excred"):
             msg = "{0.author.mention}: " + log_score(
-                  "~log " + text[1:], user)
+                  "log " + text[1:], user)
             save_participants()
 
-        elif text.startswith("~remove"):
+        elif text.startswith("remove"):
             msg = "{0.author.mention}: " + remove_score(text, user)
             save_participants()
 
-        elif text.startswith("~points"):
+        elif text.startswith("points"):
             msg = points(user, message)
 
-        elif text.startswith("~housepoints"):
+        elif text.startswith("housepoints"):
             msg = house_points(user, message)
 
-        elif text.startswith("~leaderboard"):
+        elif text.startswith("leaderboard"):
             msg = leader_board(user, message)
 
-        elif text.startswith("~standings"):
+        elif text.startswith("standings"):
             msg = standings()
 
-        elif text.startswith("~migrate"):
+        elif text.startswith("migrate"):
             msg = migrate()
             save_participants()
 
-        elif text.startswith("~help"):
+        elif text.startswith("help"):
             msg = "{0.author.mention}: Instructions on bot usage and the" \
                   " house cup itself are in: " + DOCS_LINK
 
-        elif text.startswith("~dumbledore"):
+        elif text.startswith("dumbledore"):
             house = get_house(user)
             embed = dumbledore(house, mention)
             await client.send_message(message.channel, embed=embed)
             return
 
-        elif text.startswith("~snape"):
+        elif text.startswith("snape"):
             house = get_house(user)
             embed = snape(house, mention)
             await client.send_message(message.channel, embed=embed)
