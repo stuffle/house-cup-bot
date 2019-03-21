@@ -17,15 +17,70 @@ def help_command(message):
     embed = None
 
     if arg == "join":
-        msg = "Join the house cup with your current house role. \n" \
+        msg = "Join the House Cup with your current house role. \n" \
               "Unless you leave and rejoin, you will have your current" \
               " house and name for the entirety of the month."
         embed = discord.Embed(
             title="Join Help",
             color=COLOR,
             description=msg)
-    elif embed == None:
-        msg = "Sorry! It may be because stuffle is still writing the help command."
+    elif arg == "leave":
+        msg = "Leave the House Cup. You will lose every point you've earned."
+        embed = discord.Embed(
+            title="Leave Help",
+            color=COLOR,
+            description=msg)
+    elif arg == "daily":
+        msg = "Log 5 points for doing any sort of creative work. " \
+              "It doesn't matter how little or how much you did. " \
+              "Anything counts. :heart:\n\n" \
+              "You must log your days work within 24 hours of doing it."
+        embed = discord.Embed(
+            title="Daily Help",
+            color=COLOR,
+            description=msg)
+    elif arg == "post":
+        msg = "Log 10 points each time you post artwork, " \
+              "update a chaptered work, post a new work, " \
+              "or help with the bot."
+        embed = discord.Embed(
+            title="Post Help",
+            color=COLOR,
+            description=msg)
+    elif arg == "beta":
+        msg = "Log 10 points each time you beta read a work, " \
+              "or participate in a workshop as a reader."
+        embed = discord.Embed(
+            title="Beta Help",
+            color=COLOR,
+            description=msg)
+    elif arg == "workshop":
+        msg = "Log 30 points when you contribute a work to the weekly " \
+              "workshop."
+        embed = discord.Embed(
+            title="Workshop Help",
+            color=COLOR,
+            description=msg)
+    elif arg == "comment":
+        # TODO: Update with new criteria
+        msg = "Comment: 5 points per comment which meets the following criteria: provides analysis and/or relates to at least 3 specific details of the work."
+        embed = discord.Embed(
+            title="Comment Help",
+            color=COLOR,
+            description=msg)
+    elif arg == "excred":
+        msg = "Use `excred AMOUNT`, where amount is a positive number.\n\n" \
+              "Check the House Cup channel for the month's extra credit " \
+              "challenge and its corresponding points. " \
+              "Maximum Extra Credit is 50 points per month."
+        embed = discord.Embed(
+            title="Extra Credit Help",
+            color=COLOR,
+            description=msg)
+
+    elif embed is None:
+        msg = "Sorry! It may be because stuffle is still writing " \
+              "the help command."
         embed = discord.Embed(
             title="Unrecognized Command",
             color=COLOR,

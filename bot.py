@@ -660,7 +660,7 @@ async def on_message(message):
 
         elif text.startswith("excred"):
             msg = "{0.author.mention}: " + log_score(
-                  "log " + text[1:], user)
+                  "log " + text, user)
             save_participants()
 
         elif text.startswith("remove"):
