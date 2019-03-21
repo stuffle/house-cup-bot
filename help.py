@@ -125,6 +125,40 @@ def help_command(message):
             color=COLOR,
             description=msg)
 
+    elif arg == "award":
+        msg = "Mods only: Award points to someone with a mention and the " \
+              "amount of points to give." \
+              "\n\n Example `award @RedHorse 10`"
+        embed = discord.Embed(
+            title="Award Points Help",
+            color=COLOR,
+            description=msg)
+    elif arg == "deduct":
+        msg = "Mods only: Deduct points from someone with a mention and the " \
+              "amount of points to remove." \
+              "\n\n Example `deduct @stuffle 10`"
+        embed = discord.Embed(
+            title="Deduct Points Help",
+            color=COLOR,
+            description=msg)
+
+    elif arg == "dumbledore":
+        msg = "Try it and see. Example: `dumbledore`\n" \
+              "Don't worry though, the command is just for fun." \
+              "\n\nWritten and coded by the fabulous CHRain."
+        embed = discord.Embed(
+            title="Dumbledore Help",
+            color=COLOR,
+            description=msg)
+    elif arg == "snape":
+        msg = "Try it and see. Example: `snape`\n" \
+              "Don't worry though, the command is just for fun." \
+              "\n\nWritten and coded by the fabulous CHRain."
+        embed = discord.Embed(
+            title="Snape Help",
+            color=COLOR,
+            description=msg)
+
     elif embed is None:
         msg = "Sorry! It may be because stuffle is still writing " \
               "the help command."
