@@ -3,7 +3,7 @@ import discord
 
 DOCS_LINK = "https://docs.google.com/document/d/1z03xR7jpi-oXwmI9N1XpU6N9" \
             "0BnXmj5ptyASdWnIkNA/edit?usp=sharing"
-COLOR = 6554835
+COLOR = 6095788
 
 
 def help_command(message):

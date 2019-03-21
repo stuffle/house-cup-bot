@@ -2,11 +2,13 @@ import discord
 import random
 
 
-def get_random_embed(quote_dict, author):
+def get_random_embed(quote_dict, author, colour):
     secure_random = random.SystemRandom()
     quote, gif = random.sample(quote_dict.items(), 1)[0]
 
-    embed = discord.Embed(description=quote)
+    embed = discord.Embed(
+        color=colour,
+        description=quote)
     embed.set_author(name=author + ":")
     embed.set_image(url=gif)
     return embed
@@ -26,7 +28,7 @@ def dumbledore(house, mention):
         " 30 points to " + house +  "! Congratulations, " + mention + ". Off you trot, I am sure your " + house + " housemates are waiting to celebrate with you, and it would be a shame to deprive them of this excellent excuse to make a great deal of mess and noise. " : " https://media.giphy.com/media/OU1marLMNNtnO/giphy.gif "
     }
 
-    return get_random_embed(quotes, "Dumbledore")
+    return get_random_embed(quotes, "Dumbledore", 9110292)
 
 
 def snape(house, mention):
@@ -41,4 +43,4 @@ def snape(house, mention):
         "Your work as of late has suspiciously improved and while I have my suspicions as to why this happened, it would be remiss of me to not award your efforts, false or not. 10 points to " + house + ". ...do not think that my doubts have been eased " + mention + ", I’m watching you." : "https://media.giphy.com/media/13gxK9D2PkTVgk/giphy.gif"
     }
 
-    return get_random_embed(snape_dict, "Severus Snape")
+    return get_random_embed(snape_dict, "Severus Snape", 4289797)
