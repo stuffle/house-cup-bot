@@ -684,7 +684,7 @@ async def on_message(message):
             save_participants()
 
         elif text.startswith("help"):
-            embed = help_command(message)
+            embed = help_command(message, PREFIX)
             await client.send_message(message.channel, embed=embed)
             return
 
