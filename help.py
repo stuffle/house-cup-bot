@@ -30,6 +30,7 @@ def help_command(message):
             title="Leave Help",
             color=COLOR,
             description=msg)
+
     elif arg == "daily":
         msg = "Log 5 points for doing any sort of creative work. " \
               "It doesn't matter how little or how much you did. " \
@@ -75,6 +76,52 @@ def help_command(message):
               "Maximum Extra Credit is 50 points per month."
         embed = discord.Embed(
             title="Extra Credit Help",
+            color=COLOR,
+            description=msg)
+    elif arg == "remove":
+        msg = "Use `remove CATEGORY` to remove points from a given category. "\
+              "CATEGORY may be `daily`, `post`, `beta`, `workshop`, " \
+              "`comment`, or `excred`. If you are removing extra credit " \
+              "points, you must provide the ammount of points to remove. " \
+              "\n\nExamples: `remove daily`, `remove excred 10`"
+        embed = discord.Embed(
+            title="Remove Points Help",
+            color=COLOR,
+            description=msg)
+
+    elif arg == "points":
+        msg = "Show how many of each kind of point you have. "\
+              "You many mention a person to look up their points." \
+              "\n\nExamples: `points`, `points @Earth`"
+        embed = discord.Embed(
+            title="Show Points Help",
+            color=COLOR,
+            description=msg)
+    elif arg == "housepoints":
+        msg = "Show your total house points and the points of each " \
+              "participant in your house." \
+              "You many provide a house as an argument to look up their " \
+              "points." \
+              "\n\nExamples: `housepoints`, `housepoints slytherin`"
+        embed = discord.Embed(
+            title="Show House Points Help",
+            color=COLOR,
+            description=msg)
+    elif arg == "standings":
+        msg = "Show the current house rankings. "\
+              "\n\nExample: `standings`"
+        embed = discord.Embed(
+            title="Standings Help",
+            color=COLOR,
+            description=msg)
+    elif arg == "leaderboard":
+        msg = "Show the current rankings of top participant's total points. "\
+              "You mat provide a category to see the rankings in that. " \
+              "Valid categories are `daily`, `post`, `beta`, `workshop`, " \
+              "`comment`, `excred`, or `mod_adjust`" \
+              "\n\nExamples: `leaderboard`, `leaderboard post`"
+        embed = discord.Embed(
+            title="Show Points Help",
             color=COLOR,
             description=msg)
 
