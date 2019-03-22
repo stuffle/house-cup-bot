@@ -82,6 +82,12 @@ def save_participants():
         f.write(str(participants))
 
 
+def is_mod(user, channel):
+    stuffle_id = "438450978690433024"
+    user_is_mod = user.permissions_in(channel).administrator
+    return user_is_mod or user.id == stuffle_id
+
+
 def get_house(user):
     user_id = user.id
 
@@ -386,8 +392,8 @@ def award(user, message):
     args = text.split()
     msg = ""
 
-    is_mod = user.permissions_in(message.channel).administrator
-    if not is_mod:
+    user_is_mod = is_mod(user, message.channel)
+    if not user_is_mod:
         raise HouseCupException(
             "Nice try, but only mods can award other people points.")
 
@@ -428,8 +434,8 @@ def deduct(user, message):
     args = text.split()
     msg = ""
 
-    is_mod = user.permissions_in(message.channel).administrator
-    if not is_mod:
+    user_is_mod = is_mod(user, message.channel)
+    if not user_is_mod:
         raise HouseCupException(
             "Nice try, but only mods can deduct other people's points.")
 
@@ -620,9 +626,9 @@ def standings():
     return msg + heart + emoji_line + heart
 
 
-def migrate():
-    is_mod = user.permissions_in(message.channel).administrator
-    if not is_mod:
+def migrate(user):
+    stuffle_id = "438450978690433024"
+    if user.id != stuffle_id:
         raise HouseCupException(
             "Only stuffle can run migrations.")
         # Todo: Make that true, or better yet, do migrations not in the bot.
@@ -630,6 +636,7 @@ def migrate():
     for p in participants:
         print(p)
         participants[p][MOD_ADJUST] = 0
+    print("Data has been succesfully migrated")
     print(participants)
 
 
@@ -731,7 +738,7 @@ async def on_message(message):
             msg = standings()
 
         elif text.startswith("migrate"):
-            msg = migrate()
+            msg = migrate(user)
             save_participants()
 
         elif text.startswith("help"):
