@@ -44,3 +44,17 @@ def snape(house, mention):
     }
 
     return get_random_embed(snape_dict, "Severus Snape", 4289797)
+
+
+def at():
+    """
+    Inspired by RedHorse and Cybrid
+    """
+    quotes = [
+        "( ͡° ͜ʖ ͡°)\n@ me harder, Daddy",
+        "You’ve summoned me, but for unofficial purposes. I must ask that you refrain from interfering with my sacred, objective task.",
+        "I’m trying to do my work. Leave me alone.",
+        ""
+    ]
+
+    return random.choice(quotes)

@@ -608,8 +608,11 @@ async def on_message(message):
     if user == client.user:
         return
 
+    if client.user.mentioned_in(message) and message.mention_everyone is False:
+        msg = at()
+
     # Ignore all messages not directed at bot
-    if not message.content.startswith(PREFIX):
+    if not message.content.startswith(PREFIX) and msg == "":
         return
     text = text[1:]
 
