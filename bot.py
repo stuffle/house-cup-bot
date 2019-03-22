@@ -5,6 +5,7 @@ import ast
 import os
 import re
 import random
+import time
 
 from humor_commands import *
 from help import *
@@ -170,6 +171,7 @@ def join(user):
         "name": user.name,
         "mention": user.mention,
         "house": house,
+        "last_daily": 0,
         DAILY: 0,
         POST: 0,
         BETA: 0,
@@ -230,7 +232,7 @@ def log_score(text, user):
     if category not in CATEGORIES:
         raise HouseCupException("Unrecognized Category. " + VALID_CATEGORIES)
 
-    if category != EXCRED and category != COMMENT:
+    if category not in [EXCRED, COMMENT, DAILY, WORKSHOP]:
         points = CATEGORY_TO_POINTS[category]
         participants[user.id][category] = participants[user.id][category] + points
 
@@ -238,6 +240,17 @@ def log_score(text, user):
     if category == DAILY:
         msg = "Congratulations on doing something today—" \
               "take 5 points for " + house + "! " + HOUSE_TO_HEART[house.lower()]
+        last_daily = 0
+        if "last_daily" in participants[user.id].keys():
+            last_daily = participants[user.id]["last_daily"]
+        now = time.time()
+        four_hours = 14400  # seconds
+        if last_daily + four_hours > now:
+            raise HouseCupException(
+                "You may only log a daily once per day. "
+                "You must wait 4 hours between logging dailies.")
+        participants[user.id][DAILY] = participants[user.id][DAILY] + 5
+        participants[user.id]["last_daily"] = now
     if category == POST:
         msg = "YESSS!!! :eyes: :eyes: 10 points to " + house + "!"
     if category == BETA:
@@ -246,6 +259,17 @@ def log_score(text, user):
     if category == WORKSHOP:
         msg = "Thank you for putting your work up for the weekly workshop " \
               "~~gangbang~~. Take a whopping 30 points for " + house + "!"
+        last_workshop = 0
+        if "last_workshop" in participants[user.id].keys():
+            last_workshop = participants[user.id]["last_workshop"]
+        now = time.time()
+        one_day = 86400  # seconds
+        if last_workshop + one_day > now:
+            raise HouseCupException(
+                "You may only log a workshop once per day. "
+                "You must wait 24 hours between logging workshops.")
+        participants[user.id][WORKSHOP] = participants[user.id][WORKSHOP] + 30
+        participants[user.id]["last_workshop"] = now
     if category == COMMENT:
         if len(args) < 3:
             msg = "Comments are so appreciated. :revolving_hearts: 1 point to"\

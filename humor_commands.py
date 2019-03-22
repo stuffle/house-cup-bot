@@ -54,7 +54,9 @@ def at(mention):
         "( ͡° ͜ʖ ͡°)\n@ me harder, Baby",
         "You’ve summoned me, but for unofficial purposes. I must ask that you refrain from interfering with my sacred, objective task.",
         "I’m trying to do my work. Leave me alone.",
-        "Hey %s, I love you." % mention,
+        "Hey %s! :smile:" % mention,
+        "Why are you pinging me when you could be writing?",
+        "%s, my love, have 5 points. :kissing_heart:" % mention,
         ""
     ]
 
