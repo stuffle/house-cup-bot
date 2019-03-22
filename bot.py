@@ -615,8 +615,20 @@ async def on_message(message):
     if not message.content.startswith(PREFIX) and msg == "":
         return
     text = text[1:]
+    args = text.split(" ")
+    if len(args) == 0:
+        return
+    command = args[0]
+    argumentless_commands = [
+        "join", "daily", "post", "beta", "workshop", "standings"]
 
     try:
+        if command in argumentless_commands and len(args) > 1:
+            raise HouseCupException(
+                "`%s%s` does not take any arguments. See `%shelp %s` "
+                "for more information." % (PREFIX, command, PREFIX, command)
+            )
+
         if text.startswith("join"):
             msg = join(user)
             save_participants()
