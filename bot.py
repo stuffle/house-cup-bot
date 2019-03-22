@@ -230,7 +230,7 @@ def log_score(text, user):
     if category not in CATEGORIES:
         raise HouseCupException("Unrecognized Category. " + VALID_CATEGORIES)
 
-    if category != EXCRED:
+    if category != EXCRED and category != COMMENT:
         points = CATEGORY_TO_POINTS[category]
         participants[user.id][category] = participants[user.id][category] + points
 
@@ -247,8 +247,20 @@ def log_score(text, user):
         msg = "Thank you for putting your work up for the weekly workshop " \
               "~~gangbang~~. Take a whopping 30 points for " + house + "!"
     if category == COMMENT:
-        msg = "Comments are so appreciated. :sparkling_heart: 5 points to" \
-              " " + house + "!"
+        if len(args) < 3:
+            msg = "Comments are so appreciated. :revolving_hearts: 1 point to"\
+                  " " + house + "!"
+            participants[user.id][COMMENT] = participants[user.id][COMMENT] + 1
+        elif args[2] in ["extra", "essay", "long", "mystery"]:
+            msg = "You've probably made someone really happy with your long " \
+                  "and thoughtful comment! Good job! :sparkling_heart: " \
+                  "5 points to " + house + "!"
+            participants[user.id][COMMENT] = participants[user.id][COMMENT] + 5
+        else:
+            raise HouseCupException(
+                "Unrecognized argument to `%scomment`. For a regular comment, "
+                "do `%scomment`. For an essay length comment, do "
+                "`%scomment extra`" % (PREFIX, PREFIX, PREFIX))
     if category == EXCRED:
         if len(args) <= 2:
             raise HouseCupException(
@@ -571,9 +583,9 @@ def standings():
         house_and_score, key=lambda tup: tup[1], reverse=True)
     first_place_house, first_place_score = sorted_houses[0]
     heart = HOUSE_TO_HEART[first_place_house]
-    winners_emoji = heart + HOUSE_TO_EMOJI[first_place_house]
+    animal = HOUSE_TO_EMOJI[first_place_house]
 
-    msg = " **__Current Standings:__** " + winners_emoji + "\n"
+    msg = heart + " **__Current Standings__** " + heart + "\n"
     number = 1
     for house, score in sorted_houses:
         formatted_house = format_name(number, house)
@@ -581,7 +593,7 @@ def standings():
         number += 1
 
     emoji_line = HOUSE_TO_EMOJI[first_place_house] * 7
-    return msg + emoji_line
+    return msg + heart + emoji_line + heart
 
 
 def migrate():
@@ -609,7 +621,7 @@ async def on_message(message):
         return
 
     if client.user.mentioned_in(message) and message.mention_everyone is False:
-        msg = at()
+        msg = at(mention)
 
     # Ignore all messages not directed at bot
     if not message.content.startswith(PREFIX) and msg == "":
@@ -666,7 +678,7 @@ async def on_message(message):
             save_participants()
 
         elif text.startswith("comment"):
-            msg = "{0.author.mention}: " + log_score("log comment", user)
+            msg = "{0.author.mention}: " + log_score("log " + text, user)
             save_participants()
 
         elif text.startswith("workshop"):

@@ -70,7 +70,10 @@ def help_command(message, prefix):
             color=COLOR,
             description=msg)
     elif arg == "comment":
-        msg = "Log 1 point for any comment and 5 points per essay-length comment."\
+        msg = "Log 1 point for any comment and 5 points per essay-length " \
+              "comment. 5 point comments are defined by their length, " \
+              "analysis, and general thoughtfulness. " \
+              "Please use your best judgement on which to use." \
               "\n\nExamples: `%scomment` for regular comments and `%scomment" \
               " extra` for essay-length comments." % (prefix, prefix)
         embed = discord.Embed(
