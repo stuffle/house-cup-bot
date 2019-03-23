@@ -16,6 +16,7 @@ def help_command(message, prefix):
     arg = args[1]
     embed = None
 
+    # Join and Leave
     if arg == "join":
         msg = "Join the House Cup with your current house role. \n" \
               "Unless you leave and rejoin, you will have your current" \
@@ -33,6 +34,7 @@ def help_command(message, prefix):
             color=COLOR,
             description=msg)
 
+    # Logging Points
     elif arg == "daily":
         msg = "Log 5 points for doing any sort of creative work. " \
               "It doesn't matter how little or how much you did. " \
@@ -102,6 +104,7 @@ def help_command(message, prefix):
             color=COLOR,
             description=msg)
 
+    # Viewing Points
     elif arg == "points":
         msg = "Show how many of each kind of point you have. "\
               "You many mention a person to look up their points." \
@@ -140,6 +143,7 @@ def help_command(message, prefix):
             color=COLOR,
             description=msg)
 
+    # Mod Only commands
     elif arg == "award":
         msg = "Mods only: Award points to someone with a mention and the " \
               "amount of points to give." \
@@ -157,6 +161,7 @@ def help_command(message, prefix):
             color=COLOR,
             description=msg)
 
+    # Fun Commands
     elif arg == "dumbledore":
         msg = "Try it and see. Example: `%sdumbledore`\n" \
               "Don't worry though, the command is just for fun." \

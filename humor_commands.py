@@ -3,7 +3,6 @@ import random
 
 
 def get_random_embed(quote_dict, author, colour):
-    secure_random = random.SystemRandom()
     quote, gif = random.sample(quote_dict.items(), 1)[0]
 
     embed = discord.Embed(

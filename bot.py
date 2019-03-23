@@ -670,101 +670,91 @@ async def on_message(message):
     # Ignore all messages not directed at bot
     if not message.content.startswith(PREFIX) and msg == "":
         return
+
     text = text[1:]
     args = text.split(" ")
     if len(args) == 0:
         return
     command = args[0]
+
     argumentless_commands = [
         "join", "daily", "post", "beta", "workshop", "standings"]
+    if command in argumentless_commands and len(args) > 1:
+        raise HouseCupException(
+            "`%s%s` does not take any arguments. See `%shelp %s` "
+            "for more information." % (PREFIX, command, PREFIX, command))
 
     try:
-        if command in argumentless_commands and len(args) > 1:
-            raise HouseCupException(
-                "`%s%s` does not take any arguments. See `%shelp %s` "
-                "for more information." % (PREFIX, command, PREFIX, command)
-            )
-
-        if text.startswith("join"):
-            msg = join(user)
-            save_participants()
-            print(participants)
-
-        elif text.startswith("leave"):
-            msg = leave(user)
-
-        elif text.startswith("actuallyleave"):
-            msg = actually_leave(user)
-            save_participants()
-
-        elif text.startswith("log"):
-            msg = "{0.author.mention}: " + log_score(text, user)
-            save_participants()
-
-        elif text.startswith("award"):
-            msg = award(user, message)
-            save_participants()
-
-        elif text.startswith("deduct"):
-            msg = deduct(user, message)
-            save_participants()
-
-        elif text.startswith("daily"):
-            msg = "{0.author.mention}: " + log_score("log daily", user)
-            save_participants()
-
-        elif text.startswith("post"):
-            msg = "{0.author.mention}: " + log_score("log post", user)
-            save_participants()
-
-        elif text.startswith("beta"):
-            msg = "{0.author.mention}: " + log_score("log beta", user)
-            save_participants()
-
-        elif text.startswith("comment"):
-            msg = "{0.author.mention}: " + log_score("log " + text, user)
-            save_participants()
-
-        elif text.startswith("workshop"):
-            msg = "{0.author.mention}: " + log_score("log workshop", user)
-            save_participants()
-
-        elif text.startswith("excred"):
-            msg = "{0.author.mention}: " + log_score(
-                  "log " + text, user)
-            save_participants()
-
-        elif text.startswith("remove"):
-            msg = "{0.author.mention}: " + remove_score(text, user)
-            save_participants()
-
-        elif text.startswith("points"):
-            msg = points(user, message)
-
-        elif text.startswith("housepoints"):
-            msg = house_points(user, message)
-
-        elif text.startswith("leaderboard"):
-            msg = leader_board(user, message)
-
-        elif text.startswith("standings"):
-            msg = standings()
-
-        elif text.startswith("migrate"):
-            msg = migrate(user)
-            save_participants()
-
-        elif text.startswith("help"):
+        if text.startswith("help"):
             embed = help_command(message, PREFIX)
             await client.send_message(message.channel, embed=embed)
             return
 
+        # Join and Leave
+        elif text.startswith("join"):
+            msg = join(user)
+            save_participants()
+            print(participants)
+        elif text.startswith("leave"):
+            msg = leave(user)
+        elif text.startswith("actuallyleave"):
+            msg = actually_leave(user)
+            save_participants()
+
+        # Edit Points
+        elif text.startswith("log"):
+            msg = "{0.author.mention}: " + log_score(text, user)
+            save_participants()
+        elif text.startswith("daily"):
+            msg = "{0.author.mention}: " + log_score("log daily", user)
+            save_participants()
+        elif text.startswith("post"):
+            msg = "{0.author.mention}: " + log_score("log post", user)
+            save_participants()
+        elif text.startswith("beta"):
+            msg = "{0.author.mention}: " + log_score("log beta", user)
+            save_participants()
+        elif text.startswith("comment"):
+            msg = "{0.author.mention}: " + log_score("log " + text, user)
+            save_participants()
+        elif text.startswith("workshop"):
+            msg = "{0.author.mention}: " + log_score("log workshop", user)
+            save_participants()
+        elif text.startswith("excred"):
+            msg = "{0.author.mention}: " + log_score(
+                  "log " + text, user)
+            save_participants()
+        elif text.startswith("remove"):
+            msg = "{0.author.mention}: " + remove_score(text, user)
+            save_participants()
+
+        # Point viewing commands
+        elif text.startswith("points"):
+            msg = points(user, message)
+        elif text.startswith("housepoints"):
+            msg = house_points(user, message)
+        elif text.startswith("leaderboard"):
+            msg = leader_board(user, message)
+        elif text.startswith("standings"):
+            msg = standings()
+
+        # Mod only commands
+        elif text.startswith("award"):
+            msg = award(user, message)
+            save_participants()
+        elif text.startswith("deduct"):
+            msg = deduct(user, message)
+            save_participants()
+        elif text.startswith("migrate"):
+            msg = migrate(user)
+            save_participants()
+
+        # For fun commands
         elif text.startswith("dumbledore"):
             house = get_house(user)
             embed = dumbledore(house, mention)
             await client.send_message(message.channel, embed=embed)
             return
-
         elif text.startswith("snape"):
             house = get_house(user)
             embed = snape(house, mention)
