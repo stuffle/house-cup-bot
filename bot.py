@@ -6,6 +6,8 @@ import os
 import re
 import random
 import time
+from calendar import monthrange
+from datetime import datetime
 
 from humor_commands import *
 from help import *
@@ -171,6 +173,16 @@ def join(user):
         raise HouseCupException(
             "You have already joined the house cup for this month.")
 
+    now = datetime.now()
+    day_of_month = now.day
+    _, days_in_month = monthrange(now.year, now.month)
+    if days_in_month - day_of_month <= 7:
+        raise HouseCupException(
+            "I'm sorry, but it is too late to join the House Cup. "
+            "Registration closed a week before the end of the month. "
+            "Please come back next month and we will welcome you "
+            "with open arms. :hugging:")
+
     house = get_house(user)
 
     participant = {
@@ -178,6 +190,7 @@ def join(user):
         "mention": user.mention,
         "house": house,
         "last_daily": 0,
+        "last_workshop": 0,
         DAILY: 0,
         POST: 0,
         BETA: 0,
@@ -631,7 +644,7 @@ def migrate(user):
     if user.id != stuffle_id:
         raise HouseCupException(
             "Only stuffle can run migrations.")
-        # Todo: Make that true, or better yet, do migrations not in the bot.
+        # Todo: don't do migrations in the bot.
 
     for p in participants:
         print(p)
