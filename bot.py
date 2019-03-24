@@ -60,8 +60,24 @@ CATEGORY_TO_POINTS = {
     WORKSHOP: 30,
     COMMENT: 5
 }
+CATEGORY_TO_EMOJI = {
+    "total": ":trophy:",
+    DAILY: ":white_sun_small_cloud:",
+    POST: ":book:",
+    BETA: ":pencil:",
+    COMMENT: ":keyboard:",
+    WORKSHOP: ":sweat_smile:",
+    EXCRED: ":star2:",
+    MOD_ADJUST: ":innocent:"
+}
 VALID_CATEGORIES = "Valid arguments to this command are `daily`, `post`," \
                    " `beta`, `workshop`, `comment`, and `excred`"
+
+SERVER_ID_TO_CHANNEL = {
+    # Red's Writing Hood: house-cup-bot
+    "497039992401428498": "553382529521025037"
+}
+
 
 client = discord.Client()
 participants = {}
@@ -88,6 +104,21 @@ def is_mod(user, channel):
     stuffle_id = "438450978690433024"
     user_is_mod = user.permissions_in(channel).administrator
     return user_is_mod or user.id == stuffle_id
+
+
+def get_random_person(user):
+    """
+    Return the name of a random person other than the user.
+    """
+    members = participants.keys()
+    if len(members) < 2:
+        return "Cedric Diggory"
+
+    person_id = random.choice(members)
+    person = ""
+    while person != user.id:
+        person = participants[person_id]["mention"]
+    return person
 
 
 def get_house(user):
@@ -166,9 +197,6 @@ def format_name(number, name):
 
 
 def join(user):
-    """
-    TODO: Implement deadline for joining
-    """
     if user.id in participants.keys():
         raise HouseCupException(
             "You have already joined the house cup for this month.")
@@ -504,20 +532,26 @@ def points(user, message):
     total_message = "__**Total:  " + str(
         calculate_personal_score(person_id)) + "**__"
     daily_message = format_name(
-        ":white_sun_small_cloud:", DAILY) + str(person[DAILY])
-    post_message = format_name(":book:", POST) + str(person[POST])
-    beta_message = format_name(":pencil:", BETA) + str(person[BETA])
-    comment_message = format_name(":keyboard:", COMMENT) + str(person[COMMENT])
+        CATEGORY_TO_EMOJI[DAILY], DAILY) + str(person[DAILY])
+    post_message = format_name(
+        CATEGORY_TO_EMOJI[POST], POST) + str(person[POST])
+    beta_message = format_name(
+        CATEGORY_TO_EMOJI[BETA], BETA) + str(person[BETA])
+    comment_message = format_name(
+        CATEGORY_TO_EMOJI[COMMENT], COMMENT) + str(person[COMMENT])
     workshop_message = format_name(
-        ":sweat_smile:", WORKSHOP) + str(person[WORKSHOP])
-    excred_message = format_name(":avocado:", EXCRED) + str(person[EXCRED])
+        CATEGORY_TO_EMOJI[WORKSHOP], WORKSHOP) + str(person[WORKSHOP])
+    excred_message = format_name(
+        CATEGORY_TO_EMOJI[EXCRED], EXCRED) + str(person[EXCRED])
 
     msg = "\n".join([who_message, total_message, daily_message, post_message,
                      beta_message, comment_message, workshop_message,
                      excred_message])
 
     if person[MOD_ADJUST] != 0:
-        msg = msg + "\n" + format_name(":innocent:", MOD_ADJUST) + str(person[MOD_ADJUST])
+        msg = msg + "\n" + format_name(
+            CATEGORY_TO_EMOJI[MOD_ADJUST],
+            MOD_ADJUST) + str(person[MOD_ADJUST])
 
     return msg
 
@@ -540,7 +574,6 @@ def house_points(user, message):
     members = get_paticipants(house)
     sorted_members = sort_participants(members, "total")
 
-    # TODO: Use real house total based on points calculation
     house_total = calculate_house_score(house)
     heart = HOUSE_TO_HEART[house] + " "
     house_title = heart + "__**" + house.capitalize() + ":** "
@@ -635,8 +668,71 @@ def standings():
         msg = msg + formatted_house + str(score) + "\n"
         number += 1
 
-    emoji_line = HOUSE_TO_EMOJI[first_place_house] * 7
-    return msg + heart + emoji_line + heart
+    return msg + heart + animal * 7 + heart
+
+
+def winnings(user, message):
+    house_and_score = []
+    for house in HOUSES:
+        score = calculate_house_score(house)
+        house_and_score.append((house, score))
+
+    sorted_houses = sorted(
+        house_and_score, key=lambda tup: tup[1], reverse=True)
+    first_place_house, first_place_score = sorted_houses[0]
+    heart = HOUSE_TO_HEART[first_place_house]
+    animal = HOUSE_TO_EMOJI[first_place_house]
+
+    msg = heart + animal * 7 + heart + "\n" \
+        "**The House Cup is over!!!**\n\n Congratulations to **%s**, " \
+        "the winners of this month's House Cup! \n\n" \
+        "__Final scores are:__\n" % first_place_house.capitalize()
+
+    # Show standings
+    number = 1
+    for house, score in sorted_houses:
+        formatted_house = format_name(
+            HOUSE_TO_EMOJI[house] + " " + str(number), house)
+        msg = msg + formatted_house + str(score) + "  "
+        msg = msg + HOUSE_TO_HEART[house] + "\n"
+        number += 1
+
+    msg = msg + "\nExtra congratulations to these participants who " \
+        "went the extra mile and were top in their category.\n"
+
+    # Show top in category
+    for category in ["total"] + CATEGORIES:
+        top_member, points = sort_participants(
+            participants.values(), category)[0]
+        category_announcement = CATEGORY_TO_EMOJI[category] + " **" \
+            "" + category.capitalize() + ":** "
+        msg += category_announcement + top_member["mention"]
+        msg += "—" + str(points) + "  "
+        msg += HOUSE_TO_HEART[top_member["house"]] + "\n"
+
+    mentions = [participants[p]["mention"] for p in participants]
+    all_mentions = ", ".join(mentions)
+    msg += "\nThank you to everyone who participated in this month's " \
+        "House Cup: %s\n\n" % all_mentions
+
+    msg += "We hope to see you again in the next House Cup. You may now " \
+        "`%sjoin` the new competition. Good luck, friend.\n" % PREFIX
+
+    msg += heart + animal * 7 + heart
+    return msg
+
+
+def ping_everyone(user, message):
+    user_is_mod = is_mod(user, message.channel)
+
+    if not user_is_mod:
+        raise HouseCupException(
+            "Only mods can ping all participants of the House Cup.")
+
+    mentions = [participants[p]["mention"] for p in participants]
+    mentions.remove(user.mention)
+    return "Hey listen! %s has something to say!\n%s" % (
+        user.mention, ", ".join(mentions))
 
 
 def migrate(user):
@@ -665,7 +761,8 @@ async def on_message(message):
         return
 
     if client.user.mentioned_in(message) and message.mention_everyone is False:
-        msg = at(mention)
+        random_person = get_random_person(user)
+        msg = at(mention, random_person)
 
     # Ignore all messages not directed at bot
     if not message.content.startswith(PREFIX) and msg == "":
@@ -748,6 +845,10 @@ async def on_message(message):
         elif text.startswith("migrate"):
             msg = migrate(user)
             save_participants()
+        elif text.startswith("pingeveryone"):
+            msg = ping_everyone(user, message)
+        elif text.startswith("winnings"):
+            msg = winnings(user, message)
 
         # For fun commands
         elif text.startswith("dumbledore"):
@@ -788,6 +889,8 @@ async def on_ready():
     print(client.user.name)
     print(client.user.id)
     print('------')
+
+    # TODO: Data load failure error ping
     load_participants()
 
 

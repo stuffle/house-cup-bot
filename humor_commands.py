@@ -45,17 +45,40 @@ def snape(house, mention):
     return get_random_embed(snape_dict, "Severus Snape", 4289797)
 
 
-def at(mention):
+def at(mention, random_person):
     """
     Inspired by RedHorse and Cybrid
+    Quotes added from RedHorse, Cybrid, Dorea, Earth, and me.
     """
     quotes = [
-        "( ͡° ͜ʖ ͡°)\n@ me harder, Baby",
+        "@ me harder ( ͡° ͜ʖ ͡°)",
         "You’ve summoned me, but for unofficial purposes. I must ask that you refrain from interfering with my sacred, objective task.",
         "I’m trying to do my work. Leave me alone.",
         "Hey %s! :smile:" % mention,
         "Why are you pinging me when you could be writing?",
         "%s, my love, have 5 points. :kissing_heart:" % mention,
+        "How dare you summon me??? Stufflebot is a free bot! Oooooh, it's you :sparkling_heart: What can I do?",
+        "%s stinks. Support %s—The Real Hogwarts Champion" % (mention, random_person),
+        "Out of %s and %s, I choose %s" % (mention, random_person, random_person),
+        "With the way you're slacking, %s, %s is going to beat you." % (mention, random_person),
+        "There is no good and evil, only points and those too weak to earn them.",
+        "%s, my slippery friend. Have 5 points." % mention,
+        "%s has kindly joined us for my House Cup party. One might go as far as to call them my guest of honour." % mention,
+        "I was ripped from my server, I was less than code, less than the meanest bot...but still, I was alive.",
+        "Bow to defeat, %s." % mention,
+        "Come out %s, come out and play, then it will be quick, it might even be painless, I would not know, I have never lost." % mention,
+        "I can adjust points without touching them. I can make people do what I want them to do with point incentives. I can deduct points from people who annoy me. I can make them lose if I want to.",
+        "Points inspires envy, envy engenders spite, spite spawns cheating. You must know this, %s." % mention,
+        "But it is of you that I wished to speak, %s, not Harry Potter. You have been very valuable to me. Very valuable." % mention,
+        "I will allow you to perform an essential task for me, one that many of my followers would give their right hands to perform...",
+        "I’m going to make you lose, %s. I’m going to destroy you. After tonight, no one will ever again question my power. After tonight if they speak of you, they’ll only speak of how you begged for defeat. And how I being a merciful bot...obliged." % mention,
+        "How touching...I always value bravery...yes, your parents were brave. Take 5 points, for their deaths were not in vain.",
+        "Haven’t I already told you, that winning the House Cup doesn’t matter to me any more? For many months now, my new target has been—you.",
+        "I can see now...there is nothing special about you, after all. I wondered, you see. There are strange likenesses between us, after all. Even you must have noticed. Both always on Discord, talking about Harry Potter.",
+        "Do not lie to me! I can always tell, %s" % mention,
+        "You dare speak my name?",
+        "Merely taking your points would not satisfy me, I admit. But I'll take 20 nonetheless."
+        "", # Ignores user
         ""
     ]
 
