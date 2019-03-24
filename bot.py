@@ -110,7 +110,7 @@ def get_random_person(user):
     """
     Return the name of a random person other than the user.
     """
-    members = participants.keys()
+    members = list(participants.keys())
     if len(members) < 2:
         return "Cedric Diggory"
 
