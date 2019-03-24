@@ -116,7 +116,8 @@ def get_random_person(user):
         return "Cedric Diggory"
 
     person_id = user.id
-    while person == user.id:
+    person = "Cedric Diggory"
+    while person_id == user.id:
         print(person)
         person_id = random.choice(members)
         print(person_id)
