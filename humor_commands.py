@@ -45,6 +45,21 @@ def snape(house, mention):
     return get_random_embed(snape_dict, "Severus Snape", 4289797)
 
 
+def sneak(mention, random_person):
+    """
+    Quotes written by Eath_Phoenix
+    """
+    quotes = [
+        "Hello %s I see you’re working hard to earn house points! However, I think %s need’s more help than you do. 10 points to them." % (mention, random_person),
+        "Thank you for your gallant efforts in earning house points %s, I think it only fair that %s takes them in your stead." % (mention, random_person),
+        "Hm, this is tricky, I’m tempted to give %s your points, but I’ll let you keep them instead. This time." % random_person,
+        "Brave are those who earn house points %s, braver still are those who take them form you. 10 points to %s!" % (mention, random_person),
+        "10 points to %s, no, wait, that doesn’t sound right. 10 points %s!" % (mention, random_person),
+        "50 points to %s, and let this be a lesson to you, %s" % (random_person, mention)
+        ]
+    return random.choice(quotes)
+
+
 def at(mention, random_person):
     """
     Inspired by RedHorse and Cybrid

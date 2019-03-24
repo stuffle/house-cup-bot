@@ -165,7 +165,7 @@ def help_command(message, prefix):
     elif arg == "dumbledore":
         msg = "Try it and see. Example: `%sdumbledore`\n" \
               "Don't worry though, the command is just for fun." \
-              "\n\nWritten and coded by the amazing CHRain." % prefix
+              "\n\nWritten and coded by The Amazing CHRain." % prefix
         embed = discord.Embed(
             title="Dumbledore Help",
             color=COLOR,
@@ -173,9 +173,17 @@ def help_command(message, prefix):
     elif arg == "snape":
         msg = "Try it and see. Example: `%ssnape`\n" \
               "Don't worry though, the command is just for fun." \
-              "\n\nWritten and coded by the amazing CHRain." % prefix
+              "\n\nWritten and coded by The Amazing CHRain." % prefix
         embed = discord.Embed(
             title="Snape Help",
+            color=COLOR,
+            description=msg)
+    elif arg == "sneak":
+        msg = "Try it and see. Example: `%ssneak`\n" \
+              "Don't worry though, the command is just for fun." \
+              "\n\nQuotes written by The Great Earth." % prefix
+        embed = discord.Embed(
+            title="Sneak Help",
             color=COLOR,
             description=msg)
 
@@ -219,7 +227,7 @@ def general_help(prefix):
         inline=False)
     embed.add_field(
         name="Fun Commands:",
-        value="`dumbledore`, `snape`",
+        value="`dumbledore`, `snape`, `sneak`",
         inline=False)
 
     return embed
