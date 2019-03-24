@@ -114,9 +114,9 @@ def get_random_person(user):
     if len(members) < 2:
         return "Cedric Diggory"
 
-    person_id = random.choice(members)
     person = ""
     while person != user.id:
+        person_id = random.choice(members)
         person = participants[person_id]["mention"]
     return person
 

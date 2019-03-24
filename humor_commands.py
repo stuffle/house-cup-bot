@@ -51,7 +51,7 @@ def at(mention, random_person):
     Quotes added from RedHorse, Cybrid, Dorea, Earth, and me.
     """
     quotes = [
-        "@ me harder ( ͡° ͜ʖ ͡°)",
+        "@ me harder, %s ( ͡° ͜ʖ ͡°)" % mention,
         "You’ve summoned me, but for unofficial purposes. I must ask that you refrain from interfering with my sacred, objective task.",
         "I’m trying to do my work. Leave me alone.",
         "Hey %s! :smile:" % mention,
