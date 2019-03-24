@@ -68,7 +68,7 @@ def at(mention, random_person):
         "Bow to defeat, %s." % mention,
         "Come out %s, come out and play, then it will be quick, it might even be painless, I would not know, I have never lost." % mention,
         "I can adjust points without touching them. I can make people do what I want them to do with point incentives. I can deduct points from people who annoy me. I can make them lose if I want to.",
-        "Points inspires envy, envy engenders spite, spite spawns cheating. You must know this, %s." % mention,
+        "Points inspire envy, envy engenders spite, spite spawns cheating. You must know this, %s." % mention,
         "But it is of you that I wished to speak, %s, not Harry Potter. You have been very valuable to me. Very valuable." % mention,
         "I will allow you to perform an essential task for me, one that many of my followers would give their right hands to perform...",
         "I’m going to make you lose, %s. I’m going to destroy you. After tonight, no one will ever again question my power. After tonight if they speak of you, they’ll only speak of how you begged for defeat. And how I being a merciful bot...obliged." % mention,

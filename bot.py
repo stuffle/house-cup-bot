@@ -111,17 +111,14 @@ def get_random_person(user):
     Return the name of a random person other than the user.
     """
     members = list(participants.keys())
-    print(str(members))
     if len(members) < 2:
         return "Cedric Diggory"
 
     person_id = user.id
     person = "Cedric Diggory"
     while person_id == user.id:
-        print(person)
         person_id = random.choice(members)
-        print(person_id)
-        person = participants[person_id]["mention"]
+        person = participants[person_id]["name"]
     return person
 
 
