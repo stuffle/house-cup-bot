@@ -92,6 +92,16 @@ def help_command(message, prefix):
             title="Extra Credit Help",
             color=COLOR,
             description=msg)
+    elif arg == "wc":
+        msg = "Log one point per 1000 words you've written, rounded to the " \
+              "nearest 1000.\n\n" \
+              "Example: `%swc 9000` to log 9000 total words this month or"\
+              " `%swc add 3000` to add 3000 words to your total." % (
+                prefix, prefix)
+        embed = discord.Embed(
+            title="Extra Credit Help",
+            color=COLOR,
+            description=msg)
     elif arg == "remove":
         msg = "Use `%sremove CATEGORY` to remove points from a given category. "\
               "CATEGORY may be `daily`, `post`, `beta`, `workshop`, " \
@@ -222,7 +232,7 @@ def general_help(prefix):
         inline=False)
     embed.add_field(
         name="Logging Points:",
-        value="`daily`, `post`, `beta`, `comment`, `workshop`, `excred`, `remove`",
+        value="`daily`, `post`, `beta`, `comment`, `workshop`, `excred`, `wc`, `remove`",
         inline=False)
     embed.add_field(
         name="Viewing Points:",

@@ -52,7 +52,8 @@ WORKSHOP = "workshop"
 COMMENT = "comment"
 EXCRED = "excred"
 MOD_ADJUST = "mod_adjust"
-CATEGORIES = [DAILY, POST, BETA, WORKSHOP, COMMENT, EXCRED, MOD_ADJUST]
+WC = "wc"
+CATEGORIES = [DAILY, POST, BETA, WORKSHOP, COMMENT, EXCRED, MOD_ADJUST, WC]
 CATEGORY_TO_POINTS = {
     DAILY: 5,
     POST: 10,
@@ -68,10 +69,11 @@ CATEGORY_TO_EMOJI = {
     COMMENT: ":keyboard:",
     WORKSHOP: ":sweat_smile:",
     EXCRED: ":star2:",
-    MOD_ADJUST: ":innocent:"
+    MOD_ADJUST: ":innocent:",
+    WC: ":chart_with_upwards_trend:"
 }
 VALID_CATEGORIES = "Valid arguments to this command are `daily`, `post`," \
-                   " `beta`, `workshop`, `comment`, and `excred`"
+                   " `beta`, `workshop`, `comment`, `wc`, and `excred`"
 
 SERVER_ID_TO_CHANNEL = {
     # Red's Writing Hood: house-cup-bot
@@ -220,12 +222,14 @@ def join(user):
         "house": house,
         "last_daily": 0,
         "last_workshop": 0,
+        "word_count": 0,  # The actual word count
         DAILY: 0,
         POST: 0,
         BETA: 0,
         WORKSHOP: 0,
         COMMENT: 0,
         EXCRED: 0,
+        WC: 0,  # Points earned for word count
         MOD_ADJUST: 0
     }
 
@@ -270,6 +274,7 @@ def log_score(text, user):
             "Please join the house cup with `" + PREFIX + "join`")
 
     house = participants[user.id]["house"].capitalize()
+    heart = HOUSE_TO_HEART[house.lower()]
 
     # Check if valid inputs
     if len(args) < 2:
@@ -285,14 +290,14 @@ def log_score(text, user):
             "You may not log mod_adjust points, only mods can do that with "
             "`%saward` and `%sdeduct`." % (PREFIX, PREFIX))
 
-    if category not in [EXCRED, COMMENT, DAILY, WORKSHOP]:
+    if category not in [EXCRED, COMMENT, DAILY, WORKSHOP, WC]:
         points = CATEGORY_TO_POINTS[category]
         participants[user.id][category] = participants[user.id][category] + points
 
     # Add points where appropriate
     if category == DAILY:
         msg = "Congratulations on doing something today—" \
-              "take 5 points for " + house + "! " + HOUSE_TO_HEART[house.lower()]
+              "take 5 points for " + house + "! " + heart
         last_daily = 0
         if "last_daily" in participants[user.id].keys():
             last_daily = participants[user.id]["last_daily"]
@@ -304,11 +309,13 @@ def log_score(text, user):
                 "You must wait 4 hours between logging dailies.")
         participants[user.id][DAILY] = participants[user.id][DAILY] + 5
         participants[user.id]["last_daily"] = now
+
     if category == POST:
         msg = "YESSS!!! :eyes: :eyes: 10 points to " + house + "!"
     if category == BETA:
         msg = "You're a better beta than Harry is an omega. " \
               "10 points to " + house + "!"
+
     if category == WORKSHOP:
         msg = "Thank you for putting your work up for the weekly workshop " \
               "~~gangbang~~. Take a whopping 30 points for " + house + "!"
@@ -338,6 +345,49 @@ def log_score(text, user):
                 "Unrecognized argument to `%scomment`. For a regular comment, "
                 "do `%scomment`. For an essay length comment, do "
                 "`%scomment extra`" % (PREFIX, PREFIX, PREFIX))
+
+    if category == WC:
+        wordcount = 0
+        wc_points = 0
+        amount = 0
+        if "word_count" in participants[user.id]:
+            wordcount = participants[user.id]["word_count"]
+        if WC in participants[user.id]:
+            wc_points = participants[user.id][WC]
+        if len(args) <= 2:
+            raise HouseCupException(
+                "`%swc` takes arguments. Do something like "
+                "`%swc 9000` to set your total word count for the month "
+                "or `%swc add 3000` to add to your total." % (
+                    PREFIX, PREFIX, PREFIX))
+        elif args[2] == "add":
+            if len(args) <= 3 or not args[3].isdigit():
+                raise HouseCupException(
+                    "Please provide a number to add to your total word count."
+                    " For example: `%swc add 3000`" % PREFIX)
+            amount = int(args[3])
+            wordcount = wordcount + amount
+        elif not args[2].isdigit():
+            raise HouseCupException(
+                "Total word count must be a number. Try something like "
+                "`%swc 9000` or `%swc add 3000`." % (PREFIX, PREFIX))
+        else:  # We have valid "log wc total"
+            wordcount = int(args[2])
+        wc_points = round(wordcount / 1000)
+        participants[user.id]["word_count"] = wordcount
+        if wc_points >= 25:
+            wc_points = 25
+            msg = "You have now earned the max number of wc points. " \
+                "Thank you for contributing so much writing. %s " % heart
+        if args[2] == "add":
+            msg = "Congratulations on posting %d words! " \
+                "This brings your total  to %d, giving you %d points! " % (
+                    amount, wordcount, wc_points) + msg
+        else:
+            msg = "Your total wordcount is now %d, giving you %d points! " \
+                "Congratulations! " % (wordcount, wc_points) + msg
+        participants[user.id][WC] = wc_points
+
     if category == EXCRED:
         if len(args) <= 2:
             raise HouseCupException(
@@ -378,6 +428,10 @@ def remove_score(text, user):
             "Please provide a category to remove points from " + VALID_CATEGORIES)
 
     category = args[1].lower()
+    if category == WC:
+        raise HouseCupException(
+            "Please adjust your wordcount by resetting the "
+            "total with `%swc TOTAL`" % PREFIX)
     if category not in CATEGORIES or category == MOD_ADJUST:
         raise HouseCupException("Unrecognized Category. " + VALID_CATEGORIES)
 
@@ -861,6 +915,9 @@ async def on_message(message):
             save_participants()
         elif text.startswith("workshop"):
             msg = "{0.author.mention}: " + log_score("log workshop", user)
+            save_participants()
+        elif text.startswith("wc"):
+            msg = "{0.author.mention}: " + log_score("log " + text, user)
             save_participants()
         elif text.startswith("excred"):
             msg = "{0.author.mention}: " + log_score(
