@@ -280,6 +280,11 @@ def log_score(text, user):
     if category not in CATEGORIES:
         raise HouseCupException("Unrecognized Category. " + VALID_CATEGORIES)
 
+    if category == MOD_ADJUST:
+        raise HouseCupException(
+            "You may not log mod_adjust points, only mods can do that with "
+            "`%saward` and `%sdeduct`." % (PREFIX, PREFIX))
+
     if category not in [EXCRED, COMMENT, DAILY, WORKSHOP]:
         points = CATEGORY_TO_POINTS[category]
         participants[user.id][category] = participants[user.id][category] + points
@@ -940,3 +945,4 @@ async def on_ready():
 client.loop.create_task(list_recs())
 token = os.environ.get("DISCORD_BOT_SECRET")
 client.run(token)
+# TODO: Use APScheduler to schedule events like winnings
