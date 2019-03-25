@@ -1,4 +1,3 @@
-data.json
-test_data.json
+*data*
 __pycache__
 firebase_credentials.json

@@ -54,7 +54,7 @@ def sneak(mention, random_person):
         "Thank you for your gallant efforts in earning house points %s, I think it only fair that %s takes them in your stead." % (mention, random_person),
         "Hm, this is tricky, I’m tempted to give %s your points, but I’ll let you keep them instead. This time." % random_person,
         "Brave are those who earn house points %s, braver still are those who take them form you. 10 points to %s!" % (mention, random_person),
-        "10 points to %s, no, wait, that doesn’t sound right. 10 points %s!" % (mention, random_person),
+        "10 points to %s, no, wait, that doesn’t sound right. 10 points to %s!" % (mention, random_person),
         "50 points to %s, and let this be a lesson to you, %s" % (random_person, mention)
         ]
     return random.choice(quotes)
@@ -93,8 +93,6 @@ def at(mention, random_person):
         "Do not lie to me! I can always tell, %s" % mention,
         "You dare speak my name?",
         "Merely taking your points would not satisfy me, I admit. But I'll take 20 nonetheless."
-        "", # Ignores user
-        ""
     ]
 
     return random.choice(quotes)

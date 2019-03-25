@@ -7,7 +7,7 @@ import re
 import random
 import time
 from calendar import monthrange
-from datetime import datetime
+import datetime
 
 from humor_commands import *
 from help import *
@@ -202,7 +202,7 @@ def join(user):
         raise HouseCupException(
             "You have already joined the house cup for this month.")
 
-    now = datetime.now()
+    now = datetime.datetime.now()
     day_of_month = now.day
     _, days_in_month = monthrange(now.year, now.month)
     if days_in_month - day_of_month <= 7:
@@ -673,6 +673,33 @@ def standings():
 
 
 def winnings(user, message):
+    """
+    End and restarts the House Cup Compeition.
+    Display Winners
+    """
+    global participants
+    if not participants:
+        raise HouseCupException(
+            "There can be no winners with no participants. :sob:")
+
+    # Get Month and error check date
+    now = datetime.date.today()
+    contest_month = now.strftime("%B")
+    new_month = now.strftime("%B")
+    day = now.day
+    _, days_in_month = monthrange(now.year, now.month)
+
+    if day == "1":
+        yesterday = now - datetime.timedelta(days=1)
+        contest_month = yesterday.strftime("%B")
+    elif day == days_in_month:
+        tomorrow = now + datetime.timedelta(days=1)
+        new_month = tomorrow.strftime("%B")
+    else:
+        raise HouseCupException(
+            "Winnings can only be used at the end of the compeition. "
+            "Please try again on the last day of the month, or the first UTC.")
+
     house_and_score = []
     for house in HOUSES:
         score = calculate_house_score(house)
@@ -686,8 +713,9 @@ def winnings(user, message):
 
     msg = heart + animal * 7 + heart + "\n" \
         "**The House Cup is over!!!**\n\n Congratulations to **%s**, " \
-        "the winners of this month's House Cup! \n\n" \
-        "__Final scores are:__\n" % first_place_house.capitalize()
+        "the winners of %s's House Cup! \n\n" \
+        "__Final scores are:__\n" % (
+            first_place_house.capitalize(), contest_month)
 
     # Show standings
     number = 1
@@ -717,9 +745,14 @@ def winnings(user, message):
         "House Cup: %s\n\n" % all_mentions
 
     msg += "We hope to see you again in the next House Cup. You may now " \
-        "`%sjoin` the new competition. Good luck, friend.\n" % PREFIX
-
+        "`%sjoin` %s's House Cup. Good luck, friend.\n" % (PREFIX, new_month)
     msg += heart + animal * 7 + heart
+
+    # Make backup and reset scores
+    make_backup(contest_month + "_final")
+    participants = {}
+    save_participants()
+
     return msg
 
 
@@ -731,7 +764,8 @@ def ping_everyone(user, message):
             "Only mods can ping all participants of the House Cup.")
 
     mentions = [participants[p]["mention"] for p in participants]
-    mentions.remove(user.mention)
+    if user.mention in mentions:
+        mentions.remove(user.mention)
     return "Hey listen! %s has something to say!\n%s" % (
         user.mention, ", ".join(mentions))
 
@@ -748,6 +782,11 @@ def migrate(user):
         participants[p][MOD_ADJUST] = 0
     print("Data has been succesfully migrated")
     print(participants)
+
+
+def make_backup(when):
+    with open("data_backup_" + str(when), 'w', encoding='utf-8') as f:
+        f.write(str(participants))
 
 
 @client.event

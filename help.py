@@ -160,6 +160,13 @@ def help_command(message, prefix):
             title="Deduct Points Help",
             color=COLOR,
             description=msg)
+    elif arg == "pingeveryone":
+        msg = "Mods only: Ping everyone currently in the House Cup." \
+              "\n\n Example `%spingeveryone`" % prefix
+        embed = discord.Embed(
+            title="Ping Everyone Help",
+            color=COLOR,
+            description=msg)
 
     # Fun Commands
     elif arg == "dumbledore":
@@ -223,7 +230,7 @@ def general_help(prefix):
         inline=False)
     embed.add_field(
         name="Mod Only Commands:",
-        value="`award`, `deduct`",
+        value="`award`, `deduct`, `pingeveryone`",
         inline=False)
     embed.add_field(
         name="Fun Commands:",
