@@ -145,7 +145,7 @@ def help_command(message, prefix):
         msg = "Show the current rankings of top participants' total points. "\
               "You may provide a category to see the rankings in that. " \
               "Valid categories are `daily`, `post`, `beta`, `workshop`, " \
-              "`comment`, `excred`, or `mod_adjust`" \
+              "`comment`, `wc`, `excred`, or `mod_adjust`" \
               "\n\nExamples: `%sleaderboard`, `%sleaderboard post`" % (
                   prefix, prefix)
         embed = discord.Embed(

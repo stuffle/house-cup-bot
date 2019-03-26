@@ -53,7 +53,7 @@ COMMENT = "comment"
 EXCRED = "excred"
 MOD_ADJUST = "mod_adjust"
 WC = "wc"
-CATEGORIES = [DAILY, POST, BETA, WORKSHOP, COMMENT, EXCRED, MOD_ADJUST, WC]
+CATEGORIES = [DAILY, POST, BETA, WORKSHOP, COMMENT, WC, EXCRED, MOD_ADJUST]
 CATEGORY_TO_POINTS = {
     DAILY: 5,
     POST: 10,
@@ -176,7 +176,7 @@ def sort_participants(members, category):
         if category == "total":
             points = calculate_personal_score(
                 get_userid_from_mention(member["mention"]))
-        else:
+        elif category in member:
             points = member[category]
         members_and_points.append((member, points))
     return sorted(members_and_points, key=lambda tup: tup[1], reverse=True)
@@ -189,8 +189,8 @@ def get_userid_from_mention(mention):
 
 def calculate_personal_score(user_id):
     p = participants[user_id]
-    core_points = p[DAILY] + p[POST] + p[BETA] + p[WORKSHOP]
-    return core_points + p[COMMENT] + p[EXCRED] + p[MOD_ADJUST]
+    core_points = p[DAILY] + p[POST] + p[BETA] + p[WORKSHOP] + p[COMMENT]
+    return core_points + p[WC] + p[EXCRED] + p[MOD_ADJUST]
 
 
 def format_name(number, name):
@@ -603,10 +603,12 @@ def points(user, message):
         CATEGORY_TO_EMOJI[WORKSHOP], WORKSHOP) + str(person[WORKSHOP])
     excred_message = format_name(
         CATEGORY_TO_EMOJI[EXCRED], EXCRED) + str(person[EXCRED])
+    wc_message = format_name(
+        CATEGORY_TO_EMOJI[WC], WC) + str(person[WC])
 
     msg = "\n".join([who_message, total_message, daily_message, post_message,
                      beta_message, comment_message, workshop_message,
-                     excred_message])
+                     wc_message, excred_message])
 
     if person[MOD_ADJUST] != 0:
         msg = msg + "\n" + format_name(
@@ -658,14 +660,14 @@ def leader_board(user, message):
     args = text.split()
     house = get_house(user)
     category = "total"
-    valid_args = "Valid arguments to `" + PREFIX + "leaderboard` are `daily`, `post`," \
-                 " `beta`, `workshop`, `comment`, `excred`, `mod_adjust`, " \
-                 "and `total`"
+    valid_args = "Valid arguments to `" + PREFIX + "leaderboard` are " \
+                "`daily`, `post`, `beta`, `workshop`, `comment`, `wc` (points)" \
+                ", `word_count`, `excred`, `mod_adjust`, and `total`"
     msg = ""
 
     if len(args) > 1:
         category = args[1].lower()
-        if category not in CATEGORIES + ["total"]:
+        if category not in CATEGORIES + ["total", "word_count"]:
             raise HouseCupException(valid_args)
 
     sorted_members = sort_participants(participants.values(), category)[:5]
@@ -754,10 +756,10 @@ def winnings(user, message):
     elif day == days_in_month:
         tomorrow = now + datetime.timedelta(days=1)
         new_month = tomorrow.strftime("%B")
-    else:
+    """else:
         raise HouseCupException(
             "Winnings can only be used at the end of the compeition. "
-            "Please try again on the last day of the month, or the first UTC.")
+            "Please try again on the last day of the month, or the first UTC.")"""
 
     house_and_score = []
     for house in HOUSES:
@@ -786,7 +788,7 @@ def winnings(user, message):
         number += 1
 
     msg = msg + "\nExtra congratulations to these participants who " \
-        "went the extra mile and were top in their category.\n"
+        "went the extra mile and were top in their points category.\n"
 
     # Show top in category
     for category in ["total"] + CATEGORIES:
@@ -796,6 +798,8 @@ def winnings(user, message):
             "" + category.capitalize() + ":** "
         msg += category_announcement + top_member["mention"]
         msg += "—" + str(points) + "  "
+        if category == WC:
+            msg += "(%d words) " % top_member["word_count"]
         msg += HOUSE_TO_HEART[top_member["house"]] + "\n"
 
     mentions = [participants[p]["mention"] for p in participants]
