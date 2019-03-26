@@ -846,7 +846,9 @@ def migrate(user):
 
     for p in participants:
         print(p)
-        participants[p][MOD_ADJUST] = 0
+        if not WC in participants:
+            participants[p][WC] = 0
+            participants[p]["word_count"] = 0
     print("Data has been succesfully migrated")
     print(participants)
 
