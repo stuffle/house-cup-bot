@@ -77,7 +77,9 @@ VALID_CATEGORIES = "Valid arguments to this command are `daily`, `post`," \
 
 SERVER_ID_TO_CHANNEL = {
     # Red's Writing Hood: house-cup-bot
-    "497039992401428498": "553382529521025037"
+    "497039992401428498": "553382529521025037",
+    # Test: General
+    "539932855845781524": "539932855845781530"
 }
 
 
@@ -1001,8 +1003,25 @@ async def on_ready():
     print(client.user.id)
     print('------')
 
-    # TODO: Data load failure error ping
-    load_participants()
+    # If there is a problem loading data, make a backup and go offline
+    # because the bot is effectively broken.
+    try:
+        load_participants()
+    except Exception as ex:
+        now = datetime.datetime.now()
+        print("Making backup at %s" % str(now))
+        make_backup(str(now))
+        for server in client.servers:
+            if server.id in SERVER_ID_TO_CHANNEL:
+                channel = client.get_channel(SERVER_ID_TO_CHANNEL[server.id])
+                if channel:
+                    msg = "I have had a critical data failue! :sob: " \
+                          "I'm going away to rest until <@438450978690433024>"\
+                          " fixes me."
+                    await client.send_message(channel, msg.format(msg))
+        await client.logout()
+        print("Logged Out")
+        raise ex
 
 
 client.loop.create_task(list_recs())
