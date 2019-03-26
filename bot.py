@@ -672,7 +672,9 @@ def leader_board(user, message):
 
     sorted_members = sort_participants(participants.values(), category)[:5]
 
-    msg = "__**Top 5 Students for " + category.capitalize() + " Points:**__\n"
+    msg = "__**Top 5 People for " + category.capitalize() + " Points:**__\n"
+    if category =="word_count":
+        msg = "__**Top 5 People for Total Word Count:**__\n"
 
     # Add each member to return message
     number = 1
