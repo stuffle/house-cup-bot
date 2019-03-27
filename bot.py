@@ -107,7 +107,10 @@ def save_participants():
 def is_mod(user, channel):
     stuffle_id = "438450978690433024"
     user_is_mod = user.permissions_in(channel).administrator
-    return user_is_mod or user.id == stuffle_id
+    role_names = [role.name.lower() for role in user.roles]
+    mod_role = "mod" in role_names
+    print(role_names)
+    return user_is_mod or mod_role or user.id == stuffle_id
 
 
 def get_random_person(user):
