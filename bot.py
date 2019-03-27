@@ -741,6 +741,8 @@ def winnings(user, message):
     """
     End and restarts the House Cup Compeition.
     Display Winners
+
+    TODO: Ties
     """
     global participants
     if not participants:
@@ -838,6 +840,7 @@ def ping_everyone(user, message):
 
 
 def migrate(user):
+    # TODO: data backups first
     stuffle_id = "438450978690433024"
     if user.id != stuffle_id:
         raise HouseCupException(
@@ -883,14 +886,14 @@ async def on_message(message):
         return
     command = args[0]
 
-    argumentless_commands = [
-        "join", "daily", "post", "beta", "workshop", "standings"]
-    if command in argumentless_commands and len(args) > 1:
-        raise HouseCupException(
-            "`%s%s` does not take any arguments. See `%shelp %s` "
-            "for more information." % (PREFIX, command, PREFIX, command))
-
     try:
+        argumentless_commands = [
+            "join", "daily", "post", "beta", "workshop", "standings"]
+        if command in argumentless_commands and len(args) > 1:
+            raise HouseCupException(
+                "`%s%s` does not take any arguments. See `%shelp %s` "
+                "for more information." % (PREFIX, command, PREFIX, command))
+
         if text.startswith("help"):
             embed = help_command(message, PREFIX)
             await client.send_message(message.channel, embed=embed)
