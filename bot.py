@@ -59,7 +59,7 @@ CATEGORY_TO_POINTS = {
     POST: 10,
     BETA: 10,
     WORKSHOP: 30,
-    COMMENT: 5
+    COMMENT: 1
 }
 CATEGORY_TO_EMOJI = {
     "total": ":trophy:",
@@ -109,7 +109,6 @@ def is_mod(user, channel):
     user_is_mod = user.permissions_in(channel).administrator
     role_names = [role.name.lower() for role in user.roles]
     mod_role = "mod" in role_names
-    print(role_names)
     return user_is_mod or mod_role or user.id == stuffle_id
 
 
@@ -287,7 +286,7 @@ def log_score(text, user):
             "Please provide a category to log your points in. " + VALID_CATEGORIES)
 
     category = args[1].lower()
-    if category not in CATEGORIES:
+    if category not in CATEGORIES + ["exercise"]:
         raise HouseCupException("Unrecognized Category. " + VALID_CATEGORIES)
 
     if category == MOD_ADJUST:
@@ -295,7 +294,7 @@ def log_score(text, user):
             "You may not log mod_adjust points, only mods can do that with "
             "`%saward` and `%sdeduct`." % (PREFIX, PREFIX))
 
-    if category not in [EXCRED, COMMENT, DAILY, WORKSHOP, WC]:
+    if category not in [EXCRED, COMMENT, DAILY, WORKSHOP, WC, "exercise"]:
         points = CATEGORY_TO_POINTS[category]
         participants[user.id][category] = participants[user.id][category] + points
 
@@ -320,6 +319,10 @@ def log_score(text, user):
     if category == BETA:
         msg = "You're a better beta than Harry is an omega. " \
               "10 points to " + house + "!"
+    if category == "exercise":
+        msg = "Thanks for participating in a weekly exercise! Take 5 " \
+              "workshop points for %s!" % house
+        participants[user.id][WORKSHOP] = participants[user.id][WORKSHOP] + 5
 
     if category == WORKSHOP:
         msg = "Thank you for putting your work up for the weekly workshop " \
@@ -437,10 +440,11 @@ def remove_score(text, user):
         raise HouseCupException(
             "Please adjust your wordcount by resetting the "
             "total with `%swc TOTAL`" % PREFIX)
-    if category not in CATEGORIES or category == MOD_ADJUST:
+    if category not in CATEGORIES + ["exercise"] or category == MOD_ADJUST:
         raise HouseCupException("Unrecognized Category. " + VALID_CATEGORIES)
 
     points = 0
+    new_points = 0
     if category == EXCRED:
         if len(args) <= 2:
             raise HouseCupException(
@@ -453,11 +457,15 @@ def remove_score(text, user):
             raise HouseCupException(
                 "Please provide the amount of extra credit points to remove as a positive integer. For example: `" + PREFIX + "remove excred 20`")
         points = amount
+    elif category == "exercise":
+        points = 5
+        new_points = participants[user.id][WORKSHOP] - 5
+        category = WORKSHOP
     else:
         points = CATEGORY_TO_POINTS[category]
-    new_points = participants[user.id][category] - points
+        new_points = participants[user.id][category] - points
     if new_points < 0:
-        raise(
+        raise HouseCupException(
             "No points were taken from you because this would set your total in " + str(category).capitalize() + " to a negative number.")
     else:
         participants[user.id][category] = new_points
@@ -891,7 +899,8 @@ async def on_message(message):
 
     try:
         argumentless_commands = [
-            "join", "daily", "post", "beta", "workshop", "standings"]
+            "join", "daily", "post", "beta", "workshop", "standings",
+            "exercise"]
         if command in argumentless_commands and len(args) > 1:
             raise HouseCupException(
                 "`%s%s` does not take any arguments. See `%shelp %s` "
@@ -932,6 +941,8 @@ async def on_message(message):
         elif text.startswith("workshop"):
             msg = "{0.author.mention}: " + log_score("log workshop", user)
             save_participants()
+        elif text.startswith("exercise"):
+            msg = "{0.author.mention}: " + log_score("log exercise", user)
         elif text.startswith("wc"):
             msg = "{0.author.mention}: " + log_score("log " + text, user)
             save_participants()

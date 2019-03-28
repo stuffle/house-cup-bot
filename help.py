@@ -71,6 +71,15 @@ def help_command(message, prefix):
             title="Workshop Help",
             color=COLOR,
             description=msg)
+    elif arg == "exercise":
+        msg = "Log 5 workshop points when you either contribute a work to " \
+              "the weekly exercise or participate as a reader. " \
+              "Do this command twice if you do both!" \
+              "\n\nExample: `%sexercise`" % prefix
+        embed = discord.Embed(
+            title="Exercise Help",
+            color=COLOR,
+            description=msg)
     elif arg == "comment":
         msg = "Log 1 point for any comment and 5 points per essay-length " \
               "comment. 5 point comments are defined by their length, " \
@@ -232,7 +241,7 @@ def general_help(prefix):
         inline=False)
     embed.add_field(
         name="Logging Points:",
-        value="`daily`, `post`, `beta`, `comment`, `workshop`, `excred`, `wc`, `remove`",
+        value="`daily`, `post`, `beta`, `comment`, `workshop`, `exercise`, `excred`, `wc`, `remove`",
         inline=False)
     embed.add_field(
         name="Viewing Points:",
