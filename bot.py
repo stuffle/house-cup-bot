@@ -85,6 +85,7 @@ SERVER_ID_TO_CHANNEL = {
 
 client = discord.Client()
 participants = {}
+CAN_JOIN = False
 
 
 class HouseCupException(Exception):
@@ -208,10 +209,11 @@ def join(user):
         raise HouseCupException(
             "You have already joined the house cup for this month.")
 
+    # TODO: Is this UTC?
     now = datetime.datetime.now()
     day_of_month = now.day
     _, days_in_month = monthrange(now.year, now.month)
-    if days_in_month - day_of_month <= 7:
+    if not CAN_JOIN and days_in_month - day_of_month <= 7:
         raise HouseCupException(
             "I'm sorry, but it is too late to join the House Cup. "
             "Registration closed a week before the end of the month. "
@@ -761,6 +763,7 @@ def winnings(user, message):
             "There can be no winners with no participants. :sob:")
 
     # Get Month and error check date
+    # TODO: Is this happening in UTC?
     now = datetime.date.today()
     contest_month = now.strftime("%B")
     new_month = now.strftime("%B")
@@ -832,6 +835,8 @@ def winnings(user, message):
     make_backup(contest_month + "_final")
     participants = {}
     save_participants()
+    global CAN_JOIN
+    CAN_JOIN = True
 
     return msg
 
