@@ -50,7 +50,7 @@ def snape(house, mention):
     snape_dict = {
         "You’re a fool for typing this command. You’re just like the rest of the dunderheads that I have to face on a daily basis, always nattering and giggling like gossips. Wha—stop looking at me like that! 10 points from " + house + "! for looking at your professor rudely!" : (
             "https://media.giphy.com/media/4jXIVkgjhIQbS/giphy.gif",
-            "Snape's dark eyes bore into to, growing larger until the only thing you see and know is his disapproval...and you know it's deserved."),
+            "Snape's dark eyes bore into you, growing larger until the only thing you see and know is his disapproval...and you know it's deserved."),
         "I heard from a little birdie that you have been slacking lately...silence! Whatever it is you want to say, I don’t want to hear it. There is no point in apportioning blame. What is done, is done. 10 points from " + house + "! For...disappointing your professor." : (
             "https://media.giphy.com/media/UAJpANY0bGPhS/giphy.gif",
             "Congratulations, you've managed to be such a bother that Snape is no longer stoic. His face crumples in agony as he orders \"SILENCE!\""),
