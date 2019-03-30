@@ -602,10 +602,10 @@ def points(user, message):
     msg = ""
 
     person = participants[person_id]
+    rounded_score = str(round(calculate_personal_score(person_id), 2))
 
     who_message = person_mention + "'s points are:"
-    total_message = "__**Total:  " + str(
-        calculate_personal_score(person_id)) + "**__"
+    total_message = "__**Total:  " + rounded_score + "**__"
     daily_message = format_name(
         CATEGORY_TO_EMOJI[DAILY], DAILY) + str(person[DAILY])
     post_message = format_name(
@@ -651,7 +651,7 @@ def house_points(user, message):
     members = get_paticipants(house)
     sorted_members = sort_participants(members, "total")
 
-    house_total = calculate_house_score(house)
+    house_total = round(calculate_house_score(house), 2)
     heart = HOUSE_TO_HEART[house] + " "
     house_title = heart + "__**" + house.capitalize() + ":** "
     msg = house_title + str(house_total) + "__ " + heart + "\n"
@@ -743,8 +743,9 @@ def standings():
     msg = heart + " **__Current Standings__** " + heart + "\n"
     number = 1
     for house, score in sorted_houses:
+        rounded_score = round(score, 2)
         formatted_house = format_name(number, house)
-        msg = msg + formatted_house + str(score) + "\n"
+        msg = msg + formatted_house + str(rounded_score) + "\n"
         number += 1
 
     return msg + heart + animal * 7 + heart
@@ -809,7 +810,8 @@ def winnings(user, message):
     for house, score in sorted_houses:
         formatted_house = format_name(
             HOUSE_TO_EMOJI[house] + " " + str(number), house)
-        msg = msg + formatted_house + str(score) + "  "
+        rounded_score = round(score, 2)
+        msg = msg + formatted_house + str(rounded_score) + "  "
         msg = msg + HOUSE_TO_HEART[house] + "\n"
         number += 1
 
