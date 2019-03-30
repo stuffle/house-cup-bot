@@ -762,6 +762,12 @@ def winnings(user, message):
         raise HouseCupException(
             "There can be no winners with no participants. :sob:")
 
+    user_is_mod = is_mod(user, message.channel)
+
+    if not user_is_mod:
+        raise HouseCupException(
+            "Only mods can declare the winners and restart the House Cup.")
+
     # Get Month and error check date
     # TODO: Is this happening in UTC?
     now = datetime.date.today()
@@ -776,10 +782,10 @@ def winnings(user, message):
     elif day == days_in_month:
         tomorrow = now + datetime.timedelta(days=1)
         new_month = tomorrow.strftime("%B")
-    """else:
+    else:
         raise HouseCupException(
             "Winnings can only be used at the end of the compeition. "
-            "Please try again on the last day of the month, or the first UTC.")"""
+            "Please try again on the last day of the month, or the first UTC.")
 
     house_and_score = []
     for house in HOUSES:

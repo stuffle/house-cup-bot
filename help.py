@@ -186,6 +186,16 @@ def help_command(message, prefix):
             title="Ping Everyone Help",
             color=COLOR,
             description=msg)
+    elif arg == "winnings":
+        msg = "Mods only: Show the winners of this month's House Cup. " \
+              "This will end and restart the competition. " \
+              "This command should only be used at midnight UTC. " \
+              "This command will be deleted after Stuffle codes timed announcements." \
+              "\n\n Example `%swinnings`" % prefix
+        embed = discord.Embed(
+            title="Ping Everyone Help",
+            color=COLOR,
+            description=msg)
 
     # Fun Commands
     elif arg == "dumbledore":
@@ -249,7 +259,7 @@ def general_help(prefix):
         inline=False)
     embed.add_field(
         name="Mod Only Commands:",
-        value="`award`, `deduct`, `pingeveryone`",
+        value="`award`, `deduct`, `pingeveryone`, `winnings`",
         inline=False)
     embed.add_field(
         name="Fun Commands:",
