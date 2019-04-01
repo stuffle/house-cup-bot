@@ -102,13 +102,13 @@ def help_command(message, prefix):
             color=COLOR,
             description=msg)
     elif arg == "wc":
-        msg = "Log one point per 1000 words you've written, rounded to the " \
+        msg = "Log one point per 1000 words you've posted, rounded to the " \
               "nearest 1000.\n\n" \
               "Example: `%swc 9000` to log 9000 total words this month or"\
               " `%swc add 3000` to add 3000 words to your total." % (
                 prefix, prefix)
         embed = discord.Embed(
-            title="Extra Credit Help",
+            title="Word Count Help",
             color=COLOR,
             description=msg)
     elif arg == "remove":
@@ -251,7 +251,7 @@ def general_help(prefix):
         inline=False)
     embed.add_field(
         name="Logging Points:",
-        value="`daily`, `post`, `beta`, `comment`, `workshop`, `exercise`, `excred`, `wc`, `remove`",
+        value="`daily`, `post`, `beta`, `comment`, `workshop`, `exercise`, `excred`, `wc` (total), `wc add`, `remove`",
         inline=False)
     embed.add_field(
         name="Viewing Points:",
