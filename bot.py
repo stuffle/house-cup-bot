@@ -783,10 +783,11 @@ def winnings(user, message):
     elif day == days_in_month:
         tomorrow = now + datetime.timedelta(days=1)
         new_month = tomorrow.strftime("%B")
-    else:
+    print(now)
+    """else:
         raise HouseCupException(
             "Winnings can only be used at the end of the compeition. "
-            "Please try again on the last day of the month, or the first UTC.")
+            "Please try again on the last day of the month, or the first UTC.")"""
 
     house_and_score = []
     for house in HOUSES:
