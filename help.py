@@ -222,6 +222,14 @@ def help_command(message, prefix):
             title="Sneak Help",
             color=COLOR,
             description=msg)
+    elif arg == "hermione":
+        msg = "Try it and see. Example: `%shermione`\n" \
+              "Don't worry though, the command is just for fun." \
+              "\n\nQuotes written by Batsutousai." % prefix
+        embed = discord.Embed(
+            title="Hermione Help",
+            color=COLOR,
+            description=msg)
 
     elif embed is None:
         msg = "Sorry! This command is unrecognized. View the general help " \
@@ -263,7 +271,7 @@ def general_help(prefix):
         inline=False)
     embed.add_field(
         name="Fun Commands:",
-        value="`dumbledore`, `snape`, `sneak`",
+        value="`dumbledore`, `snape`, `hermione` `sneak`",
         inline=False)
 
     return embed

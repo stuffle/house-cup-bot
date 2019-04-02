@@ -11,7 +11,7 @@ def get_random_embed(quote_dict, author, colour):
         description=quote)
     embed.set_author(name=author + ":")
     embed.set_image(url=gif)
-    embed.set_footer(text=caption)
+    embed.set_footer(text="Gif Caption: " + caption)
     return embed
 
 
@@ -22,19 +22,19 @@ def dumbledore(house, mention):
     house = house.capitalize()
 
     quotes = {
-        " I’m afraid after I take points from you, the likely result will be death caused by angry housemates, but do not fret. After all, to the well-organized mind, death is but the next great adventure. Good Luck, " + mention + ". 50 points from " + house + "!" : (
+        "I’m afraid after I take points from you, the likely result will be death caused by angry housemates, but do not fret. After all, to the well-organized mind, death is but the next great adventure. Good Luck, " + mention + ". 50 points from " + house + "!" : (
             " https://media.giphy.com/media/720g7C1jz13wI/giphy.gif ",
             "Dumbledore, in dignified blue robes and hat, is so disappointed in you that he throws up his arms and rolls his eyes."),
-        " Do you feel pain, " + mention + "? Pain from losing house points, yet again? Remember, the fact that you can feel pain like this is your greatest strength. 50 points from " + house + "." : (
+        "Do you feel pain, " + mention + "? Pain from losing house points, yet again? Remember, the fact that you can feel pain like this is your greatest strength. 50 points from " + house + "." : (
             " https://media.giphy.com/media/xqn7gb9F4tl2U/giphy.gif ",
             "Dumbledore, colored in black and white that truly show his age, shakes his head sagely as he utters, \"It is our choices that show what we truly are.\""),
-        " 20 points from" + house + "! Anguish. It’s an emotion all of us must face at one point in our lives, I’m afraid. As a man who has lived that life, I give you wisdom: we must try not to sink beneath our anguish, but battle on. " : (
+        "20 points from" + house + "! Anguish. It’s an emotion all of us must face at one point in our lives, I’m afraid. As a man who has lived that life, I give you wisdom: we must try not to sink beneath our anguish, but battle on. " : (
             " https://media.giphy.com/media/14q7kvYacWa2I0/giphy.gif ",
             "Dumbledore, looking weary and bedraggled, and wearing white robes (because this is from that scene in which they're dead) glances upwards, as if remembering the memories of the past."),
-        " Your act of kindness warms my heart and soothes my soul. Thank you, " + mention + ", for typing the dumbledore command. It's lucky it's dark. I haven't blushed so much since Madam Pomfrey told me she liked my new earmuffs. 10 points to " + house + "." : (
+        "Your act of kindness warms my heart and soothes my soul. Thank you, " + mention + ", for typing the dumbledore command. It's lucky it's dark. I haven't blushed so much since Madam Pomfrey told me she liked my new earmuffs. 10 points to " + house + "." : (
             " https://media.giphy.com/media/AOrThUuuOoDCg/giphy.gif ",
             "Dumbledore, sitting stoically on his throne above you,  pats his right hand in what we might assume, is his version of clapping for people like you. But, he makes an effort with the flashing caption: \"# DUMBLEDORE IS PLEASED\"."),
-        " 30 points to " + house +  "! Congratulations, " + mention + ". Off you trot, I am sure your " + house + " housemates are waiting to celebrate with you, and it would be a shame to deprive them of this excellent excuse to make a great deal of mess and noise. " : (
+        "30 points to " + house +  "! Congratulations, " + mention + ". Off you trot, I am sure your " + house + " housemates are waiting to celebrate with you, and it would be a shame to deprive them of this excellent excuse to make a great deal of mess and noise. " : (
             " https://media.giphy.com/media/OU1marLMNNtnO/giphy.gif ",
             "Dumbledore, who is doing the chicken dance, stands next to an actually smiling Snape, with the caption \"PARTY HARD.\"")
     }
@@ -79,6 +79,35 @@ def sneak(mention, random_person):
         ]
     return random.choice(quotes)
 
+
+def hermione(house, mention):
+    """
+    Quotes written by Batsutousai
+    """
+
+    house = house.capitalize()
+    quotes = {
+    "You've done something stupid, but somehow managed not to get caught by a professor or prefect. Impressive, " + mention + ". You neither gain nor lose points." : (
+        "https://cdn.discordapp.com/attachments/562148502944350229/562387688645328940/expelled-Hermione.gif",
+        "Hermione, looking back over her shoulder with the text \"We could have been killed, or worse, expelled\"."),
+    "You've learnt how to cast a new spell! Congratulations, " + mention + "! 10 points to " + house + "!" : (
+        "https://cdn.discordapp.com/attachments/562148502944350229/562387890089361443/leviosa-Hermione.gif",
+        "Hermione, saying, \"It's LeviOsa, not LeviosA\", with the o capitalised in the first one, and the a capitalised in the second."),
+    "You've managed to keep your friend from getting into a fight in view of a professor. 10 points to " + house + ". " : (
+        "https://cdn.discordapp.com/attachments/562148502944350229/562388041050750997/makingaface-Hermione.gif",
+        "Hermione pulling Harry away and making a disgusted face at the viewer."),
+    "50 points to " + house + " for learning how to successfully cast the patronus charm!" : (
+        "https://cdn.discordapp.com/attachments/562148502944350229/562388559340765184/patronus-Hermione.gif",
+        "Hermione standing in the Room of Requirement, smiling as she twists to watch as her otter patronus jumps in a circle around her."),
+    "20 points from " + house + " for punching a fellow student! Even if they did deserve it." : (
+        "https://cdn.discordapp.com/attachments/562148502944350229/562388967132102669/punchDraco-Hermione.gif",
+        "Hermione starts to turn away from Draco, who looks delighted, before turning back around to punch him in the face."),
+    "10 points for always being ready with the answer, even when your classmates are being IDIOTIC CHILDREN." : (
+        "https://cdn.discordapp.com/attachments/562148502944350229/562389131485904966/raisehand-Hermione.gif",
+        "Hermione raises her hand in class, looking exasperated, while students behind her are grinning and laughing.")
+    }
+
+    return get_random_embed(quotes, "Hermione Granger", 12155926)
 
 def at(mention, random_person):
     """

@@ -1004,6 +1004,11 @@ async def on_message(message):
             embed = snape(house, mention)
             await client.send_message(message.channel, embed=embed)
             return
+        elif text.startswith("hermione"):
+            house = get_house(user)
+            embed = hermione(house, mention)
+            await client.send_message(message.channel, embed=embed)
+            return
         elif text.startswith("sneak"):
             random_person = get_random_person(user)
             msg = sneak(mention, random_person)
