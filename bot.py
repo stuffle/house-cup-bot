@@ -332,11 +332,20 @@ def log_score(text, user):
             "10 points to %s!" % house)
         quotes.append(
             "We're always happy to see your updates. "
-            "10 points to %s" % house)
+            "10 points to %s!" % house)
 
     if category == BETA:
-        msg = "You're a better beta than Harry is an omega. " \
-              "10 points to " + house + "!"
+        quotes.append(
+            "You're a better beta than Harry is an omega. "
+            "10 points to %s!" % house)
+        quotes.append(
+            "Betaing is an important job, and you do it well. "
+            "10 points to %s!" % house)
+        quotes.append(
+            "Thank you for helping someone improve their fic. "
+            "It's not just them who appreciate you; "
+            "it's all of us, for giving us a better fic to read. "
+            "Take a well-deserved 10 points.")
     if category == "exercise":
         msg = "Thanks for participating in a weekly exercise! Take 5 " \
               "workshop points for %s!" % house
