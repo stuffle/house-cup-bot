@@ -317,13 +317,23 @@ def log_score(text, user):
         participants[user.id]["last_daily"] = now
 
     if category == POST:
+        # Mean
         quotes.append(
             "10 points to %s. It took you a while, didn't it? "
-            "Pls update." % house)
+            "But really, what else could I expect from a %s? "
+            "Anyways, please update again soon." % (house, house))
+        # Nice
         quotes.append(
             "Nice work! The fandom appreciates your contribution. "
             "%s 10 points to %s!" % (heart, house))
-        quotes.append("YESSS!!! :eyes: :eyes: 10 points to %s!" % house)
+        quotes.append("YESSS!!! :eyes: 10 points to %s!" % house)
+        quotes.append(
+            "I'm glad that you're sharing your work with us. "
+            "10 points to %s!" % house)
+        quotes.append(
+            "We're always happy to see your updates. "
+            "10 points to %s" % house)
+
     if category == BETA:
         msg = "You're a better beta than Harry is an omega. " \
               "10 points to " + house + "!"
