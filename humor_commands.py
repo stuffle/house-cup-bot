@@ -109,6 +109,37 @@ def hermione(house, mention):
 
     return get_random_embed(quotes, "Hermione Granger", 12155926)
 
+
+def mcgonagall(house, mention):
+    """
+    Quotes written by Batsutousai
+    """
+
+    house = house.capitalize()
+    quotes = {
+        "Of course you and your friends are causing trouble again, " + mention + ". I don't know why I'm surprised. 10 points from each of your Houses." : (
+            "https://cdn.discordapp.com/attachments/562148502944350229/562817695628918804/alwaysyou3-Minerva.gif",
+            "McGonagall, standing in front of a window with a tired expression and the text \"Why is it, when something happens, it is always you three?\""),
+        "Why must you and your friends always take everything onto your own shoulders, " + mention + "? I suppose I'll just have to award 25 points to each of your Houses, on account of your refusal to let others do harm.": (
+            "https://cdn.discordapp.com/attachments/562148502944350229/562817695628918804/alwaysyou3-Minerva.gif",
+            "McGonagall, standing in front of a window with a tired expression and the text \"Why is it, when something happens, it is always you three?\""),
+        "Well done, " + mention + "! 50 points to " + house + "!" : (
+            "https://cdn.discordapp.com/attachments/562148502944350229/562818059765547042/clapping-Minerva.gif",
+            "McGonagall smiling and clapping."),
+        "Yes, I can see you thinking about misbehaving, " + mention + ". Do I need to take points from " + house + ", or can you resist the urge to commit mayhem?" : (
+            "https://cdn.discordapp.com/attachments/562148502944350229/562818245271224332/shakeshead-Minerva.gif",
+            "McGonagall, standing in a hallway full of students with her arms full of books and a scroll, shaking her head."),
+        "You and your friend are clearly enjoying yourselves too much. You'd best head out, before I decide " + house + " could do with a few less points." : (
+            "https://cdn.discordapp.com/attachments/562148502944350229/562818492441690144/takeyourfriend-Minerva.gif",
+            "McGonagall, standing in a hallway in Hogwarts and speaking the added text: \"Take Weasley with you, he looks far too happy over there.\""),
+        " You're late to class, " + mention + ". That will be 10 points from " + house + "." : (
+            "https://cdn.discordapp.com/attachments/562148502944350229/562818695303397384/transform-Minerva.gif",
+            "A tabby cat sitting on a desk jumps forward off the desk and turns into McGonagall, who continues striding forward with an unimpressed look on her face.")
+    }
+
+    return get_random_embed(quotes, "Professor McGonagall", 9110292)
+
+
 def at(mention, random_person):
     """
     Inspired by RedHorse and Cybrid

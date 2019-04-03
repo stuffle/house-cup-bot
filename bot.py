@@ -271,9 +271,9 @@ def log_score(text, user):
     Text example: `~log excred 20`
     """
     msg = ""
-    print("Running log")
     args = text.split()
     amount = 0
+    quotes = []
 
     if user.id not in participants:
         raise HouseCupException(
@@ -317,7 +317,13 @@ def log_score(text, user):
         participants[user.id]["last_daily"] = now
 
     if category == POST:
-        msg = "YESSS!!! :eyes: :eyes: 10 points to " + house + "!"
+        quotes.append(
+            "10 points to %s. It took you a while, didn't it? "
+            "Pls update." % house)
+        quotes.append(
+            "Nice work! The fandom appreciates your contribution. "
+            "%s 10 points to %s!" % (heart, house))
+        quotes.append("YESSS!!! :eyes: :eyes: 10 points to %s!" % house)
     if category == BETA:
         msg = "You're a better beta than Harry is an omega. " \
               "10 points to " + house + "!"
@@ -418,7 +424,11 @@ def log_score(text, user):
             msg = str(amount) + " points to " + house + " for extra credit work!"
         participants[user.id][EXCRED] = new_excred_total
 
-    return msg
+    # If I still set msg, there is only one possible response
+    if msg:
+        return msg
+
+    return random.choice(quotes)
 
 
 def remove_score(text, user):
@@ -1007,6 +1017,11 @@ async def on_message(message):
         elif text.startswith("hermione"):
             house = get_house(user)
             embed = hermione(house, mention)
+            await client.send_message(message.channel, embed=embed)
+            return
+        elif text.startswith("mcgonagall"):
+            house = get_house(user)
+            embed = mcgonagall(house, mention)
             await client.send_message(message.channel, embed=embed)
             return
         elif text.startswith("sneak"):
