@@ -106,18 +106,21 @@ def help_command(message, prefix):
               "nearest 1000.\n\n" \
               "Example: `%swc 9000` to log 9000 total words this month or"\
               " `%swc add 3000` to add 3000 words to your total." % (
-                prefix, prefix)
+                  prefix, prefix)
         embed = discord.Embed(
             title="Word Count Help",
             color=COLOR,
             description=msg)
     elif arg == "remove":
-        msg = "Use `%sremove CATEGORY` to remove points from a given category. "\
-              "CATEGORY may be `daily`, `post`, `beta`, `workshop`, " \
+        msg = "Use `%sremove CATEGORY` to remove points from a given category"\
+              ". CATEGORY may be `daily`, `post`, `beta`, `workshop`, " \
               "`comment`, or `excred`. If you are removing extra credit " \
               "points, you must provide the ammount of points to remove. " \
-              "\n\nExamples: `%sremove daily`, `%sremove excred 10`" % (
-                  prefix, prefix, prefix)
+              "If you want to remove points from your word count, use " \
+              "`%swc TOTAL_WC` to reset your total word count." \
+              "\n\nExamples: `%sremove daily`, `%sremove excred 10`, " \
+              "%s`remove comment`, `%sremove comment extra`" % (
+                  prefix, prefix, prefix, prefix, prefix, prefix)
         embed = discord.Embed(
             title="Remove Points Help",
             color=COLOR,
@@ -252,7 +255,7 @@ def help_command(message, prefix):
 
 def general_help(prefix):
     msg = "Commands list. For help on a specific command, run " \
-          "`%shelp [command]`.\n" \
+          "`%shelp COMMAND`.\n" \
           "Documentation on how the bot and competition work are " \
           "available [here](%s)." % (prefix, DOCS_LINK)
 

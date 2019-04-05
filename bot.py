@@ -479,25 +479,41 @@ def remove_score(text, user):
     if category == EXCRED:
         if len(args) <= 2:
             raise HouseCupException(
-                "Please provide an amount for the extra credit, like `" + PREFIX + "remove excred 10`")
+                "Please provide an amount for the extra credit, like "
+                "`" + PREFIX + "remove excred 10`")
         if not args[2].isdigit():
             raise HouseCupException(
-                "Extra credit amount must be a number. Try something like `" + PREFIX + "remove excred 10`")
+                "Extra credit amount must be a number. "
+                "Try something like `" + PREFIX + "remove excred 10`")
         amount = int(args[2])
         if amount <= 0:
             raise HouseCupException(
-                "Please provide the amount of extra credit points to remove as a positive integer. For example: `" + PREFIX + "remove excred 20`")
+                "Please provide the amount of extra credit points to "
+                "remove as a positive integer. For example: "
+                "`" + PREFIX + "remove excred 20`")
         points = amount
     elif category == "exercise":
         points = 5
         new_points = participants[user.id][WORKSHOP] - 5
         category = WORKSHOP
+    elif category == "comment" and len(args) > 2:
+        if args[2] in ["extra", "essay", "mystery"]:
+            points = 5
+            new_points = participants[user.id][category] - points
+        else:
+            raise HouseCupException(
+                "If you want to remove a regular comment, do "
+                "`%sremove comment`. "
+                "If you want to remove an 5 point comment, do "
+                "`%sremove comment extra`." % (PREFIX, PREFIX))
     else:
         points = CATEGORY_TO_POINTS[category]
         new_points = participants[user.id][category] - points
     if new_points < 0:
         raise HouseCupException(
-            "No points were taken from you because this would set your total in " + str(category).capitalize() + " to a negative number.")
+            "No points were taken from you because this would set your "
+            "total in " + str(category).capitalize() + " to "
+            "a negative number.")
     else:
         participants[user.id][category] = new_points
         msg = str(points) + " points were removed from " + house + ". RIP."
