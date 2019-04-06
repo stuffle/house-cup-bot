@@ -702,11 +702,9 @@ def house_points(user, message):
     msg = house_title + str(house_total) + "__ " + heart + "\n"
 
     # Add each member to return message
-    rank = 1
-    for member, total_points in sorted_members:
-        formatted_name = format_name(rank, member["name"])
+    for index, (member, total_points) in enumerate(sorted_members):
+        formatted_name = format_name(index + 1, member["name"])
         msg = msg + formatted_name + str(total_points) + "\n"
-        rank += 1
 
     emoji_line = HOUSE_TO_EMOJI[house] * 7
     return msg + emoji_line
@@ -733,16 +731,19 @@ def leader_board(user, message):
     sorted_members = sort_participants(participants.values(), category)[:5]
 
     msg = "__**Top 5 People for " + category.capitalize() + " Points:**__\n"
-    if category =="word_count":
+    if category == "word_count":
         msg = "__**Top 5 People for Total Word Count:**__\n"
 
     # Add each member to return message
-    number = 1
-    for member, points in sorted_members:
+    rank = 0
+    previous_points = -43423478
+    for index, (member, points) in enumerate(sorted_members):
+        if points != previous_points:
+            rank = index
         heart = "  " + HOUSE_TO_HEART[member["house"]]
-        formatted_name = format_name(number, member["name"])
+        formatted_name = format_name(rank + 1, member["name"])
         msg = msg + formatted_name + str(points) + heart + "\n"
-        number += 1
+        previous_points = points
 
     return msg
 
@@ -810,6 +811,7 @@ def winnings(user, message):
 
     user_is_mod = is_mod(user, message.channel)
 
+    # Make this only me and red
     if not user_is_mod:
         raise HouseCupException(
             "Only mods can declare the winners and restart the House Cup.")

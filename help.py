@@ -282,7 +282,7 @@ def general_help(prefix):
         inline=False)
     embed.add_field(
         name="Fun Commands:",
-        value="`dumbledore`, `snape`, `mcgonagall`, `hermione` `sneak`",
+        value="`dumbledore`, `snape`, `mcgonagall`, `hermione`, `sneak`",
         inline=False)
 
     return embed
