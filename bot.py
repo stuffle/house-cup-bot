@@ -70,7 +70,8 @@ CATEGORY_TO_EMOJI = {
     WORKSHOP: ":sweat_smile:",
     EXCRED: ":star2:",
     MOD_ADJUST: ":innocent:",
-    WC: ":chart_with_upwards_trend:"
+    WC: ":chart_with_upwards_trend:",
+    "word_count": ":books:"
 }
 VALID_CATEGORIES = "Valid arguments to this command are `daily`, `post`," \
                    " `beta`, `workshop`, `comment`, `wc`, and `excred`"
@@ -811,10 +812,11 @@ def winnings(user, message):
 
     user_is_mod = is_mod(user, message.channel)
 
-    # Make this only me and red
-    if not user_is_mod:
+    # Only Stuffle and Red can end the house cup
+    if user.id not in ["478970983089438760", "438450978690433024"]:
         raise HouseCupException(
-            "Only mods can declare the winners and restart the House Cup.")
+            "Only Stuffle and Red can declare the winners "
+            "and restart the House Cup.")
 
     # Get Month and error check date
     # TODO: Is this happening in UTC?
@@ -848,7 +850,7 @@ def winnings(user, message):
     animal = HOUSE_TO_EMOJI[first_place_house]
 
     msg = heart + animal * 7 + heart + "\n" \
-        "**The House Cup is over!!!**\n\n Congratulations to **%s**, " \
+        "**The House Cup is over!!!**\n\nCongratulations to **%s**, " \
         "the winners of %s's House Cup! \n\n" \
         "__Final scores are:__\n" % (
             first_place_house.capitalize(), contest_month)
@@ -863,29 +865,37 @@ def winnings(user, message):
         msg = msg + HOUSE_TO_HEART[house] + "\n"
         number += 1
 
-    msg = msg + "\nExtra congratulations to these participants who " \
-        "went the extra mile and were top in their points category.\n"
-
-    # Show top in category
-    for category in ["total"] + CATEGORIES:
-        top_member, points = sort_participants(
-            participants.values(), category)[0]
-        category_announcement = CATEGORY_TO_EMOJI[category] + " **" \
-            "" + category.capitalize() + ":** "
-        msg += category_announcement + top_member["mention"]
-        msg += "—" + str(points) + "  "
-        if category == WC:
-            msg += "(%d words) " % top_member["word_count"]
-        msg += HOUSE_TO_HEART[top_member["house"]] + "\n"
-
+    # Thank you for participating
     mentions = [participants[p]["mention"] for p in participants]
     all_mentions = ", ".join(mentions)
     msg += "\nThank you to everyone who participated in this month's " \
-        "House Cup: %s\n\n" % all_mentions
+        "House Cup: %s\n\n ~ " % all_mentions
 
-    msg += "We hope to see you again in the next House Cup. You may now " \
+    msg2 = "\nExtra congratulations to these participants who " \
+        "went the extra mile and were top in their points category.\n"
+
+    # Show top in category
+    cats = ["total", "word_count"] + CATEGORIES
+    cats.remove(DAILY)
+    for category in cats:
+        sorted_participants = sort_participants(
+            participants.values(), category)
+        top_member, points = sorted_participants[0]
+        top_member_mentions = []
+        for member, p in sorted_participants:
+            if p == points:
+                top_member_mentions.append(member["mention"])
+        top_string = ", ".join(top_member_mentions)
+        category_name = category.capitalize()
+        category_announcement = CATEGORY_TO_EMOJI[category] + " **" \
+            "" + category_name + ":** "
+        msg2 += category_announcement + top_string
+        msg2 += "—" + str(points) + "  "
+        msg2 += HOUSE_TO_HEART[top_member["house"]] + "\n"
+
+    msg2 += "\nWe hope to see you again next month. You may now " \
         "`%sjoin` %s's House Cup. Good luck, friend.\n" % (PREFIX, new_month)
-    msg += heart + animal * 7 + heart
+    msg2 += heart + animal * 7 + heart
 
     # Make backup and reset scores
     make_backup(contest_month + "_final")
@@ -894,7 +904,7 @@ def winnings(user, message):
     global CAN_JOIN
     CAN_JOIN = True
 
-    return msg
+    return (msg, msg2)
 
 
 def ping_everyone(user, message):
@@ -1038,7 +1048,9 @@ async def on_message(message):
         elif text.startswith("pingeveryone"):
             msg = ping_everyone(user, message)
         elif text.startswith("winnings"):
-            msg = winnings(user, message)
+            msg1, msg2 = winnings(user, message)
+            await client.send_message(message.channel, msg1.format(message))
+            await client.send_message(message.channel, msg2.format(message))
 
         # For fun commands
         elif text.startswith("dumbledore"):
