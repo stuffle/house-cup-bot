@@ -29,8 +29,8 @@ HOUSES = [SLYTHERIN, GRYFFINDOR, RAVENCLAW, HUFFLEPUFF]
 HOUSE_TO_EMOJI = {
     SLYTHERIN: ":snake:",
     RAVENCLAW: ":eagle:",
-    GRYFFINDOR: ":lion:",
-    HUFFLEPUFF: ":hugging:"
+    GRYFFINDOR: ":banana:",
+    HUFFLEPUFF: ":unicorn:"
 }
 HOUSE_TO_HEART = {
     SLYTHERIN: ":green_heart:",
