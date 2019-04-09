@@ -493,6 +493,7 @@ def remove_score(text, user):
                 "remove as a positive integer. For example: "
                 "`" + PREFIX + "remove excred 20`")
         points = amount
+        new_points = participants[user.id][EXCRED] - points
     elif category == "exercise":
         points = 5
         new_points = participants[user.id][WORKSHOP] - 5
@@ -510,6 +511,7 @@ def remove_score(text, user):
     else:
         points = CATEGORY_TO_POINTS[category]
         new_points = participants[user.id][category] - points
+
     if new_points < 0:
         raise HouseCupException(
             "No points were taken from you because this would set your "
