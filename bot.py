@@ -246,11 +246,13 @@ def join(user):
            "May the odds be ever in " + house.capitalize() + "'s favor."
 
 
-def leave(user):
-    msg = "{0.author.mention}: You can check out any time you like. " \
-          "But you can never leave! :musical_note: \n\n" \
-          "But if you insist, know that your score will be wiped out. " \
-          "Use  `" + PREFIX + "actuallyleave`  :sob:"
+def leave(user, message):
+    current_points = points(user, message)
+    msg = "Are you sure you want to leave the House Cup?" \
+          "If you do, your score will be wiped out. " \
+          "\n%s\n\n" \
+          "If you're sure you want to leave, " \
+          "use  `%sactuallyleave`" % (current_points, PREFIX)
     return msg
 
 
@@ -260,8 +262,8 @@ def actually_leave(user):
 
     del participants[user.id]
 
-    msg = "{0.author.mention}: You have left the house cup. :sob:\n" \
-          "To rejoin (if it's not too late), use `" + PREFIX + "join`"
+    msg = "{0.author.mention}: You have left the house cup. " \
+          "If you have a change of heart, talk to a mod!"
     return msg
 
 
@@ -649,6 +651,10 @@ def points(user, message):
             "To look up another user's points, mention them.")
     msg = ""
 
+    if person_id not in participants:
+        raise HouseCupException(
+            person_mention + " is not currently participating in the house cup. :sob:")
+
     person = participants[person_id]
     rounded_score = str(round(calculate_personal_score(person_id), 2))
 
@@ -990,7 +996,7 @@ async def on_message(message):
             save_participants()
             print(participants)
         elif text.startswith("leave"):
-            msg = leave(user)
+            msg = leave(user, message)
         elif text.startswith("actuallyleave"):
             msg = actually_leave(user)
             save_participants()
