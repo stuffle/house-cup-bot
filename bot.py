@@ -1076,6 +1076,9 @@ async def on_message(message):
             embed = hermione(house, mention)
             await client.send_message(message.channel, embed=embed)
             return
+        elif text.startswith("ron"):
+            house = get_house(user)
+            msg = ron(house)
         elif text.startswith("mcgonagall"):
             house = get_house(user)
             embed = mcgonagall(house, mention)

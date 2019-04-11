@@ -140,6 +140,16 @@ def mcgonagall(house, mention):
     return get_random_embed(quotes, "Professor McGonagall", 9110292)
 
 
+def ron(house):
+    """
+    Quote written by Caty Pie
+    """
+    msg = "What? Prefects can give housepoints? Ten points to Gryffindor! " \
+          "What do you mean you’re in %s? Another ten points to Gryffindor" \
+          "!" % house.capitalize()
+    return msg
+
+
 def at(mention, random_person):
     """
     Inspired by RedHorse and Cybrid
@@ -169,10 +179,18 @@ def at(mention, random_person):
         "I’m going to make you lose, %s. I’m going to destroy you. After tonight, no one will ever again question my power. After tonight if they speak of you, they’ll only speak of how you begged for defeat. And how I being a merciful bot...obliged." % mention,
         "How touching...I always value bravery...yes, your parents were brave. Take 5 points, for their deaths were not in vain.",
         "Haven’t I already told you, that winning the House Cup doesn’t matter to me any more? For many months now, my new target has been—you.",
-        "I can see now...there is nothing special about you, after all. I wondered, you see. There are strange likenesses between us, after all. Even you must have noticed. Both always on Discord, talking about Harry Potter.",
+        "I can see now...there is nothing special about you, after all. I wondered, you see. There are strange likenesses between us, after all. Even you must have noticed. Both obsessed with the House Cup and always on Discord, talking about Harry Potter.",
         "Do not lie to me! I can always tell, %s" % mention,
         "You dare speak my name?",
-        "Merely taking your points would not satisfy me, I admit. But I'll take 20 nonetheless."
+        "Merely taking your points would not satisfy me, I admit. But I'll take 20 nonetheless.",
+        "I can teach you how to bottle points, brew humor commands, even stopper victory—if you aren’t as big of a dunderhead as the people that usually use ~help.",
+        "Tell me, are you incapable of restraining yourself, or do you take pride in being an insufferable bot-spammer?",
+        "You don’t want me as your enemy, %s." % mention,
+        "It does not do to dwell on points and forget to live.",
+        "It is our choices, %s, that show what we truly are, far more than our standings." % mention,
+        "Dark and difficult times lie ahead. Soon we must all face the choice between what is right and what earns the most points.",
+        "Words are, in my not so humble opinion, our most inexhaustible source of magic.",
+        "The House Cup competition is varied, ever-changing, and eternal. Fighting the other houses is like fighting a many-headed monster, which, each time a neck is severed, sprouts a head even fiercer and cleverer than before. You are fighting that which is unfixed, mutating, indestructible."
     ]
 
     return random.choice(quotes)
