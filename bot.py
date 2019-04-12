@@ -412,6 +412,9 @@ def log_score(text, user):
         else:  # We have valid "log wc total"
             wordcount = int(args[2])
         wc_points = round(wordcount / 1000)
+        plural = "s"
+        if wc_points == 1:
+            plural = ""
         participants[user.id]["word_count"] = wordcount
         if wc_points >= 25:
             wc_points = 25
@@ -419,11 +422,11 @@ def log_score(text, user):
                 "Thank you for contributing so much writing. %s " % heart
         if args[2] == "add":
             msg = "Congratulations on posting %d words! " \
-                "This brings your total  to %d, giving you %d points! " % (
-                    amount, wordcount, wc_points) + msg
+                "This brings your total  to %d, giving you %d point%s! " % (
+                    amount, wordcount, wc_points, plural) + msg
         else:
-            msg = "Your total wordcount is now %d, giving you %d points! " \
-                "Congratulations! " % (wordcount, wc_points) + msg
+            msg = "Your total wordcount is now %d, giving you %d point%s! " \
+                "Congratulations! " % (wordcount, wc_points, plural) + msg
         participants[user.id][WC] = wc_points
 
     if category == EXCRED:
@@ -810,8 +813,6 @@ def winnings(user, message):
     """
     End and restarts the House Cup Compeition.
     Display Winners
-
-    TODO: Ties
     """
     global participants
     if not participants:
