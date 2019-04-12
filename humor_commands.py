@@ -68,6 +68,8 @@ def snape(house, mention):
 def sneak(mention, random_person):
     """
     Quotes written by Eath_Phoenix
+
+    Todo Idea: Display sneak points in ~points
     """
     quotes = [
         "Hello %s I see you’re working hard to earn house points! However, I think %s needs more help than you do. 10 points to them." % (mention, random_person),

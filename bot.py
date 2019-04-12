@@ -307,6 +307,15 @@ def log_score(text, user):
     if category == DAILY:
         msg = "Congratulations on doing something today—" \
               "take 5 points for " + house + "! " + heart
+        current_points = participants[user.id][DAILY] + 5
+        today = datetime.date.today()
+        _, days_in_month = monthrange(today.year, today.month)
+        print(days_in_month)
+        if current_points >= 5 * (days_in_month + 1):
+            raise HouseCupException(
+                "This daily was not logged because then you would have "
+                "more dailies than there are days in the month.")
+
         last_daily = 0
         if "last_daily" in participants[user.id].keys():
             last_daily = participants[user.id]["last_daily"]
@@ -316,7 +325,7 @@ def log_score(text, user):
             raise HouseCupException(
                 "You may only log a daily once per day. "
                 "You must wait 4 hours between logging dailies.")
-        participants[user.id][DAILY] = participants[user.id][DAILY] + 5
+        participants[user.id][DAILY] = current_points
         participants[user.id]["last_daily"] = now
 
     if category == POST:
@@ -1004,6 +1013,7 @@ async def on_message(message):
 
         # Edit Points
         elif text.startswith("log"):
+            # Todo: Remove and refactor log
             msg = "{0.author.mention}: " + log_score(text, user)
             save_participants()
         elif text.startswith("daily"):
