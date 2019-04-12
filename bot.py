@@ -1,6 +1,8 @@
 # Work with Python 3.6
 import discord
 import asyncio
+import apscheduler
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
 import ast
 import os
 import re
@@ -310,7 +312,6 @@ def log_score(text, user):
         current_points = participants[user.id][DAILY] + 5
         today = datetime.date.today()
         _, days_in_month = monthrange(today.year, today.month)
-        print(days_in_month)
         if current_points >= 5 * (days_in_month + 1):
             raise HouseCupException(
                 "This daily was not logged because then you would have "
@@ -1148,7 +1149,29 @@ async def on_ready():
         raise ex
 
 
-client.loop.create_task(list_recs())
-token = os.environ.get("DISCORD_BOT_SECRET")
-client.run(token)
+async def test_announce():
+    print("Running test_announce")
+    for server in client.servers:
+            if server.id in SERVER_ID_TO_CHANNEL:
+                channel = client.get_channel(SERVER_ID_TO_CHANNEL[server.id])
+                if channel:
+                    msg = "This is a scheduled test message. " \
+                          "<@438450978690433024>, it worked!"
+                    await client.send_message(channel, msg.format(msg))
+
+
+if __name__ == '__main__':
+    scheduler = AsyncIOScheduler()
+    scheduler.add_job(
+        test_announce,
+        'date',
+        run_date=datetime.datetime(
+            2019, 4, 12, 18, 30, 5, 0, datetime.timezone.utc))
+    scheduler.start()
+
+    client.loop.create_task(list_recs())
+    token = os.environ.get("DISCORD_BOT_SECRET")
+    client.run(token)
+
 # TODO: Use APScheduler to schedule events like winnings
+# TODO: Custom emoji
