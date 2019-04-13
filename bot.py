@@ -307,7 +307,7 @@ def log_score(text, user):
 
     # Add points where appropriate
     if category == DAILY:
-        msg = "Congratulations on doing something today—" \
+        msg = "Congratulations on doing something productive today—" \
               "take 5 points for " + house + "! " + heart
         current_points = participants[user.id][DAILY] + 5
         today = datetime.date.today()
@@ -321,11 +321,12 @@ def log_score(text, user):
         if "last_daily" in participants[user.id].keys():
             last_daily = participants[user.id]["last_daily"]
         now = time.time()
-        four_hours = 14400  # seconds
-        if last_daily + four_hours > now:
+        eight_hours = 14400 * 2  # seconds
+        if last_daily + eight_hours > now:
             raise HouseCupException(
-                "You may only log a daily once per day. "
-                "You must wait 4 hours between logging dailies.")
+                "Please adhere to the rules of only using this "
+                "command once per day and only for days that you have been "
+                "creatively productive.")
         participants[user.id][DAILY] = current_points
         participants[user.id]["last_daily"] = now
 
