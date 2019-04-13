@@ -1006,7 +1006,6 @@ async def on_message(message):
         elif text.startswith("join"):
             msg = join(user)
             save_participants()
-            print(participants)
         elif text.startswith("leave"):
             msg = leave(user, message)
         elif text.startswith("actuallyleave"):
@@ -1128,6 +1127,7 @@ async def on_ready():
     print(client.user.name)
     print(client.user.id)
     print('------')
+    await client.change_presence(game=discord.Game(name="~help"))
 
     # If there is a problem loading data, make a backup and go offline
     # because the bot is effectively broken.

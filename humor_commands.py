@@ -28,7 +28,7 @@ def dumbledore(house, mention):
         "Do you feel pain, " + mention + "? Pain from losing house points, yet again? Remember, the fact that you can feel pain like this is your greatest strength. 50 points from " + house + "." : (
             " https://media.giphy.com/media/xqn7gb9F4tl2U/giphy.gif ",
             "Dumbledore, colored in black and white that truly show his age, shakes his head sagely as he utters, \"It is our choices that show what we truly are.\""),
-        "20 points from" + house + "! Anguish. It’s an emotion all of us must face at one point in our lives, I’m afraid. As a man who has lived that life, I give you wisdom: we must try not to sink beneath our anguish, but battle on. " : (
+        "20 points from " + house + "! Anguish. It’s an emotion all of us must face at one point in our lives, I’m afraid. As a man who has lived that life, I give you wisdom: we must try not to sink beneath our anguish, but battle on. " : (
             " https://media.giphy.com/media/14q7kvYacWa2I0/giphy.gif ",
             "Dumbledore, looking weary and bedraggled, and wearing white robes (because this is from that scene in which they're dead) glances upwards, as if remembering the memories of the past."),
         "Your act of kindness warms my heart and soothes my soul. Thank you, " + mention + ", for typing the dumbledore command. It's lucky it's dark. I haven't blushed so much since Madam Pomfrey told me she liked my new earmuffs. 10 points to " + house + "." : (
@@ -144,12 +144,14 @@ def mcgonagall(house, mention):
 
 def ron(house):
     """
-    Quote written by Caty Pie
+    Quotes written by Caty Pie
     """
-    msg = "What? Prefects can give housepoints? Ten points to Gryffindor! " \
-          "What do you mean you’re in %s? Another ten points to Gryffindor" \
-          "!" % house.capitalize()
-    return msg
+    quotes = [
+        "What? Prefects can give housepoints? Ten points to Gryffindor! What do you mean you’re in %s? Another ten points to Gryffindor!" % house.capitalize(),
+        "You what? Sorry, I’m late for Quidditch practice. Get your own points."
+    ]
+
+    return random.choice(quotes)
 
 
 def at(mention, random_person):

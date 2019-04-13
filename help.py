@@ -66,7 +66,9 @@ def help_command(message, prefix):
             description=msg)
     elif arg == "workshop":
         msg = "Log 30 points when you contribute a work to the weekly " \
-              "workshop.\n\nExample: `%sworkshop`" % prefix
+              "workshop. If you were a reviewer, use `%sbeta` to log " \
+              "your points." \
+              "\n\nExample: `%sworkshop`" % (prefix, prefix)
         embed = discord.Embed(
             title="Workshop Help",
             color=COLOR,
@@ -93,7 +95,7 @@ def help_command(message, prefix):
             description=msg)
     elif arg == "excred":
         msg = "Use `%sexcred AMOUNT`, where amount is a positive number.\n\n" \
-              "Check the House Cup channel for the month's extra credit " \
+              "Check the document for this month's extra credit " \
               "challenge and its corresponding points. " \
               "Maximum Extra Credit is 50 points per month." \
               "\n\nExample: `%sexcred 10`" % (prefix, prefix)
