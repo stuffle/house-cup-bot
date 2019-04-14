@@ -81,8 +81,10 @@ VALID_CATEGORIES = "Valid arguments to this command are `daily`, `post`," \
 SERVER_ID_TO_CHANNEL = {
     # Red's Writing Hood: house-cup-bot
     "497039992401428498": "553382529521025037",
-    # Test: General
-    "539932855845781524": "539932855845781530"
+    # Test: general
+    "539932855845781524": "539932855845781530",
+    # COS: bot-spam
+    "426319059009798146": "426322538944266240"
 }
 
 
@@ -797,14 +799,18 @@ def calculate_house_score(house):
     return house_score
 
 
-def standings():
+def get_sorted_houses():
     house_and_score = []
+
     for house in HOUSES:
         score = calculate_house_score(house)
         house_and_score.append((house, score))
 
-    sorted_houses = sorted(
-        house_and_score, key=lambda tup: tup[1], reverse=True)
+    return sorted(house_and_score, key=lambda tup: tup[1], reverse=True)
+
+
+def standings():
+    sorted_houses = get_sorted_houses()
     first_place_house, first_place_score = sorted_houses[0]
     heart = HOUSE_TO_HEART[first_place_house]
     animal = HOUSE_TO_EMOJI[first_place_house]
@@ -988,6 +994,9 @@ async def on_message(message):
         return
     command = args[0]
 
+    sorted_houses_i = get_sorted_houses()
+    first_place_house_i, first_place_score_i = sorted_houses_i[0]
+
     try:
         argumentless_commands = [
             "join", "daily", "post", "beta", "workshop", "standings",
@@ -1113,6 +1122,24 @@ async def on_message(message):
     if msg:
         await client.send_message(message.channel, msg.format(message))
 
+    sorted_houses = get_sorted_houses()
+    first_place_house, first_place_score = sorted_houses[0]
+    if first_place_house != first_place_house_i:
+        standing = standings()
+        surpassed_msg = "%s has surpassed %s in the standings!\n%s" % (
+            first_place_house.capitalize(),
+            first_place_house_i.capitalize(),
+            standing)
+        await send_to_all_servers(surpassed_msg)
+
+
+async def send_to_all_servers(msg):
+    for server in client.servers:
+        if server.id in SERVER_ID_TO_CHANNEL:
+            channel = client.get_channel(SERVER_ID_TO_CHANNEL[server.id])
+            if channel:
+                await client.send_message(channel, msg.format(msg))
+
 
 async def list_recs():
     await client.wait_until_ready()
@@ -1137,6 +1164,7 @@ async def on_ready():
         now = datetime.datetime.now()
         print("Making backup at %s" % str(now))
         make_backup(str(now))
+        # TODO: Use send_to_all_servers
         for server in client.servers:
             if server.id in SERVER_ID_TO_CHANNEL:
                 channel = client.get_channel(SERVER_ID_TO_CHANNEL[server.id])
@@ -1152,6 +1180,7 @@ async def on_ready():
 
 async def test_announce():
     print("Running test_announce")
+    # TODO: Use send_to_all_servers
     for server in client.servers:
             if server.id in SERVER_ID_TO_CHANNEL:
                 channel = client.get_channel(SERVER_ID_TO_CHANNEL[server.id])
