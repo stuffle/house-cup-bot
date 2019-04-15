@@ -689,7 +689,8 @@ def points(user, message):
     excred_message = format_name(
         CATEGORY_TO_EMOJI[EXCRED], EXCRED) + str(person[EXCRED])
     wc_message = format_name(
-        CATEGORY_TO_EMOJI[WC], WC) + str(person[WC])
+        CATEGORY_TO_EMOJI[WC], WC) + str(person[WC]) + " " \
+        "(%d words)" % person["word_count"]
 
     msg = "\n".join([who_message, total_message, daily_message, post_message,
                      beta_message, comment_message, workshop_message,
@@ -982,7 +983,7 @@ async def on_message(message):
 
     if client.user.mentioned_in(message) and message.mention_everyone is False:
         random_person = get_random_person(user)
-        msg = at(mention, random_person)
+        msg = at(text, mention, random_person)
 
     # Ignore all messages not directed at bot
     if not message.content.startswith(PREFIX) and msg == "":

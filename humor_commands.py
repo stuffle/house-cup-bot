@@ -154,11 +154,16 @@ def ron(house):
     return random.choice(quotes)
 
 
-def at(mention, random_person):
+def at(text, mention, random_person):
     """
     Inspired by RedHorse and Cybrid
     Quotes added from RedHorse, Cybrid, Dorea, Earth, and me.
     """
+
+    if text.startswith("~>"):
+        action = text[2:].split(" ")[0]
+        return "*returns %s*" % action
+
     quotes = [
         "@ me harder, %s ( ͡° ͜ʖ ͡°)" % mention,
         "You’ve summoned me, but for unofficial purposes. I must ask that you refrain from interfering with my sacred, objective task.",
