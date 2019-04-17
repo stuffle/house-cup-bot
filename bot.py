@@ -788,22 +788,32 @@ def calculate_house_score(house):
     sorted_members = sort_participants(members, "total")
     sorted_points = [x[1] for x in sorted_members]
 
-    while len(sorted_points) < 3:
-        sorted_points.append(0)
+    now = datetime.datetime.now(datetime.timezone.utc)
 
-    for index, points in enumerate(sorted_points):
-        iteration = index + 1
-        denominator = 2**iteration
+    # TODO: Remove conditional in May
+    if now.month == 4:
+        while len(sorted_points) < 3:
+            sorted_points.append(0)
 
-        """
-        If we're on the last iteration, use the previous number in the
-        geometric sum so that the weights sum to 1
-         """
-        if iteration == len(sorted_points):
-            denominator = 2**index
+        for index, points in enumerate(sorted_points):
+            iteration = index + 1
+            denominator = 2**iteration
 
-        weight = 1 / denominator
-        house_score += weight * float(points)
+            """
+            If we're on the last iteration, use the previous number in the
+            geometric sum so that the weights sum to 1
+             """
+            if iteration == len(sorted_points):
+                denominator = 2**index
+
+            weight = 1 / denominator
+            house_score += weight * float(points)
+    else:
+        for index, points in enumerate(sorted_points):
+            iteration = index + 1
+            denominator = 2**iteration
+            weight = 1 / denominator
+            house_score += weight * float(points)
 
     return house_score
 
@@ -1200,7 +1210,7 @@ if __name__ == '__main__':
     scheduler = AsyncIOScheduler()
     winnings_date = datetime.datetime(
         now.year, now.month, days_in_month,
-        23, 59, 55, 0, datetime.timezone.utc)
+        23, 59, 0, 0, datetime.timezone.utc)
     print(winnings_date)
     scheduler.add_job(
         run_winnings,
