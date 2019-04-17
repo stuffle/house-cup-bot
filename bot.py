@@ -1181,12 +1181,6 @@ async def on_ready():
         raise ex
 
 
-async def test_announce():
-    print("Running test_announce")
-    msg = "This is a scheduled test. Hopefully, this runs at 12:20am UTC."
-    await send_to_all_servers(msg, SERVER_ID_TO_CHANNEL)
-
-
 async def run_winnings():
     print("running winnings")
     msg1, msg2 = winnings()
@@ -1213,14 +1207,6 @@ if __name__ == '__main__':
         'date',
         run_date=winnings_date)
 
-    run_announce = datetime.datetime(
-        now.year, now.month, 17,
-        0, 20, 0, 0, datetime.timezone.utc)
-    print(run_announce)
-    scheduler.add_job(
-        test_announce,
-        'date',
-        run_date=run_announce)
     scheduler.start()
     client.run(token)
 
