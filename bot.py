@@ -86,6 +86,14 @@ SERVER_ID_TO_CHANNEL = {
     # COS: bot-spam
     "426319059009798146": "426322538944266240"
 }
+SERVER_ID_TO_CHANNEL_ANNOUNCE = {
+    # Red's Writing Hood: house-cup
+    "497039992401428498": "507738193337122840",
+    # Test: general
+    "539932855845781524": "539932855845781530",
+    # COS: bulletin board
+    "426319059009798146": "549219513204342788"
+}
 
 
 client = discord.Client()
@@ -215,10 +223,10 @@ def join(user):
             "You have already joined the house cup for this month.")
 
     # TODO: Is this UTC?
-    now = datetime.datetime.now()
+    now = datetime.datetime.now(datetime.timezone.utc)
     day_of_month = now.day
     _, days_in_month = monthrange(now.year, now.month)
-    if not CAN_JOIN and days_in_month - day_of_month <= 7:
+    if not CAN_JOIN and days_in_month - day_of_month < 7:
         raise HouseCupException(
             "I'm sorry, but it is too late to join the House Cup. "
             "Registration closed a week before the end of the month. "
@@ -827,7 +835,7 @@ def standings():
     return msg + heart + animal * 7 + heart
 
 
-def winnings(user, message):
+def winnings():
     """
     End and restarts the House Cup Compeition.
     Display Winners
@@ -837,17 +845,8 @@ def winnings(user, message):
         raise HouseCupException(
             "There can be no winners with no participants. :sob:")
 
-    user_is_mod = is_mod(user, message.channel)
-
-    # Only Stuffle and Red can end the house cup
-    if user.id not in ["478970983089438760", "438450978690433024"]:
-        raise HouseCupException(
-            "Only Stuffle and Red can declare the winners "
-            "and restart the House Cup.")
-
     # Get Month and error check date
-    # TODO: Is this happening in UTC?
-    now = datetime.date.today()
+    now = datetime.datetime.now(datetime.timezone.utc)
     contest_month = now.strftime("%B")
     new_month = now.strftime("%B")
     day = now.day
@@ -860,10 +859,6 @@ def winnings(user, message):
         tomorrow = now + datetime.timedelta(days=1)
         new_month = tomorrow.strftime("%B")
     print(now)
-    """else:
-        raise HouseCupException(
-            "Winnings can only be used at the end of the compeition. "
-            "Please try again on the last day of the month, or the first UTC.")"""
 
     house_and_score = []
     for house in HOUSES:
@@ -892,13 +887,7 @@ def winnings(user, message):
         msg = msg + HOUSE_TO_HEART[house] + "\n"
         number += 1
 
-    # Thank you for participating
-    mentions = [participants[p]["mention"] for p in participants]
-    all_mentions = ", ".join(mentions)
-    msg += "\nThank you to everyone who participated in this month's " \
-        "House Cup: %s\n\n ~ " % all_mentions
-
-    msg2 = "\nExtra congratulations to these participants who " \
+    msg += "\nExtra congratulations to these participants who " \
         "went the extra mile and were top in their points category.\n"
 
     # Show top in category
@@ -916,9 +905,17 @@ def winnings(user, message):
         category_name = category.capitalize()
         category_announcement = CATEGORY_TO_EMOJI[category] + " **" \
             "" + category_name + ":** "
-        msg2 += category_announcement + top_string
-        msg2 += "—" + str(points) + "  "
-        msg2 += HOUSE_TO_HEART[top_member["house"]] + "\n"
+        msg += category_announcement + top_string
+        msg += "—" + str(points) + "  "
+        msg += HOUSE_TO_HEART[top_member["house"]] + "\n"
+
+    msg += "\n~"
+
+    # Thank you for participating
+    mentions = [participants[p]["mention"] for p in participants]
+    all_mentions = ", ".join(mentions)
+    msg2 = "\nThank you to everyone who participated in this month's " \
+        "House Cup: %s\n\n ~ " % all_mentions
 
     msg2 += "\nWe hope to see you again next month. You may now " \
         "`%sjoin` %s's House Cup. Good luck, friend.\n" % (PREFIX, new_month)
@@ -1078,7 +1075,12 @@ async def on_message(message):
         elif text.startswith("pingeveryone"):
             msg = ping_everyone(user, message)
         elif text.startswith("winnings"):
-            msg1, msg2 = winnings(user, message)
+            user_is_mod = is_mod(user, message.channel)
+            if user.id not in ["478970983089438760", "438450978690433024"]:
+                raise HouseCupException(
+                    "Only Stuffle and Red can declare the winners "
+                    "and restart the House Cup.")
+            msg1, msg2 = winnings()
             await client.send_message(message.channel, msg1.format(message))
             await client.send_message(message.channel, msg2.format(message))
 
@@ -1131,13 +1133,13 @@ async def on_message(message):
             first_place_house.capitalize(),
             first_place_house_i.capitalize(),
             standing)
-        await send_to_all_servers(surpassed_msg)
+        await send_to_all_servers(surpassed_msg, SERVER_ID_TO_CHANNEL)
 
 
-async def send_to_all_servers(msg):
+async def send_to_all_servers(msg, server_dict):
     for server in client.servers:
-        if server.id in SERVER_ID_TO_CHANNEL:
-            channel = client.get_channel(SERVER_ID_TO_CHANNEL[server.id])
+        if server.id in server_dict:
+            channel = client.get_channel(server_dict[server.id])
             if channel:
                 await client.send_message(channel, msg.format(msg))
 
@@ -1162,7 +1164,7 @@ async def on_ready():
     try:
         load_participants()
     except Exception as ex:
-        now = datetime.datetime.now()
+        now = datetime.datetime.now(datetime.timezone.utc)
         print("Making backup at %s" % str(now))
         make_backup(str(now))
         # TODO: Use send_to_all_servers
@@ -1181,27 +1183,45 @@ async def on_ready():
 
 async def test_announce():
     print("Running test_announce")
-    # TODO: Use send_to_all_servers
-    for server in client.servers:
-            if server.id in SERVER_ID_TO_CHANNEL:
-                channel = client.get_channel(SERVER_ID_TO_CHANNEL[server.id])
-                if channel:
-                    msg = "This is a scheduled test message. " \
-                          "<@438450978690433024>, it worked!"
-                    await client.send_message(channel, msg.format(msg))
+    msg = "This is a scheduled test. Hopefully, this runs at 12:20am UTC."
+    await send_to_all_servers(msg, SERVER_ID_TO_CHANNEL)
+
+
+async def run_winnings():
+    print("running winnings")
+    msg1, msg2 = winnings()
+    print("winnings ran")
+    await send_to_all_servers(msg1.format(msg1), SERVER_ID_TO_CHANNEL_ANNOUNCE)
+    await send_to_all_servers(msg2.format(msg2), SERVER_ID_TO_CHANNEL_ANNOUNCE)
 
 
 if __name__ == '__main__':
+    client.loop.create_task(list_recs())
+    token = os.environ.get("DISCORD_BOT_SECRET")
+
+    now = datetime.datetime.now(datetime.timezone.utc)
+    _, days_in_month = monthrange(now.year, now.month)
+
+    # Schedule Events
     scheduler = AsyncIOScheduler()
+    winnings_date = datetime.datetime(
+        now.year, now.month, days_in_month,
+        23, 59, 55, 0, datetime.timezone.utc)
+    print(winnings_date)
+    scheduler.add_job(
+        run_winnings,
+        'date',
+        run_date=winnings_date)
+
+    run_announce = datetime.datetime(
+        now.year, now.month, 17,
+        0, 20, 0, 0, datetime.timezone.utc)
+    print(run_announce)
     scheduler.add_job(
         test_announce,
         'date',
-        run_date=datetime.datetime(
-            2019, 4, 12, 18, 30, 5, 0, datetime.timezone.utc))
+        run_date=run_announce)
     scheduler.start()
-
-    client.loop.create_task(list_recs())
-    token = os.environ.get("DISCORD_BOT_SECRET")
     client.run(token)
 
 # TODO: Use APScheduler to schedule events like winnings

@@ -160,7 +160,7 @@ def at(text, mention, random_person):
     Quotes added from RedHorse, Cybrid, Dorea, Earth, and me.
     """
 
-    if text.startswith("~>"):
+    if text.startswith("~>") or text.startswith("->"):
         action = text[2:].split(" ")[0]
         return "*returns %s*" % action
 
