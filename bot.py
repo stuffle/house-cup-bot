@@ -237,7 +237,6 @@ def join(user):
         raise HouseCupException(
             "You have already joined the house cup for this month.")
 
-    # TODO: Is this UTC?
     now = datetime.datetime.now(datetime.timezone.utc)
     day_of_month = now.day
     _, days_in_month = monthrange(now.year, now.month)
@@ -276,8 +275,9 @@ def join(user):
 
 def leave(user, message):
     current_points = points(user, message)
-    msg = "Are you sure you want to leave the House Cup?" \
-          "If you do, your score will be wiped out. " \
+    msg = "Are you sure you want to leave the House Cup? " \
+          "You are **not** allowed to switch houses during the month.\n\n" \
+          "If you leave, your score will be wiped out. " \
           "\n%s\n\n" \
           "If you're sure you want to leave, " \
           "use  `%sactuallyleave`" % (current_points, PREFIX)
@@ -337,8 +337,8 @@ def log_score(text, user_id):
 
     # Add points where appropriate
     if category == DAILY:
-        msg = "Congratulations on doing something productive today—" \
-              "take 5 points for " + house + "! " + heart
+        msg = "Congratulations on doing something creatively productive " \
+              "today—take 5 points for " + house + "! " + heart
         current_points = participants[user_id][DAILY] + 5
         today = datetime.date.today()
         _, days_in_month = monthrange(today.year, today.month)
@@ -476,6 +476,7 @@ def log_score(text, user_id):
         if wc_points == 1:
             plural = ""
         participants[user_id]["word_count"] = wordcount
+        # TODO: Remove cap in May
         if wc_points >= 25:
             wc_points = 25
             msg = "You have now earned the max number of wc points. " \
@@ -811,7 +812,6 @@ def leader_board(text):
     """
     args = text.split()
     category = "total"
-    # TODO: Add art in may
     valid_args = "Valid arguments to `" + PREFIX + "leaderboard` are " \
                 "`daily`, `post`, `beta`, `art`, `workshop`, `comment`, `wc` (points)" \
                 ", `word_count`, `excred`, `mod_adjust`, and `total`"
@@ -1263,5 +1263,4 @@ if __name__ == '__main__':
     scheduler.start()
     client.run(token)
 
-# TODO: Use APScheduler to schedule events like winnings
 # TODO: Custom emoji
