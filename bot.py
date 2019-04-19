@@ -295,7 +295,7 @@ def actually_leave(user):
     return msg
 
 
-def log_score(text, user):
+def log_score(text, user_id):
     """
     Record house points.
 
@@ -306,11 +306,11 @@ def log_score(text, user):
     amount = 0
     quotes = []
 
-    if user.id not in participants:
+    if user_id not in participants:
         raise HouseCupException(
             "Please join the house cup with `" + PREFIX + "join`")
 
-    house = participants[user.id]["house"].capitalize()
+    house = participants[user_id]["house"].capitalize()
     heart = HOUSE_TO_HEART[house.lower()]
 
     # Check if valid inputs
@@ -321,7 +321,7 @@ def log_score(text, user):
     category = args[1].lower()
     if category == ART and is_april():
         raise HouseCupException(
-            "`%sart` may not be used until after April.")
+            "`%sart` may not be used until after April." % PREFIX)
 
     if category not in CATEGORIES + ["exercise"]:
         raise HouseCupException("Unrecognized Category. " + VALID_CATEGORIES)
@@ -333,13 +333,13 @@ def log_score(text, user):
 
     if category not in [EXCRED, COMMENT, DAILY, WORKSHOP, WC, "exercise", "art"]:
         points = CATEGORY_TO_POINTS[category]
-        participants[user.id][category] = participants[user.id][category] + points
+        participants[user_id][category] = participants[user_id][category] + points
 
     # Add points where appropriate
     if category == DAILY:
         msg = "Congratulations on doing something productive today—" \
               "take 5 points for " + house + "! " + heart
-        current_points = participants[user.id][DAILY] + 5
+        current_points = participants[user_id][DAILY] + 5
         today = datetime.date.today()
         _, days_in_month = monthrange(today.year, today.month)
         if current_points >= 5 * (days_in_month + 1):
@@ -348,8 +348,8 @@ def log_score(text, user):
                 "more dailies than there are days in the month.")
 
         last_daily = 0
-        if "last_daily" in participants[user.id].keys():
-            last_daily = participants[user.id]["last_daily"]
+        if "last_daily" in participants[user_id].keys():
+            last_daily = participants[user_id]["last_daily"]
         now = time.time()
         eight_hours = 14400 * 2  # seconds
         if last_daily + eight_hours > now:
@@ -357,8 +357,8 @@ def log_score(text, user):
                 "Please adhere to the rules of only using this "
                 "command once per day and only for days that you have been "
                 "creatively productive.")
-        participants[user.id][DAILY] = current_points
-        participants[user.id]["last_daily"] = now
+        participants[user_id][DAILY] = current_points
+        participants[user_id]["last_daily"] = now
 
     if category == POST:
         # Mean
@@ -388,14 +388,14 @@ def log_score(text, user):
                 "Art amount must be a number. Try something "
                 "like `" + PREFIX + "art 10`")
         amount = int(args[2])
-        new_art_total = participants[user.id][ART] + amount
+        new_art_total = participants[user_id][ART] + amount
         if amount not in [5, 10, 15]:
             raise HouseCupException(
                 "The amount of art points must be 5, 10, or 15")
         else:
             msg = "%d points to %s! Thank you for sharing your creation. " \
                   ":art:" % (amount, house)
-        participants[user.id][ART] = new_art_total
+        participants[user_id][ART] = new_art_total
 
     if category == BETA:
         quotes.append(
@@ -412,32 +412,32 @@ def log_score(text, user):
     if category == "exercise":
         msg = "Thanks for participating in a weekly exercise! Take 5 " \
               "workshop points for %s!" % house
-        participants[user.id][WORKSHOP] = participants[user.id][WORKSHOP] + 5
+        participants[user_id][WORKSHOP] = participants[user_id][WORKSHOP] + 5
 
     if category == WORKSHOP:
         msg = "Thank you for putting your work up for the weekly workshop " \
               "~~gangbang~~. Take a whopping 30 points for " + house + "!"
         last_workshop = 0
-        if "last_workshop" in participants[user.id].keys():
-            last_workshop = participants[user.id]["last_workshop"]
+        if "last_workshop" in participants[user_id].keys():
+            last_workshop = participants[user_id]["last_workshop"]
         now = time.time()
         one_day = 86400  # seconds
         if last_workshop + one_day > now:
             raise HouseCupException(
                 "You may only log a workshop once per day. "
                 "You must wait 24 hours between logging workshops.")
-        participants[user.id][WORKSHOP] = participants[user.id][WORKSHOP] + 30
-        participants[user.id]["last_workshop"] = now
+        participants[user_id][WORKSHOP] = participants[user_id][WORKSHOP] + 30
+        participants[user_id]["last_workshop"] = now
     if category == COMMENT:
         if len(args) < 3:
             msg = "Comments are so appreciated. :revolving_hearts: 1 point to"\
                   " " + house + "!"
-            participants[user.id][COMMENT] = participants[user.id][COMMENT] + 1
+            participants[user_id][COMMENT] = participants[user_id][COMMENT] + 1
         elif args[2] in ["extra", "essay", "long", "mystery"]:
             msg = "You've probably made someone really happy with your long " \
                   "and thoughtful comment! Good job! :sparkling_heart: " \
                   "5 points to " + house + "!"
-            participants[user.id][COMMENT] = participants[user.id][COMMENT] + 5
+            participants[user_id][COMMENT] = participants[user_id][COMMENT] + 5
         else:
             raise HouseCupException(
                 "Unrecognized argument to `%scomment`. For a regular comment, "
@@ -448,10 +448,10 @@ def log_score(text, user):
         wordcount = 0
         wc_points = 0
         amount = 0
-        if "word_count" in participants[user.id]:
-            wordcount = participants[user.id]["word_count"]
-        if WC in participants[user.id]:
-            wc_points = participants[user.id][WC]
+        if "word_count" in participants[user_id]:
+            wordcount = participants[user_id]["word_count"]
+        if WC in participants[user_id]:
+            wc_points = participants[user_id][WC]
         if len(args) <= 2:
             raise HouseCupException(
                 "`%swc` takes arguments. Do something like "
@@ -475,7 +475,7 @@ def log_score(text, user):
         plural = "s"
         if wc_points == 1:
             plural = ""
-        participants[user.id]["word_count"] = wordcount
+        participants[user_id]["word_count"] = wordcount
         if wc_points >= 25:
             wc_points = 25
             msg = "You have now earned the max number of wc points. " \
@@ -487,7 +487,7 @@ def log_score(text, user):
         else:
             msg = "Your total wordcount is now %d, giving you %d point%s! " \
                 "Congratulations! " % (wordcount, wc_points, plural) + msg
-        participants[user.id][WC] = wc_points
+        participants[user_id][WC] = wc_points
 
     if category == EXCRED:
         if len(args) <= 2:
@@ -497,7 +497,7 @@ def log_score(text, user):
             raise HouseCupException(
                 "Extra credit amount must be a number. Try something like `" + PREFIX + "excred 10`")
         amount = int(args[2])
-        new_excred_total = participants[user.id][EXCRED] + amount
+        new_excred_total = participants[user_id][EXCRED] + amount
         if new_excred_total >= 50:
             new_excred_total = 50
             msg = "Your extra credit score has been set to the maximum, 50." \
@@ -507,7 +507,7 @@ def log_score(text, user):
                 "Please provide the amount of extra credit points earned. For example: `" + PREFIX + "excred 20`")
         else:
             msg = str(amount) + " points to " + house + " for extra credit work!"
-        participants[user.id][EXCRED] = new_excred_total
+        participants[user_id][EXCRED] = new_excred_total
 
     # If I still set msg, there is only one possible response
     if msg:
@@ -516,16 +516,15 @@ def log_score(text, user):
     return random.choice(quotes)
 
 
-def remove_score(text, user):
+def remove_score(text, user_id):
     msg = ""
-    print("Running remove")
     args = text.split()
     amount = 0
 
-    if user.id not in participants:
+    if user_id not in participants:
         raise HouseCupException("You can't remove points because you're not in the house cup. :sob:")
 
-    house = participants[user.id]["house"].capitalize()
+    house = participants[user_id]["house"].capitalize()
 
     # Check if valid inputs
     if len(args) < 2:
@@ -558,8 +557,8 @@ def remove_score(text, user):
                 "remove as a positive integer. For example: "
                 "`" + PREFIX + "remove excred 20`")
         points = amount
-        new_points = participants[user.id][EXCRED] - points
-    if category == ART:
+        new_points = participants[user_id][EXCRED] - points
+    elif category == ART:
         if len(args) <= 2:
             raise HouseCupException(
                 "Please provide an amount for art, like "
@@ -574,15 +573,15 @@ def remove_score(text, user):
                 "Please provide a valid amount of art points to "
                 "remove. Amount can be 5, 10, or 15")
         points = amount
-        new_points = participants[user.id][ART] - points
+        new_points = participants[user_id][ART] - points
     elif category == "exercise":
         points = 5
-        new_points = participants[user.id][WORKSHOP] - 5
+        new_points = participants[user_id][WORKSHOP] - 5
         category = WORKSHOP
     elif category == "comment" and len(args) > 2:
         if args[2] in ["extra", "essay", "mystery"]:
             points = 5
-            new_points = participants[user.id][category] - points
+            new_points = participants[user_id][category] - points
         else:
             raise HouseCupException(
                 "If you want to remove a regular comment, do "
@@ -591,7 +590,7 @@ def remove_score(text, user):
                 "`%sremove comment extra`." % (PREFIX, PREFIX))
     else:
         points = CATEGORY_TO_POINTS[category]
-        new_points = participants[user.id][category] - points
+        new_points = participants[user_id][category] - points
 
     if new_points < 0:
         raise HouseCupException(
@@ -599,7 +598,7 @@ def remove_score(text, user):
             "total in " + str(category).capitalize() + " to "
             "a negative number.")
     else:
-        participants[user.id][category] = new_points
+        participants[user_id][category] = new_points
         msg = str(points) + " points were removed from " + house + ". RIP."
 
     return msg
@@ -806,13 +805,11 @@ def house_points(user, message):
     return msg + emoji_line
 
 
-def leader_board(user, message):
+def leader_board(text):
     """
     Show top 5 students in a given category
     """
-    text = message.content
     args = text.split()
-    house = get_house(user)
     category = "total"
     # TODO: Add art in may
     valid_args = "Valid arguments to `" + PREFIX + "leaderboard` are " \
@@ -1024,6 +1021,7 @@ def make_backup(when):
 @client.event
 async def on_message(message):
     user = message.author
+    user_id = user.id
     mention = user.mention
     text = message.content.lower()
     msg = ""
@@ -1076,37 +1074,37 @@ async def on_message(message):
         # Edit Points
         elif text.startswith("log"):
             # Todo: Remove and refactor log
-            msg = "{0.author.mention}: " + log_score(text, user)
+            msg = "{0.author.mention}: " + log_score(text, user_id)
             save_participants()
         elif text.startswith("daily"):
-            msg = "{0.author.mention}: " + log_score("log daily", user)
+            msg = "{0.author.mention}: " + log_score("log daily", user_id)
             save_participants()
         elif text.startswith("post"):
-            msg = "{0.author.mention}: " + log_score("log post", user)
+            msg = "{0.author.mention}: " + log_score("log post", user_id)
             save_participants()
         elif text.startswith("art"):
-            msg = "{0.author.mention}: " + log_score("log " + text, user)
+            msg = "{0.author.mention}: " + log_score("log " + text, user_id)
             save_participants()
         elif text.startswith("beta"):
-            msg = "{0.author.mention}: " + log_score("log beta", user)
+            msg = "{0.author.mention}: " + log_score("log beta", user_id)
             save_participants()
         elif text.startswith("comment"):
-            msg = "{0.author.mention}: " + log_score("log " + text, user)
+            msg = "{0.author.mention}: " + log_score("log " + text, user_id)
             save_participants()
         elif text.startswith("workshop"):
-            msg = "{0.author.mention}: " + log_score("log workshop", user)
+            msg = "{0.author.mention}: " + log_score("log workshop", user_id)
             save_participants()
         elif text.startswith("exercise"):
-            msg = "{0.author.mention}: " + log_score("log exercise", user)
+            msg = "{0.author.mention}: " + log_score("log exercise", user_id)
         elif text.startswith("wc"):
-            msg = "{0.author.mention}: " + log_score("log " + text, user)
+            msg = "{0.author.mention}: " + log_score("log " + text, user_id)
             save_participants()
         elif text.startswith("excred"):
             msg = "{0.author.mention}: " + log_score(
-                  "log " + text, user)
+                  "log " + text, user_id)
             save_participants()
         elif text.startswith("remove"):
-            msg = "{0.author.mention}: " + remove_score(text, user)
+            msg = "{0.author.mention}: " + remove_score(text, user_id)
             save_participants()
 
         # Point viewing commands
@@ -1115,7 +1113,7 @@ async def on_message(message):
         elif text.startswith("housepoints"):
             msg = house_points(user, message)
         elif text.startswith("leaderboard"):
-            msg = leader_board(user, message)
+            msg = leader_board(text)
         elif text.startswith("standings"):
             msg = standings()
 
