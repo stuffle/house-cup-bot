@@ -1,8 +1,7 @@
 import ast
 
 
-BACKUP = ""
-DATA_FILE = "test_data.json"
+DATA_FILE = "data.json"
 
 
 def load_participants(dfile):
@@ -21,8 +20,10 @@ def save_participants():
 
 
 participants = load_participants(DATA_FILE)
-backup = load_participants(BACKUP)
-for p in backup:
-    participants[p]["word_count"] = backup[p]["word_count"]
-    participants[p]["wc"] = backup[p]["wc"]
+with open("data_backup_migration", 'w', encoding='utf-8') as f:
+        f.write(str(participants))
+
+for p in participants:
+    if "art" not in participants[p]:
+        participants[p]["art"] = 0
 save_participants()

@@ -64,6 +64,18 @@ def help_command(message, prefix):
             title="Beta Help",
             color=COLOR,
             description=msg)
+    elif arg == "art":
+        # TODO: Remove starting in May in May
+        msg = "Starting in May:\n" \
+              "Log 5, 10, or 15 points for your art. " \
+              "For visual art, full color earns 15 points, " \
+              " flat color earns 10, and a sketch or line art earns 5. " \
+              "See the [FAQ](%s) in the House Cup Documentation for more info." \
+              "\n\nExample: `%sart 10`" % (DOCS_LINK, prefix)
+        embed = discord.Embed(
+            title="Art Help",
+            color=COLOR,
+            description=msg)
     elif arg == "workshop":
         msg = "Log 30 points when you contribute a work to the weekly " \
               "workshop. If you were a reviewer, use `%sbeta` to log " \
@@ -280,7 +292,7 @@ def general_help(prefix):
         inline=False)
     embed.add_field(
         name="Logging Points:",
-        value="`daily`, `post`, `beta`, `comment`, `workshop`, `exercise`, `excred`, `wc` (total), `wc add`, `remove`",
+        value="`daily`, `post`, `beta`, `art`, `comment`, `workshop`, `exercise`, `excred`, `wc` (total), `wc add`, `remove`",
         inline=False)
     embed.add_field(
         name="Viewing Points:",

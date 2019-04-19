@@ -23,6 +23,13 @@ DATA_FILE = "data.json"
 if IS_TEST_ENV:
     DATA_FILE = "test_data.json"
 
+
+def is_april():
+    now = datetime.datetime.now(datetime.timezone.utc)
+    return now.month == 4 and now.year == 2019
+print(is_april())
+
+
 SLYTHERIN = "slytherin"
 RAVENCLAW = "ravenclaw"
 GRYFFINDOR = "gryffindor"
@@ -55,7 +62,10 @@ COMMENT = "comment"
 EXCRED = "excred"
 MOD_ADJUST = "mod_adjust"
 WC = "wc"
+ART = "art"
 CATEGORIES = [DAILY, POST, BETA, WORKSHOP, COMMENT, WC, EXCRED, MOD_ADJUST]
+if not is_april():
+    CATEGORIES.append(ART)
 CATEGORY_TO_POINTS = {
     DAILY: 5,
     POST: 10,
@@ -68,6 +78,7 @@ CATEGORY_TO_EMOJI = {
     DAILY: ":white_sun_small_cloud:",
     POST: ":book:",
     BETA: ":pencil:",
+    ART: ":art:",
     COMMENT: ":keyboard:",
     WORKSHOP: ":sweat_smile:",
     EXCRED: ":star2:",
@@ -76,7 +87,8 @@ CATEGORY_TO_EMOJI = {
     "word_count": ":books:"
 }
 VALID_CATEGORIES = "Valid arguments to this command are `daily`, `post`," \
-                   " `beta`, `workshop`, `comment`, `wc`, and `excred`"
+                   " `art`, `beta`, `workshop`, `exercise`, `comment`, " \
+                   "`wc`, and `excred`"
 
 SERVER_ID_TO_CHANNEL = {
     # Red's Writing Hood: house-cup-bot
@@ -207,8 +219,11 @@ def get_userid_from_mention(mention):
 
 def calculate_personal_score(user_id):
     p = participants[user_id]
-    core_points = p[DAILY] + p[POST] + p[BETA] + p[WORKSHOP] + p[COMMENT]
-    return core_points + p[WC] + p[EXCRED] + p[MOD_ADJUST]
+    points = p[DAILY] + p[POST] + p[BETA] + p[WORKSHOP] + p[COMMENT]
+    points += p[WC] + p[EXCRED] + p[MOD_ADJUST]
+    if not is_april:
+        points += p[ART]
+    return points
 
 
 def format_name(number, name):
@@ -245,6 +260,7 @@ def join(user):
         DAILY: 0,
         POST: 0,
         BETA: 0,
+        ART: 0,
         WORKSHOP: 0,
         COMMENT: 0,
         EXCRED: 0,
@@ -303,6 +319,10 @@ def log_score(text, user):
             "Please provide a category to log your points in. " + VALID_CATEGORIES)
 
     category = args[1].lower()
+    if category == ART and is_april():
+        raise HouseCupException(
+            "`%sart` may not be used until after April.")
+
     if category not in CATEGORIES + ["exercise"]:
         raise HouseCupException("Unrecognized Category. " + VALID_CATEGORIES)
 
@@ -311,7 +331,7 @@ def log_score(text, user):
             "You may not log mod_adjust points, only mods can do that with "
             "`%saward` and `%sdeduct`." % (PREFIX, PREFIX))
 
-    if category not in [EXCRED, COMMENT, DAILY, WORKSHOP, WC, "exercise"]:
+    if category not in [EXCRED, COMMENT, DAILY, WORKSHOP, WC, "exercise", "art"]:
         points = CATEGORY_TO_POINTS[category]
         participants[user.id][category] = participants[user.id][category] + points
 
@@ -357,6 +377,25 @@ def log_score(text, user):
         quotes.append(
             "We're always happy to see your updates. "
             "10 points to %s!" % house)
+
+    if category == "art":
+        if len(args) <= 2:
+            raise HouseCupException(
+                "Please provide an amount for the art,"
+                " like `" + PREFIX + "art 10`")
+        if not args[2].isdigit():
+            raise HouseCupException(
+                "Art amount must be a number. Try something "
+                "like `" + PREFIX + "art 10`")
+        amount = int(args[2])
+        new_art_total = participants[user.id][ART] + amount
+        if amount not in [5, 10, 15]:
+            raise HouseCupException(
+                "The amount of art points must be 5, 10, or 15")
+        else:
+            msg = "%d points to %s! Thank you for sharing your creation. " \
+                  ":art:" % (amount, house)
+        participants[user.id][ART] = new_art_total
 
     if category == BETA:
         quotes.append(
@@ -520,6 +559,22 @@ def remove_score(text, user):
                 "`" + PREFIX + "remove excred 20`")
         points = amount
         new_points = participants[user.id][EXCRED] - points
+    if category == ART:
+        if len(args) <= 2:
+            raise HouseCupException(
+                "Please provide an amount for art, like "
+                "`" + PREFIX + "remove art 10`")
+        if not args[2].isdigit():
+            raise HouseCupException(
+                "Art amount must be a number. "
+                "Try something like `" + PREFIX + "remove art 10`")
+        amount = int(args[2])
+        if amount not in [5, 10, 15]:
+            raise HouseCupException(
+                "Please provide a valid amount of art points to "
+                "remove. Amount can be 5, 10, or 15")
+        points = amount
+        new_points = participants[user.id][ART] - points
     elif category == "exercise":
         points = 5
         new_points = participants[user.id][WORKSHOP] - 5
@@ -690,6 +745,8 @@ def points(user, message):
         CATEGORY_TO_EMOJI[POST], POST) + str(person[POST])
     beta_message = format_name(
         CATEGORY_TO_EMOJI[BETA], BETA) + str(person[BETA])
+    art_message = format_name(
+        CATEGORY_TO_EMOJI[ART], ART) + str(person[ART])
     comment_message = format_name(
         CATEGORY_TO_EMOJI[COMMENT], COMMENT) + str(person[COMMENT])
     workshop_message = format_name(
@@ -700,9 +757,14 @@ def points(user, message):
         CATEGORY_TO_EMOJI[WC], WC) + str(person[WC]) + " " \
         "(%d words)" % person["word_count"]
 
-    msg = "\n".join([who_message, total_message, daily_message, post_message,
-                     beta_message, comment_message, workshop_message,
-                     wc_message, excred_message])
+    points_messages = [who_message, total_message, daily_message, post_message,
+                       beta_message, comment_message, workshop_message,
+                       wc_message, excred_message]
+    if not is_april():
+        points_messages = [who_message, total_message, daily_message, post_message,
+                          beta_message, art_message, comment_message, workshop_message,
+                          wc_message, excred_message]
+    msg = "\n".join(points_messages)
 
     if person[MOD_ADJUST] != 0:
         msg = msg + "\n" + format_name(
@@ -752,8 +814,9 @@ def leader_board(user, message):
     args = text.split()
     house = get_house(user)
     category = "total"
+    # TODO: Add art in may
     valid_args = "Valid arguments to `" + PREFIX + "leaderboard` are " \
-                "`daily`, `post`, `beta`, `workshop`, `comment`, `wc` (points)" \
+                "`daily`, `post`, `beta`, `art`, `workshop`, `comment`, `wc` (points)" \
                 ", `word_count`, `excred`, `mod_adjust`, and `total`"
     msg = ""
 
@@ -788,10 +851,8 @@ def calculate_house_score(house):
     sorted_members = sort_participants(members, "total")
     sorted_points = [x[1] for x in sorted_members]
 
-    now = datetime.datetime.now(datetime.timezone.utc)
-
     # TODO: Remove conditional in May
-    if now.month == 4:
+    if is_april():
         while len(sorted_points) < 3:
             sorted_points.append(0)
 
@@ -955,23 +1016,6 @@ def ping_everyone(user, message):
         user.mention, ", ".join(mentions))
 
 
-def migrate(user):
-    # TODO: data backups first
-    stuffle_id = "438450978690433024"
-    if user.id != stuffle_id:
-        raise HouseCupException(
-            "Only stuffle can run migrations.")
-        # Todo: don't do migrations in the bot.
-
-    for p in participants:
-        print(p)
-        if not WC in participants:
-            participants[p][WC] = 0
-            participants[p]["word_count"] = 0
-    print("Data has been succesfully migrated")
-    print(participants)
-
-
 def make_backup(when):
     with open("data_backup_" + str(when), 'w', encoding='utf-8') as f:
         f.write(str(participants))
@@ -1040,6 +1084,9 @@ async def on_message(message):
         elif text.startswith("post"):
             msg = "{0.author.mention}: " + log_score("log post", user)
             save_participants()
+        elif text.startswith("art"):
+            msg = "{0.author.mention}: " + log_score("log " + text, user)
+            save_participants()
         elif text.startswith("beta"):
             msg = "{0.author.mention}: " + log_score("log beta", user)
             save_participants()
@@ -1079,9 +1126,6 @@ async def on_message(message):
         elif text.startswith("deduct"):
             msg = deduct(user, message)
             save_participants()
-        elif text.startswith("migrate"):
-            msg = migrate(user)
-            save_participants()
         elif text.startswith("pingeveryone"):
             msg = ping_everyone(user, message)
         elif text.startswith("winnings"):
@@ -1091,6 +1135,7 @@ async def on_message(message):
                     "Only Stuffle and Red can declare the winners "
                     "and restart the House Cup.")
             msg1, msg2 = winnings()
+            print(msg1)
             await client.send_message(message.channel, msg1.format(message))
             await client.send_message(message.channel, msg2.format(message))
 
