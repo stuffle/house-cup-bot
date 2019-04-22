@@ -15,6 +15,14 @@ def get_random_embed(quote_dict, author, colour):
     return embed
 
 
+def should_i_kill():
+    responses = ["No."] * 8
+    responses.append("Do what needs to be done.")
+    responses.append("Why must you always do this? :weary:")
+    responses.append("Yes. \"Sometimes the plot demands a death.\"—Earth")
+    return random.choice(responses)
+
+
 def dumbledore(house, mention):
     """
     Written by CHRain

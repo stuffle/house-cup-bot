@@ -12,6 +12,7 @@ from calendar import monthrange
 import datetime
 
 from humor_commands import *
+from viking import *
 from help import *
 
 
@@ -618,7 +619,7 @@ def get_mention_user(needs_mention, mentions):
         person_mention = mentions[0]
     elif len(mentions) > 1:
         raise HouseCupException(
-            "You can only look up the points of one user at a time.")
+            "You can only use this command for one user at a time.")
     elif not needs_mention:
         return None
     elif len(mentions) == 0:
@@ -1034,7 +1035,7 @@ async def on_message(message):
         random_person = get_random_person(user)
         msg = at(text, mention, random_person)
 
-    # Ignore all messages not directed at bot
+    # Ignore all messages not directed at bot unless it was a mention
     if not message.content.startswith(PREFIX) and msg == "":
         return
 
@@ -1164,6 +1165,16 @@ async def on_message(message):
         elif text.startswith("sneak"):
             random_person = get_random_person(user)
             msg = sneak(mention, random_person)
+        elif text.startswith("kidnap"):
+            embed = kidnap(user.mention, message.mentions, text)
+            await client.send_message(message.channel, embed=embed)
+            return
+        elif text.startswith("pillage"):
+            embed = pillage(user.mention)
+            await client.send_message(message.channel, embed=embed)
+            return
+        elif text.startswith("shouldikillharry"):
+            msg = "%s: %s" % (mention, should_i_kill())
 
     except HouseCupException as ex:
         msg = "{0.author.mention}: " + str(ex)
