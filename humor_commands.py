@@ -23,6 +23,48 @@ def should_i_kill():
     return random.choice(responses)
 
 
+def gen_prompt():
+    person = [
+        "Harry",
+        "Ron",
+        "Hermione",
+        "Voldemort",
+        "Tom",
+        "Dumbledore",
+        "Snape",
+        "Umbridge",
+        "Ginny"
+    ]
+    random_person = random.choice(person)
+
+    action = [
+        "should not have ventured into",
+        "inherits",
+        "has to sit for NEWTs at",
+        "is caught smoking weed in",
+        "sets fire to",
+        "opens a Magical Creatures shelter at",
+        "locks themselves into",
+        "regrets the day they first saw"
+    ]
+    random_action = random.choice(action)
+
+    setting = [
+        "Hogwarts Castle",
+        "12 Grimmauld Place",
+        "the Ministry of Magic",
+        "a mysterious Muggle residence",
+        "the Little Hangleton Graveyard",
+        "a beachside cave",
+        "the Forbidden Forest",
+        "an office building",
+        "the Muggle parliament"
+    ]
+    random_setting = random.choice(setting)
+
+    return "%s %s %s." % (random_person, random_action, random_setting)
+
+
 def dumbledore(house, mention):
     """
     Written by CHRain
