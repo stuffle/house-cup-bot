@@ -206,7 +206,6 @@ def at(text, mention, random_person):
         "It does not do to dwell on points and forget to live.",
         "It is our choices, %s, that show what we truly are, far more than our standings." % mention,
         "Dark and difficult times lie ahead. Soon we must all face the choice between what is right and what earns the most points.",
-        "Words are, in my not so humble opinion, our most inexhaustible source of magic.",
         "The House Cup competition is varied, ever-changing, and eternal. Fighting the other houses is like fighting a many-headed monster, which, each time a neck is severed, sprouts a head even fiercer and cleverer than before. You are fighting that which is unfixed, mutating, indestructible."
     ]
 

@@ -13,6 +13,7 @@ import datetime
 
 from humor_commands import *
 from viking import *
+from inspire import *
 from help import *
 
 
@@ -1175,6 +1176,8 @@ async def on_message(message):
             return
         elif text.startswith("shouldikillharry"):
             msg = "%s: %s" % (mention, should_i_kill())
+        elif text.startswith("inspireme"):
+            msg = "%s: %s" % (mention, inspireme())
 
     except HouseCupException as ex:
         msg = "{0.author.mention}: " + str(ex)
