@@ -264,6 +264,29 @@ def help_command(message, prefix):
             color=COLOR,
             description=msg)
 
+    # Writing Commands
+    elif arg == "prompt":
+        msg = "Get a randomly generated prompt. Example: `%sprompt`" \
+              "\n\nPrompt options written by RedHorse." % prefix
+        embed = discord.Embed(
+            title="Prompt Help",
+            color=COLOR,
+            description=msg)
+    elif arg == "inspireme":
+        msg = "Get some inspiration from stufflebot. Example: `%sinspireme`" \
+              "\n\nResponses written by Caty, Dorea, and Stuffle." % prefix
+        embed = discord.Embed(
+            title="InspireMe Help",
+            color=COLOR,
+            description=msg)
+    elif arg == "shouldikillharry":
+        msg = "Have stufflebot decide if you should kill Harry. " \
+              "Example: `%sshouldikillharry`"
+        embed = discord.Embed(
+            title="ShouldIKillHarry Help",
+            color=COLOR,
+            description=msg)
+
     elif embed is None:
         msg = "Sorry! This command is unrecognized. View the general help " \
               "for a list of commands with `%shelp`." % prefix
@@ -305,6 +328,10 @@ def general_help(prefix):
     embed.add_field(
         name="Fun Commands:",
         value="`dumbledore`, `snape`, `mcgonagall`, `hermione`, `ron`, `sneak`",
+        inline=False)
+    embed.add_field(
+        name="Inspiration Commands:",
+        value="`prompt`, `inspireme`, `shouldikillharry`",
         inline=False)
 
     return embed

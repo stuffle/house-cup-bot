@@ -44,7 +44,7 @@ def gen_prompt():
         "is caught smoking weed in",
         "sets fire to",
         "opens a Magical Creatures shelter at",
-        "locks themselves into",
+        "locks themself into",
         "regrets the day they first saw"
     ]
     random_action = random.choice(action)
