@@ -33,7 +33,9 @@ def gen_prompt():
         "Dumbledore",
         "Snape",
         "Umbridge",
-        "Ginny"
+        "Ginny",
+        "Draco",
+        "Tom Riddle Sr."
     ]
     random_person = random.choice(person)
 
@@ -45,7 +47,11 @@ def gen_prompt():
         "sets fire to",
         "opens a Magical Creatures shelter at",
         "locks themself into",
-        "regrets the day they first saw"
+        "regrets the day they first saw",
+        "hides their most prized possession in",
+        "reflects on it all at",
+        "finds a new favorite makeout spot in",
+        "plans a party at"
     ]
     random_action = random.choice(action)
 
@@ -58,7 +64,9 @@ def gen_prompt():
         "a beachside cave",
         "the Forbidden Forest",
         "an office building",
-        "the Muggle parliament"
+        "the Muggle parliament",
+        "the Room of Requirement",
+        "the Chamber of Secrets"
     ]
     random_setting = random.choice(setting)
 
