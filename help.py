@@ -263,6 +263,20 @@ def help_command(message, prefix):
             title="McGonagall Help",
             color=COLOR,
             description=msg)
+    elif arg == "kidnap":
+        msg = "Kidnap someone! Example: `%skidnap @dorea`" \
+              "\n\nMost gifs supplied by Dorea." % prefix
+        embed = discord.Embed(
+            title="Kidnap Help",
+            color=COLOR,
+            description=msg)
+    elif arg == "pillage":
+        msg = "Go pillaging! Example: `%spillage`" \
+              "\n\nMost gifs supplied by Dorea." % prefix
+        embed = discord.Embed(
+            title="Pillage Help",
+            color=COLOR,
+            description=msg)
 
     # Writing Commands
     elif arg == "prompt":
@@ -323,11 +337,11 @@ def general_help(prefix):
         inline=False)
     embed.add_field(
         name="Mod Only Commands:",
-        value="`award`, `deduct`, `pingeveryone`, `winnings`",
+        value="`award`, `deduct`, `pingeveryone`",
         inline=False)
     embed.add_field(
         name="Fun Commands:",
-        value="`dumbledore`, `snape`, `mcgonagall`, `hermione`, `ron`, `sneak`",
+        value="`dumbledore`, `snape`, `mcgonagall`, `hermione`, `ron`, `sneak`, `kidnap`, `pillage`",
         inline=False)
     embed.add_field(
         name="Inspiration Commands:",
