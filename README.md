@@ -1,4 +1,6 @@
 # house-cup-bot
+AKA: Stufflebot
+
 A discord bot to run the House Cup Competition. This was built for a Harry Potter fanfiction writing group.
 
 General rules for the contest are available [here](https://docs.google.com/document/d/1z03xR7jpi-oXwmI9N1XpU6N90BnXmj5ptyASdWnIkNA/edit?usp=sharing)
