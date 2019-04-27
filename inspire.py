@@ -17,6 +17,9 @@ def inspireme():
     quotes = [
         "Neil Gaiman: I’m not going to tell you how to feel, I’m going to kill that unicorn and I’m going to break your heart.",
         "Neil Gaiman: You learn more from finishing a failure than writing something fantastic that you never finish.",
+        "Neil Gaiman: The world always seems brighter when you've just made something that wasn't there before.",
+        "Neil Gaiman: Things need not have happened to be true. Tales and adventures are the shadow truths that will endure when mere facts are dust and ashes and forgotten.",
+        "Neil Gaiman: Tomorrow may be hell, but today was a good writing day, and on the good writing days nothing else matters.",
         "Franz Kafka: Follow your most intense obsessions mercilessly.",
         "Octavia E. Butler: You don’t start out writing good stuff. You start out writing crap and thinking it’s good stuff, and then gradually you get better at it.\nThat’s why I say one of the most valuable traits is persistence.",
         "Jodi Picoult: You can always edit a bad page. You can’t edit a blank page.",
@@ -31,7 +34,16 @@ def inspireme():
         "Aesop: Beware lest you lose the substance by grasping at the shadow.",
         "Mark Twain: Words are only painted fire. A look is the fire itself.",
         "Mark Twain: But who prays for Satan? Who, in eighteen centuries, has had the common humanity to pray for the one sinner that needs it most?",
-        "Margaret Atwood: A word after a word after a word is power."
+        "Margaret Atwood: A word after a word after a word is power.",
+        "Margaret Atwood: In the spring, at the end of the day, you should smell like dirt.",
+        "Margaret Atwood: War is what happens when language fails.",
+        "Margaret Atwood: Nothing changes instantaneously: in a gradually heating bathtub you’d be boiled to death before you knew it.",
+        "Margaret Atwood: The small details of life often hide a great significance.",
+        "Margaret Atwood: After everything that’s happened, how can the world still be so beautiful? Because it is.",
+        "The Latest Kate: It’s okay if you screwed up today. Tomorrow is waiting for you with not mistakes in it.",
+        "The Latest Kate: Feeling negative doesn’t mean anything is *actually* going to go wrong. Things have a way of working out, you’ve seen it.",
+        "The Latest Kate: No beating yourself up anymore. It doesn’t help, and you don’t deserve it.",
+        "James Patterson: Life is hard, and a lot of people come home tired from work. If they're gonna spend half an hour reading, they want some entertainment and a sense of achievement. So that's what I give them. That's all I'm trying to do. Is that really so wrong?"
     ]
 
     humour = [
@@ -52,10 +64,11 @@ def inspireme():
         "When I go fishing for inspiration, I always remember my rod. :fishing_pole_and_fish:",
         "\nWith every word you add, you’re one word closer to finishing.\n" \
         "With every word you change, you’re that little bit more concise.\n" \
-        "\nWith every word you take away, you’re that much closer to your final vision.\n" \
+        "With every word you take away, you’re that much closer to your final vision.\n" \
         "So just keep going, one word at a time.",
         "I know you can do it. You just have to believe in yourself like I believe in you. :kissing_heart:",
-        "\nWhen you get stuck, ask yourself, ‘What do my characters want?’ \nBut regardless of what they want, when you get to the end, make sure you give them what they *need*."
+        "\nWhen you get stuck, ask yourself, ‘What do my characters want?’ \nBut regardless of what they want, when you get to the end, make sure you give them what they *need*.",
+        "I want to look back and know that I did not give up."
     ]
 
     responses = facts + quotes + humour + inspirations
