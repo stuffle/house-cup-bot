@@ -19,9 +19,19 @@ def inspireme():
         "Neil Gaiman: You learn more from finishing a failure than writing something fantastic that you never finish.",
         "Franz Kafka: Follow your most intense obsessions mercilessly.",
         "Octavia E. Butler: You don’t start out writing good stuff. You start out writing crap and thinking it’s good stuff, and then gradually you get better at it.\nThat’s why I say one of the most valuable traits is persistence.",
-        "Jodi Picoult: You can always edit a bad page. You can’t edit a blank page."
+        "Jodi Picoult: You can always edit a bad page. You can’t edit a blank page.",
         "Dumbledore: Of course it is happening inside your head, Harry, but why on Earth should that mean it’s not real?",
         "Dumbledore: Words are, in my not so humble opinion, our most inexhaustible source of magic.",
+        "Richard Bach: The best way to pay for a lovely moment is to enjoy it.",
+        "Jack London: Life is not a matter of holding good cards, but sometimes, playing a poor hand well.",
+        "Jack London: I would rather be a superb meteor, every atom of me in magnificent glow, than a sleepy and permanent planet.",
+        "Jack London: I’d rather sing one wild song and burst my heart with it, than live a thousand years watching my digestion and being afraid of the wet.",
+        "Upton Sinclair: There is one kind of prison where the man is behind bars, and everything that he desires is outside; and there is another kind where the things are behind the bars, and the man is outside.",
+        "Upton Sinclair: But the devil is a subtle worm; he does not give up at one defeat, for he knows human nature, and the strength of the forces which battle for him.",
+        "Aesop: Beware lest you lose the substance by grasping at the shadow.",
+        "Mark Twain: Words are only painted fire. A look is the fire itself.",
+        "Mark Twain: But who prays for Satan? Who, in eighteen centuries, has had the common humanity to pray for the one sinner that needs it most?",
+        "Margaret Atwood: A word after a word after a word is power."
     ]
 
     humour = [
@@ -29,12 +39,10 @@ def inspireme():
         "Why does inspiration always come when I should be sleeping?? :sweat:",
         "Don’t write anything Tom wouldn’t do.",
         "Just, whatever you do, don’t let Tom play with knives... :sweat:",
-        "*Harry in a dress!*\nI’m just saying...",
         "Whatever you have planned, don’t worry about it. I’m sure Harry won’t mind...",
         "Just relax your shoulders, close your eyes, and take a deep, calming breath. Don’t let the smell of chloroform bother you.",
-        "You might not like my advice. It involves cable ties and a very firm paddle.",
         "If all else fails, get them all drunk.",
-        "\n“Roses are red,\nViolets are blue,\nI have a gun,\nGet in the van.”\n*(Dory’s example of Tom’s poetic prowess.)*",
+        "\n“Roses are red,\nViolets are blue,\nI have a gun,\nGet in the van.”\n*(Dory’s example of Tom’s poetic prowess.)*—Caty",
         "I think Harry needs a hug! :heart:",
         "There’s nothing wrong with a little kidnapping between friends."
     ]
