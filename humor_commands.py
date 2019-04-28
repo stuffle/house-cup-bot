@@ -35,7 +35,19 @@ def gen_prompt():
         "Umbridge",
         "Ginny",
         "Draco",
-        "Tom Riddle Sr."
+        "Tom Riddle Sr.",
+        "The Golden Trio",
+        "The Locket Horcrux",
+        "The Diary Horcrux",
+        "The Scar Horcrux",
+        "The Cup Horcrux",
+        "The Diadem Horcrux",
+        "Nagini",
+        "Sixty-year-old Harry Potter",
+        "Sirius",
+        "Remus",
+        "Your OT3",
+        "You"
     ]
     random_person = random.choice(person)
 
@@ -51,7 +63,24 @@ def gen_prompt():
         "hides their most prized possession in",
         "reflects on it all at",
         "finds a new favorite makeout spot in",
-        "plans a party at"
+        "wakes up still drunk in",
+        "finds a baby in a basket at",
+        "brought the war to",
+        "takes the Dark Mark at",
+        "gets married in",
+        "encountered the Mirror of Erised in",
+        "loves to have tea at",
+        "discovers a new kink in",
+        "seduces an enemy at",
+        "plans a fancy dress party at",
+        "redecorates",
+        "does a ritual at",
+        "cries in",
+        "opens a center for homeless garden gnomes at",
+        "meets a mysterious Squib in",
+        "meets a solicitor in secret at",
+        "never intended to return to",
+        "discovers a creature inheritance at"
     ]
     random_action = random.choice(action)
 
@@ -66,7 +95,14 @@ def gen_prompt():
         "an office building",
         "the Muggle parliament",
         "the Room of Requirement",
-        "the Chamber of Secrets"
+        "the Chamber of Secrets",
+        "their childhood bedroom",
+        "Dumbledore’s office",
+        "the Quidditch pitch",
+        "the residence of the Supreme Mugwump",
+        "the Black Lake",
+        "Number Four Privet Drive",
+        "the back garden of the Burrow"
     ]
     random_setting = random.choice(setting)
 
