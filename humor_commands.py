@@ -23,7 +23,7 @@ def should_i_kill():
     return random.choice(responses)
 
 
-def gen_prompt():
+def gen_prompt(mention, ran_person):
     person = [
         "Harry",
         "Ron",
@@ -47,7 +47,10 @@ def gen_prompt():
         "Sirius",
         "Remus",
         "Your OT3",
-        "You"
+        mention,
+        mention,
+        ran_person,
+        ran_person
     ]
     random_person = random.choice(person)
 

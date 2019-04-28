@@ -1179,7 +1179,8 @@ async def on_message(message):
         elif text.startswith("inspireme"):
             msg = "%s: %s" % (mention, inspireme())
         elif text.startswith("prompt"):
-            msg = "%s: %s" % (mention, gen_prompt())
+            random_person = get_random_person(user)
+            msg = "%s: %s" % (mention, gen_prompt(mention, random_person))
 
     except HouseCupException as ex:
         msg = "{0.author.mention}: " + str(ex)
