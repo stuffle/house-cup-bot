@@ -46,6 +46,11 @@ def gen_prompt(mention, ran_person):
         "Sixty-year-old Harry Potter",
         "Sirius",
         "Remus",
+        "Fluffy, the Cerberus",
+        "Dobby, the house-elf",
+        "Norberta, the Norwegian Ridgeback Dragon",
+        "Merope",
+        "Grindelwald",
         "Your OT3",
         mention,
         mention,
@@ -83,7 +88,16 @@ def gen_prompt(mention, ran_person):
         "meets a mysterious Squib in",
         "meets a solicitor in secret at",
         "never intended to return to",
-        "discovers a creature inheritance at"
+        "discovers a creature inheritance at",
+        "plots world domination from",
+        "climbs on to come at",
+        "cackles like a loon at",
+        "runs away from a Nundu in",
+        "likes to boogie down at",
+        "held a protest at",
+        "wakes up with no memory of how they got there at",
+        "Apparates with ill-intentions to",
+        "commits their first murder at"
     ]
     random_action = random.choice(action)
 
@@ -105,7 +119,15 @@ def gen_prompt(mention, ran_person):
         "the residence of the Supreme Mugwump",
         "the Black Lake",
         "Number Four Privet Drive",
-        "the back garden of the Burrow"
+        "the back garden of the Burrow",
+        "King’s Cross Station",
+        "Platform 9 ¾",
+        "Wool’s Orphanage",
+        "the top of Mount Everest",
+        "the Albanian Forest",
+        "the Sahara Desert",
+        "Madam Puddifoot’s",
+        "Nurmengard"
     ]
     random_setting = random.choice(setting)
 

@@ -281,7 +281,8 @@ def help_command(message, prefix):
     # Writing Commands
     elif arg == "prompt":
         msg = "Get a randomly generated prompt. Example: `%sprompt`" \
-              "\n\nPrompt options written by RedHorse." % prefix
+              "\n\nPrompt options written by RedHorse, Stuffle, " \
+              "Aubry, Essa, Mik, and DarkBlue\n" % prefix
         embed = discord.Embed(
             title="Prompt Help",
             color=COLOR,
