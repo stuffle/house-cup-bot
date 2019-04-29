@@ -46,11 +46,12 @@ def gen_prompt(mention, ran_person):
         "Sixty-year-old Harry Potter",
         "Sirius",
         "Remus",
-        "Fluffy, the Cerberus",
-        "Dobby, the house-elf",
+        "Fluffy, the Cerberus,",
+        "Dobby, the house-elf,",
         "Norberta, the Norwegian Ridgeback Dragon",
         "Merope",
         "Grindelwald",
+        "James and Lily Potter",
         "Your OT3",
         mention,
         mention,
@@ -87,6 +88,7 @@ def gen_prompt(mention, ran_person):
         "meets a mysterious Squib in",
         "meets a solicitor in secret at",
         "never intended to return to",
+        "will never return to",
         "discovers a creature inheritance at",
         "plots world domination from",
         "cackles like a loon at",
@@ -95,7 +97,12 @@ def gen_prompt(mention, ran_person):
         "held a protest at",
         "wakes up with no memory of how they got to",
         "Apparates with ill-intentions to",
-        "commits their first murder at"
+        "commits their first murder at",
+        "hides a body in",
+        "discovers a secret in",
+        "comes face to face with someone they never wanted to see again at",
+        "must hide in",
+        "must inflitrate"
     ]
     random_action = random.choice(action)
 
@@ -125,7 +132,8 @@ def gen_prompt(mention, ran_person):
         "the Albanian Forest",
         "the Sahara Desert",
         "Madam Puddifoot’s",
-        "Nurmengard"
+        "Nurmengard",
+        "Gringotts"
     ]
     random_setting = random.choice(setting)
 
