@@ -1,8 +1,15 @@
 import ast
+import os
 
+
+IS_TEST_ENV = os.environ.get("IS_TEST_ENV")
 
 DATA_FILE = "data.json"
+if IS_TEST_ENV:
+    DATA_FILE = "test_data.json"
+
 participants = {}
+
 
 def load_old_participants(dfile):
     global participants

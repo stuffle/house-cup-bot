@@ -52,6 +52,9 @@ def gen_prompt(mention, ran_person):
         "Merope",
         "Grindelwald",
         "James and Lily Potter",
+        "Fred and George",
+        "Cedric",
+        "Your OTP",
         "Your OT3",
         mention,
         mention,
@@ -66,6 +69,7 @@ def gen_prompt(mention, ran_person):
         "is caught smoking weed in",
         "sets fire to",
         "opens a Magical Creatures shelter at",
+        "never should have opened a Magical Creatures shelter at",
         "locks themself into",
         "regrets the day they first saw",
         "hides their most prized possession in",
@@ -101,8 +105,22 @@ def gen_prompt(mention, ran_person):
         "hides a body in",
         "discovers a secret in",
         "comes face to face with someone they never wanted to see again at",
-        "must hide in",
-        "must inflitrate"
+        "must inflitrate",
+        "has a self-care day at",
+        "makes a new friend at",
+        "has a clandestine meeting at",
+        "experiences a heartbreak at",
+        "confesses their love at",
+        "vows revenge after the events at",
+        "rains destruction upon",
+        "has a change of heart after visiting",
+        "gathers an army before going to",
+        "turns over a new leaf after an afternoon at",
+        "goes out in a blaze of glory at",
+        "adopts a pet from",
+        "lives happily ever after at",
+        "goes into hiding at",
+        "will never recover from the battle of"
     ]
     random_action = random.choice(action)
 
@@ -133,7 +151,10 @@ def gen_prompt(mention, ran_person):
         "the Sahara Desert",
         "Madam Puddifoot’s",
         "Nurmengard",
-        "Gringotts"
+        "Gringotts",
+        "the coffee shop in yet another coffee shop AU",
+        "the Department of Mysteries",
+        "Malfoy Manor"
     ]
     random_setting = random.choice(setting)
 
