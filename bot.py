@@ -124,12 +124,16 @@ def load_participants():
 
     with open(DATA_FILE, encoding='utf-8') as f:
         file_text = f.read()
-        participants = ast.literal_eval(file_text)
+        data = ast.literal_eval(file_text)
+        participants = ast.literal_eval(data["participants"])
 
 
 def save_participants():
     with open(DATA_FILE, 'w', encoding='utf-8') as f:
-        f.write(str(participants))
+        data = {
+            "participants": str(participants)
+        }
+        f.write(str(data))
 
 
 def is_mod(user, channel):

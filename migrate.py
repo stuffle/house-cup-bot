@@ -2,10 +2,10 @@ import ast
 
 
 DATA_FILE = "data.json"
+participants = {}
 
-
-def load_participants(dfile):
-    participants = {}
+def load_old_participants(dfile):
+    global participants
 
     with open(dfile, encoding='utf-8') as f:
         file_text = f.read()
@@ -15,15 +15,13 @@ def load_participants(dfile):
 
 
 def save_participants():
+    print("in save")
     with open(DATA_FILE, 'w', encoding='utf-8') as f:
-        f.write(str(participants))
+        data = {
+            "participants": str(participants)
+        }
+        f.write(str(data))
 
 
-participants = load_participants(DATA_FILE)
-with open("data_backup_migration", 'w', encoding='utf-8') as f:
-        f.write(str(participants))
-
-for p in participants:
-    if "art" not in participants[p]:
-        participants[p]["art"] = 0
+participants = load_old_participants(DATA_FILE)
 save_participants()

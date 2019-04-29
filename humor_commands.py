@@ -54,7 +54,6 @@ def gen_prompt(mention, ran_person):
         "Your OT3",
         mention,
         mention,
-        ran_person,
         ran_person
     ]
     random_person = random.choice(person)
@@ -90,12 +89,11 @@ def gen_prompt(mention, ran_person):
         "never intended to return to",
         "discovers a creature inheritance at",
         "plots world domination from",
-        "climbs on to come at",
         "cackles like a loon at",
         "runs away from a Nundu in",
         "likes to boogie down at",
         "held a protest at",
-        "wakes up with no memory of how they got there at",
+        "wakes up with no memory of how they got to",
         "Apparates with ill-intentions to",
         "commits their first murder at"
     ]
