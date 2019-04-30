@@ -1027,6 +1027,25 @@ def make_backup(when):
         f.write(str(participants))
 
 
+def time_left():
+    now = datetime.datetime.now(datetime.timezone.utc)
+
+    winnings_date = datetime.datetime(
+        now.year, now.month, days_in_month,
+        23, 59, 0, 0, datetime.timezone.utc)
+    time_remaining = winnings_date - now
+    days = time_remaining.days
+    hours_in_seconds = time_remaining.seconds - (days * 24 * 3600)
+    hours = hours_in_seconds / 3600
+    minutes_in_seconds = hours_in_seconds % 3600
+    minutes = minutes_in_seconds / 60
+    seconds = minutes_in_seconds % 60
+    msg = "There are %d days, %d hours, %d minutes, and %d seconds " \
+          "remaining." \
+          " Good luck, friend." % (days, hours, minutes, seconds)
+    return msg
+
+
 @client.event
 async def on_message(message):
     user = message.author
@@ -1188,6 +1207,8 @@ async def on_message(message):
         elif text.startswith("prompt"):
             random_person = get_random_person(user)
             msg = "%s: %s" % (mention, gen_prompt(mention, random_person))
+        elif text.startswith("time"):
+            msg = "%s: %s" % (mention, time_left())
 
     except HouseCupException as ex:
         msg = "{0.author.mention}: " + str(ex)
