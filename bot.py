@@ -226,7 +226,7 @@ def get_userid_from_mention(mention):
 def calculate_personal_score(user_id):
     p = participants[user_id]
     points = p[DAILY] + p[POST] + p[BETA] + p[WORKSHOP] + p[COMMENT]
-    points += p[WC] + p[EXCRED] + p[MOD_ADJUST]
+    points += p[WC] + p[ART] + p[EXCRED] + p[MOD_ADJUST]
     if not is_april:
         points += p[ART]
     return points
