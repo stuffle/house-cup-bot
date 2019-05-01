@@ -329,7 +329,7 @@ def log_score(text, user_id):
         raise HouseCupException(
             "`%sart` may not be used until after April." % PREFIX)
 
-    if category not in CATEGORIES + ["exercise"]:
+    if category not in CATEGORIES + ["exercise", "art"]:
         raise HouseCupException("Unrecognized Category. " + VALID_CATEGORIES)
 
     if category == MOD_ADJUST:
