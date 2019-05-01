@@ -31,8 +31,7 @@ class TestLogScore(unittest.TestCase):
         self.assertIsNotNone(bot.log_score("~log daily", "123"))
         self.assertIsNotNone(bot.log_score("~log post", "123"))
         self.assertIsNotNone(bot.log_score("~log beta", "123"))
-        # TODO: Uncomment art in May
-        # self.assertIsNotNone(bot.log_score("~log art 10", "123"))
+        self.assertIsNotNone(bot.log_score("~log art 10", "123"))
         self.assertIsNotNone(bot.log_score("~log workshop", "123"))
         self.assertIsNotNone(bot.log_score("~log exercise", "123"))
         self.assertIsNotNone(bot.log_score("~log comment", "123"))
@@ -59,8 +58,7 @@ class TestRemoveScore(unittest.TestCase):
         self.assertIsNotNone(bot.remove_score("~remove daily", "123"))
         self.assertIsNotNone(bot.remove_score("~remove post", "123"))
         self.assertIsNotNone(bot.remove_score("~remove beta", "123"))
-        # TODO: Uncomment art in May
-        # self.assertIsNotNone(bot.remove_score("~remove art 10", "123"))
+        self.assertIsNotNone(bot.remove_score("~remove art 10", "123"))
         self.assertIsNotNone(bot.remove_score("~remove workshop", "123"))
         self.assertIsNotNone(bot.remove_score("~remove exercise", "123"))
         self.assertIsNotNone(bot.remove_score("~remove comment", "123"))
@@ -99,7 +97,7 @@ class TestLeaderboard(unittest.TestCase):
         self.assertIsNotNone(bot.leader_board("leaderboard post"))
         self.assertIsNotNone(bot.leader_board("leaderboard beta"))
         self.assertIsNotNone(bot.leader_board("leaderboard daily"))
-        # TODO: self.assertIsNotNone(bot.leader_board("leaderboard art"))
+        self.assertIsNotNone(bot.leader_board("leaderboard art"))
         self.assertIsNotNone(bot.leader_board("leaderboard workshop"))
         self.assertIsNotNone(bot.leader_board("leaderboard comment"))
         self.assertIsNotNone(bot.leader_board("leaderboard excred"))

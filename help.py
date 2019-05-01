@@ -65,9 +65,7 @@ def help_command(message, prefix):
             color=COLOR,
             description=msg)
     elif arg == "art":
-        # TODO: Remove starting in May in May
-        msg = "Starting in May:\n" \
-              "Log 5, 10, or 15 points for your art. " \
+        msg = "Log 5, 10, or 15 points for your art. " \
               "For visual art, full color earns 15 points, " \
               " flat color earns 10, and a sketch or line art earns 5. " \
               "See the [FAQ](%s) in the House Cup Documentation for more info." \

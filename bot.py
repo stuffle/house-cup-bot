@@ -26,12 +26,6 @@ if IS_TEST_ENV:
     DATA_FILE = "test_data.json"
 
 
-def is_april():
-    now = datetime.datetime.now(datetime.timezone.utc)
-    return now.month == 4 and now.year == 2019
-print(is_april())
-
-
 SLYTHERIN = "slytherin"
 RAVENCLAW = "ravenclaw"
 GRYFFINDOR = "gryffindor"
@@ -65,9 +59,8 @@ EXCRED = "excred"
 MOD_ADJUST = "mod_adjust"
 WC = "wc"
 ART = "art"
-CATEGORIES = [DAILY, POST, BETA, WORKSHOP, COMMENT, WC, EXCRED, MOD_ADJUST]
-if not is_april():
-    CATEGORIES.append(ART)
+CATEGORIES = [DAILY, POST, BETA, ART, WORKSHOP,
+              COMMENT, WC, EXCRED, MOD_ADJUST]
 CATEGORY_TO_POINTS = {
     DAILY: 5,
     POST: 10,
@@ -227,8 +220,6 @@ def calculate_personal_score(user_id):
     p = participants[user_id]
     points = p[DAILY] + p[POST] + p[BETA] + p[WORKSHOP] + p[COMMENT]
     points += p[WC] + p[ART] + p[EXCRED] + p[MOD_ADJUST]
-    if not is_april:
-        points += p[ART]
     return points
 
 
@@ -325,11 +316,8 @@ def log_score(text, user_id):
             "Please provide a category to log your points in. " + VALID_CATEGORIES)
 
     category = args[1].lower()
-    if category == ART and is_april():
-        raise HouseCupException(
-            "`%sart` may not be used until after April." % PREFIX)
 
-    if category not in CATEGORIES + ["exercise", "art"]:
+    if category not in CATEGORIES + ["exercise"]:
         raise HouseCupException("Unrecognized Category. " + VALID_CATEGORIES)
 
     if category == MOD_ADJUST:
@@ -767,12 +755,8 @@ def points(user, message):
         "(%d words)" % person["word_count"]
 
     points_messages = [who_message, total_message, daily_message, post_message,
-                       beta_message, comment_message, workshop_message,
-                       wc_message, excred_message]
-    if not is_april():
-        points_messages = [who_message, total_message, daily_message, post_message,
-                          beta_message, art_message, comment_message, workshop_message,
-                          wc_message, excred_message]
+                      beta_message, art_message, comment_message, workshop_message,
+                      wc_message, excred_message]
     msg = "\n".join(points_messages)
 
     if person[MOD_ADJUST] != 0:
@@ -857,30 +841,11 @@ def calculate_house_score(house):
     sorted_members = sort_participants(members, "total")
     sorted_points = [x[1] for x in sorted_members]
 
-    # TODO: Remove conditional in May
-    if is_april():
-        while len(sorted_points) < 3:
-            sorted_points.append(0)
-
-        for index, points in enumerate(sorted_points):
-            iteration = index + 1
-            denominator = 2**iteration
-
-            """
-            If we're on the last iteration, use the previous number in the
-            geometric sum so that the weights sum to 1
-             """
-            if iteration == len(sorted_points):
-                denominator = 2**index
-
-            weight = 1 / denominator
-            house_score += weight * float(points)
-    else:
-        for index, points in enumerate(sorted_points):
-            iteration = index + 1
-            denominator = 2**iteration
-            weight = 1 / denominator
-            house_score += weight * float(points)
+    for index, points in enumerate(sorted_points):
+        iteration = index + 1
+        denominator = 2**iteration
+        weight = 1 / denominator
+        house_score += weight * float(points)
 
     return house_score
 
