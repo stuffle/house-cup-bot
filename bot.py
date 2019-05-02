@@ -994,20 +994,18 @@ def make_backup(when):
 
 def time_left():
     now = datetime.datetime.now(datetime.timezone.utc)
-
     winnings_date = datetime.datetime(
         now.year, now.month, days_in_month,
         23, 59, 0, 0, datetime.timezone.utc)
+
     time_remaining = winnings_date - now
     days = time_remaining.days
-    hours_in_seconds = time_remaining.seconds - (days * 24 * 3600)
-    hours = hours_in_seconds / 3600
-    minutes_in_seconds = hours_in_seconds % 3600
-    minutes = minutes_in_seconds / 60
-    seconds = minutes_in_seconds % 60
-    msg = "There are %d days, %d hours, %d minutes, and %d seconds " \
+    hours = time_remaining.seconds // 3600
+    minutes = (time_remaining.seconds // 60) % 60
+
+    msg = "There are %d days, %d hours, and %d minutes " \
           "remaining." \
-          " Good luck, friend." % (days, hours, minutes, seconds)
+          " Good luck, friend." % (days, hours, minutes)
     return msg
 
 
