@@ -473,11 +473,6 @@ def log_score(text, user_id):
         if wc_points == 1:
             plural = ""
         participants[user_id]["word_count"] = wordcount
-        # TODO: Remove cap in May
-        if wc_points >= 25:
-            wc_points = 25
-            msg = "You have now earned the max number of wc points. " \
-                "Thank you for contributing so much writing. %s " % heart
         if args[2] == "add":
             msg = "Congratulations on posting %d words! " \
                 "This brings your total  to %d, giving you %d point%s! " % (

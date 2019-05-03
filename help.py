@@ -20,7 +20,7 @@ def help_command(message, prefix):
     if arg == "join":
         msg = "Join the House Cup with your current house role. \n" \
               "Unless you leave and rejoin, you will have your current" \
-              " house and name for the entirety of the month." \
+              " username for the entirety of the month." \
               "\n\nExample: `%sjoin`" % prefix
         embed = discord.Embed(
             title="Join Help",
@@ -36,11 +36,11 @@ def help_command(message, prefix):
 
     # Logging Points
     elif arg == "daily":
-        msg = "Log 5 points for doing any sort of creative work. " \
+        msg = "Log 5 points for doing any sort of creative fandom work. " \
               "It doesn't matter how little or how much you did. " \
               "Anything counts. :heart:\n\n" \
               "You must log your days work within 24 hours of doing it." \
-              " Dailies can be logged once every four hours, " \
+              " Dailies can be logged once every eight hours, " \
               "but please do not log more than one a day." \
               "\n\nExample: `%sdaily`" % prefix
         embed = discord.Embed(
@@ -48,10 +48,11 @@ def help_command(message, prefix):
             color=COLOR,
             description=msg)
     elif arg == "post":
-        msg = "Log 10 points each time you post artwork, " \
-              "update a chaptered work, post a new work, " \
-              "or help with the bot." \
-              "\n\nExample: `%spost`" % prefix
+        msg = "Log 10 points each time you post something " \
+              "other than art. For art, use `~art`." \
+              " See the [FAQ](%s) in the house cup doc for " \
+              "more info on what counts." \
+              "\n\nExample: `%spost`" % (DOCS_LINK, prefix)
         embed = discord.Embed(
             title="Post Help",
             color=COLOR,
@@ -85,7 +86,7 @@ def help_command(message, prefix):
             description=msg)
     elif arg == "exercise":
         msg = "Log 5 workshop points when you either contribute a work to " \
-              "the weekly exercise or participate as a reader. " \
+              "the weekly exercise in the writing server or participate as a reader. " \
               "Do this command twice if you do both!" \
               "\n\nExample: `%sexercise`" % prefix
         embed = discord.Embed(
@@ -94,26 +95,27 @@ def help_command(message, prefix):
             description=msg)
     elif arg == "comment":
         msg = "Log 1 point for any comment and 5 points per essay-length " \
-              "comment. 5 point comments are defined by their length, " \
-              "analysis, and general thoughtfulness. " \
-              "Please use your best judgement on which to use." \
+              "comment. " \
+              "See the [FAQ](%s) in the house cup doc for " \
+              "more info on which to use." \
               "\n\nExamples: `%scomment` for regular comments and `%scomment" \
-              " extra` for essay-length comments." % (prefix, prefix)
+              " extra` for essay-length comments." % (
+                  DOCS_LINK, prefix, prefix)
         embed = discord.Embed(
             title="Comment Help",
             color=COLOR,
             description=msg)
     elif arg == "excred":
         msg = "Use `%sexcred AMOUNT`, where amount is a positive number.\n\n" \
-              "Check the document for this month's extra credit " \
+              "Check the [document](%s) for this month's extra credit " \
               "challenge and its corresponding points. " \
               "Maximum Extra Credit is 50 points per month." \
-              "\n\nExample: `%sexcred 10`" % (prefix, prefix)
+              "\n\nExample: `%sexcred 10`" % (prefix, DOCS_LINK, prefix)
         embed = discord.Embed(
             title="Extra Credit Help",
             color=COLOR,
             description=msg)
-    elif arg == "wc":
+    elif arg == "wc" or arg == "wordcount" or arg == "word_count":
         msg = "Log one point per 1000 words you've posted, rounded to the " \
               "nearest 1000.\n\n" \
               "Example: `%swc 9000` to log 9000 total words this month or"\
@@ -126,7 +128,7 @@ def help_command(message, prefix):
     elif arg == "remove":
         msg = "Use `%sremove CATEGORY` to remove points from a given category"\
               ". CATEGORY may be `daily`, `post`, `beta`, `workshop`, " \
-              "`comment`, or `excred`. If you are removing extra credit " \
+              "`comment`, or `excred`. If you are removing extra credit or art " \
               "points, you must provide the ammount of points to remove. " \
               "If you want to remove points from your word count, use " \
               "`%swc TOTAL_WC` to reset your total word count." \
@@ -169,7 +171,7 @@ def help_command(message, prefix):
         msg = "Show the current rankings of top participants' total points. "\
               "You may provide a category to see the rankings in that. " \
               "Valid categories are `daily`, `post`, `beta`, `workshop`, " \
-              "`comment`, `wc`, `excred`, or `mod_adjust`" \
+              "`art`, `comment`, `wc`, `word_count`, `excred`, or `mod_adjust`" \
               "\n\nExamples: `%sleaderboard`, `%sleaderboard post`" % (
                   prefix, prefix)
         embed = discord.Embed(
@@ -197,16 +199,6 @@ def help_command(message, prefix):
     elif arg == "pingeveryone":
         msg = "Mods only: Ping everyone currently in the House Cup." \
               "\n\n Example `%spingeveryone`" % prefix
-        embed = discord.Embed(
-            title="Ping Everyone Help",
-            color=COLOR,
-            description=msg)
-    elif arg == "winnings":
-        msg = "Mods only: Show the winners of this month's House Cup. " \
-              "This will end and restart the competition. " \
-              "This command should only be used at midnight UTC. " \
-              "This command will be deleted after Stuffle codes timed announcements." \
-              "\n\n Example `%swinnings`" % prefix
         embed = discord.Embed(
             title="Ping Everyone Help",
             color=COLOR,
