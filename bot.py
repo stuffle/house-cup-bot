@@ -1150,6 +1150,10 @@ async def on_message(message):
         elif text.startswith("sneak"):
             random_person = get_random_person(user)
             msg = sneak(mention, random_person)
+        elif text.startswith("grouphug"):
+            embed = group_hug(user.mention, message.mentions, text)
+            await client.send_message(message.channel, embed=embed)
+            return
         elif text.startswith("kidnap"):
             embed = kidnap(user.mention, message.mentions, text)
             await client.send_message(message.channel, embed=embed)
