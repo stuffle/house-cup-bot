@@ -26,10 +26,15 @@ def should_i_kill():
 def gen_prompt(mention, ran_person):
     person = [
         "Harry",
+        "Fem Harry",
         "Ron",
         "Hermione",
         "Voldemort",
+        "Voldemort, made attractive for 'reasons',",
+        "Voldemort, at the height of his power,",
+        "Fem Voldemort",
         "Tom",
+        "Fem Tom",
         "Dumbledore",
         "Snape",
         "Umbridge",
@@ -48,7 +53,7 @@ def gen_prompt(mention, ran_person):
         "Remus",
         "Fluffy, the Cerberus,",
         "Dobby, the house-elf,",
-        "Norberta, the Norwegian Ridgeback Dragon",
+        "Norberta, the Norwegian Ridgeback Dragon,",
         "Merope",
         "Grindelwald",
         "Delphini",
@@ -136,18 +141,22 @@ def gen_prompt(mention, ran_person):
         "goes into hiding at",
         "will never recover from the battle of",
         "escaped the war by running away to",
-        "changed his identity to live anonymously at",
+        "changed their identity to live anonymously at",
         "dances naked at",
-        "loses his temper at",
+        "loses their temper at",
         "sings sonnets in",
         "decides to become the Pirate King and starts from",
         "decides to become the World’s Best Thief, starting with the robbery of",
         "becomes a lawyer, setting up their law firm at",
-        "become a doctor, setting up a clinic at",
+        "becomes a doctor, setting up a clinic at",
         "decides to become a Masterchef Chef, cooking their first big meal at",
         "decides to join the Mafia and starts from",
         "decides to start a Guild at",
-        "plays Dungeons and Dragons with their friends at"
+        "plays Dungeons and Dragons with their friends at",
+        "holds a jam session at",
+        "plays the most beautiful instrumental song at",
+        "manipulates the residents of",
+        "will forever haunt"
 
     ]
     random_action = random.choice(action)
@@ -184,19 +193,23 @@ def gen_prompt(mention, ran_person):
         "Malfoy Manor",
         "Antarctica",
         "the Arctic Circle",
-        "a Monastery",
-        "an Altar",
+        "a monastery",
+        "an altar",
         "Germany",
         "the Bermuda Triangle",
-        "an Auction",
-        "in a broom closet",
+        "an auction",
+        "the inside of a broom closet",
         "the cupboard under the stairs",
-        "the Kitchen",
-        "the Dance Floor",
+        "the kitchen",
+        "the dance floor",
         "a bar",
         "a tavern",
         "a seedy hotel",
-        "a fancy hotel"
+        "a fancy hotel",
+        "an alpine ski lodge",
+        "a safe house",
+        "Myrtle's bathroom",
+        "the Forest of Dean"
     ]
     random_setting = random.choice(setting)
 
