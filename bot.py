@@ -12,7 +12,7 @@ from calendar import monthrange
 import datetime
 
 from humor_commands import *
-from viking import *
+from actions import *
 from inspire import *
 from help import *
 

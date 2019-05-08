@@ -16,6 +16,6 @@ export DISCORD_BOT_SECRET='TOKEN'
 ```
  Run this in your terminal and then also add this line to your `.bashrc`.
 
-2. Create a file named `data.json` with `{}` inside of it.
+2. Create a file named `data.json` with `{'participants': '{}'}` inside of it.
 
 3. Then you should be able to run the bot with `python bot.py`. Make sure to use Python 3.6.
