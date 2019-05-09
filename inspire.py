@@ -11,7 +11,7 @@ def inspireme():
         "In Svalbard, a remote Norwegian island, it is illegal to die because bodies are unable to be buried safely due to the permafrost on the ground. If you are about to die, they fly you back to mainland Norway to pass on there.",
         "When George Washington died, Napoleon Bonaparte of France gave a personal eulogy and ordered a ten day mourning period for France.",
         "Scientists discovered sharks that are living in an active underwater volcano. Divers cannot investigate because they would get burns from the acidity and heat.",
-        "To properly write adjectives in order, you would list them by amount, value, size, temperature, age, shape, color, origin, and material."
+        "Fun English fact: To properly write adjectives in order, you would list them by amount, value, size, temperature, age, shape, color, origin, and material."
     ]
 
     quotes = [
@@ -43,11 +43,25 @@ def inspireme():
         "The Latest Kate: It’s okay if you screwed up today. Tomorrow is waiting for you with not mistakes in it.",
         "The Latest Kate: Feeling negative doesn’t mean anything is *actually* going to go wrong. Things have a way of working out, you’ve seen it.",
         "The Latest Kate: No beating yourself up anymore. It doesn’t help, and you don’t deserve it.",
-        "James Patterson: Life is hard, and a lot of people come home tired from work. If they're gonna spend half an hour reading, they want some entertainment and a sense of achievement. So that's what I give them. That's all I'm trying to do. Is that really so wrong?"
+        "James Patterson: Life is hard, and a lot of people come home tired from work. If they're gonna spend half an hour reading, they want some entertainment and a sense of achievement. So that's what I give them. That's all I'm trying to do. Is that really so wrong?",
+        "Paul Grealish: Describing your writing as trash while you're still drafting is like looking at a bag of flour and an egg and saying, 'My cake tastes like crap.'",
+        "S. Kelley Harrel: A good editor doesn't rewrite words, she rewires synapses.",
+        "Richard Due: I've reached that final moment of editing a book—the one where the text manifests as a living breathing person and starts slugging me in the face.",
+        "Stephen King: Books are a uniquely portable magic.",
+        "Stephen King: Description begins in the writer’s imagination, but should finish in the reader’s.",
+        "Stephen King: Amateurs sit and wait for inspiration, the rest of us just get up and go to work.",
+        "Stephen King: Optimism is a perfectly legitimate response to failure.",
+        "Brandon Sanderson: Novels aren’t just happy escapes; they are slivers of people’s souls, nailed to the pages, dripping ink from veins of wood pulp. Reading the right one at the right time can make all the difference.",
+        "Brandon Sanderson: The mark of a great man is one who knows when to set aside the important things in order to accomplish the vital ones.",
+        "Brandon Sanderson: The purpose of a storyteller is not to tell you how to think, but to give you questions to think upon.",
+        "Brandon Sanderson: Words are where most change begins.",
+        "Brandon Sanderson: A man was defined not by his flaws, but by how he overcame them.",
+        "Brandon Sanderson: You could be writing the book that changes your life.",
+        "Brandon Sanderson: Expectations were like fine pottery. The harder you held them, the more likely they were to crack."
     ]
 
     humour = [
-        "If you’re stuck for ideas, remember the werechair.",
+        "If you’re stuck for ideas, remember the werechair (a chair bitten by a werewolf).",
         "Why does inspiration always come when I should be sleeping?? :sweat:",
         "Don’t write anything Tom wouldn’t do.",
         "Just, whatever you do, don’t let Tom play with knives... :sweat:",
