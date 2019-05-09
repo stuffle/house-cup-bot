@@ -73,6 +73,11 @@ def gen_prompt(mention, ran_person):
         "Lily Evans",
         "Neville",
         "Luna",
+        "MOD Harry",
+        "Hadrian Potter-Peverell-Gryffindor-Slytherin",
+        "Rita Skeeter",
+        "Crookshanks",
+        "Voldemort’s unknown extra Horcrux",
         "Your OTP",
         "Your OT3",
         mention,
@@ -99,7 +104,7 @@ def gen_prompt(mention, ran_person):
         "brought the war to",
         "takes the Dark Mark at",
         "gets married in",
-        "encountered the Mirror of Erised in",
+        "encounters the Mirror of Erised in",
         "loves to have tea at",
         "discovers a new kink in",
         "seduces an enemy at",
@@ -155,8 +160,17 @@ def gen_prompt(mention, ran_person):
         "plays Dungeons and Dragons with their friends at",
         "holds a jam session at",
         "plays the most beautiful instrumental song at",
-        "manipulates the residents of",
-        "will forever haunt"
+        "manipulates the people at",
+        "will forever haunt",
+        "commits the ultimate sin at",
+        "makes the front page of the Daily Prophet after the events of",
+        "delivers an impassioned speech at",
+        "resists the consequences of dark magic at",
+        "finally embraces the Dark Arts at",
+        "kidnaps their enemy from",
+        "has their master plan go awry at",
+        "flees from the Death Eaters at",
+        "runs from the Order of the Phoenix at"
 
     ]
     random_action = random.choice(action)
@@ -209,7 +223,11 @@ def gen_prompt(mention, ran_person):
         "an alpine ski lodge",
         "a safe house",
         "Myrtle's bathroom",
-        "the Forest of Dean"
+        "the Forest of Dean",
+        "a flower shop",
+        "the inside of a magic portrait",
+        "the final resting place of Merlin",
+        "Dumbledore’s grave "
     ]
     random_setting = random.choice(setting)
 
