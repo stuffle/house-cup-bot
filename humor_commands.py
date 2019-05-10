@@ -78,6 +78,18 @@ def gen_prompt(mention, ran_person):
         "Rita Skeeter",
         "Crookshanks",
         "Voldemort’s unknown extra Horcrux",
+        "Quirrell, with Voldemort on the back of his head,",
+        "Ginny, possessed by Tom,",
+        "The wraith of Voldemort",
+        "Auror Potter",
+        "Professor Harry Potter",
+        "Professor Tom Riddle",
+        "Omega Harry",
+        "Omega Tom",
+        "Harry’s twin",
+        "The WBWL",
+        "A platonic pair",
+        "A couple",
         "Your OTP",
         "Your OT3",
         mention,
@@ -170,7 +182,14 @@ def gen_prompt(mention, ran_person):
         "kidnaps their enemy from",
         "has their master plan go awry at",
         "flees from the Death Eaters at",
-        "runs from the Order of the Phoenix at"
+        "runs from the Order of the Phoenix at",
+        "reads the Harry Potter books at",
+        "writes fan fiction at",
+        "can feel something watching them at",
+        "thinks they are alone at",
+        "needs to escape",
+        "can not find the source of an ominous sound at",
+        "sees the future at"
 
     ]
     random_action = random.choice(action)
@@ -227,7 +246,13 @@ def gen_prompt(mention, ran_person):
         "a flower shop",
         "the inside of a magic portrait",
         "the final resting place of Merlin",
-        "Dumbledore’s grave "
+        "Dumbledore’s grave",
+        "Diagon Alley",
+        "the Riddle house",
+        "the Guant shack",
+        "Azkaban",
+        "Hogsmeade",
+        "Borgin and Burkes"
     ]
     random_setting = random.choice(setting)
 
