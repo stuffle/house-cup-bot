@@ -872,6 +872,15 @@ def standings():
     return msg + heart + animal * 7 + heart
 
 
+def announce_two_days():
+    current_standings = standings()
+    msg = "There are exactly two days remaining in this month's House Cup. " \
+          "Get your points in soon to help your house win. " \
+          "Good luck friends." \
+          "\n\n%s" % current_standings
+    return msg
+
+
 def winnings():
     """
     End and restarts the House Cup Compeition.
@@ -1249,6 +1258,12 @@ async def run_winnings():
     await send_to_all_servers(msg2.format(msg2), SERVER_ID_TO_CHANNEL_ANNOUNCE)
 
 
+async def run_announce_two_days():
+    print("Running announce_two_days")
+    msg = announce_two_days()
+    await send_to_all_servers(msg.format(msg), SERVER_ID_TO_CHANNEL_ANNOUNCE)
+
+
 if __name__ == '__main__':
     client.loop.create_task(list_recs())
     token = os.environ.get("DISCORD_BOT_SECRET")
@@ -1266,6 +1281,15 @@ if __name__ == '__main__':
         run_winnings,
         'date',
         run_date=winnings_date)
+
+    two_days_left = datetime.datetime(
+        now.year, now.month, days_in_month - 2,
+        23, 59, 0, 0, datetime.timezone.utc)
+    print("Two days left: %s" % two_days_left)
+    scheduler.add_job(
+        run_announce_two_days,
+        'date',
+        run_date=two_days_left)
 
     scheduler.start()
     client.run(token)
