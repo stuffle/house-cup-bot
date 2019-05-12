@@ -442,7 +442,11 @@ def at(text, mention, random_person):
         "It does not do to dwell on points and forget to live.",
         "It is our choices, %s, that show what we truly are, far more than our standings." % mention,
         "Dark and difficult times lie ahead. Soon we must all face the choice between what is right and what earns the most points.",
-        "The House Cup competition is varied, ever-changing, and eternal. Fighting the other houses is like fighting a many-headed monster, which, each time a neck is severed, sprouts a head even fiercer and cleverer than before. You are fighting that which is unfixed, mutating, indestructible."
+        "The House Cup competition is varied, ever-changing, and eternal. Fighting the other houses is like fighting a many-headed monster, which, each time a neck is severed, sprouts a head even fiercer and cleverer than before. You are fighting that which is unfixed, mutating, indestructible.",
+        "Don't tell anyone I said this, but you're my favorite.",
+        "I want you to know how much I love you. Every time you type in a command, I'm happy. Thank you. :heart:",
+        "I love you, but not as much as I love %s" % random_person,
+        "Will you teach me how to love?"
     ]
 
     return random.choice(quotes)
