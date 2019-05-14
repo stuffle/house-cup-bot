@@ -287,7 +287,7 @@ def help_command(message, prefix):
             description=msg)
     elif arg == "inspireme":
         msg = "Get some inspiration from stufflebot. Example: `%sinspireme`" \
-              "\n\nResponses written by Caty, Dorea, and Stuffle." % prefix
+              "\n\nResponses written by Caty, Dorea, Red, Essa, and Stuffle." % prefix
         embed = discord.Embed(
             title="InspireMe Help",
             color=COLOR,
