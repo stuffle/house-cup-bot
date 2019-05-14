@@ -172,7 +172,7 @@ def gen_prompt(mention, ran_person):
         "plays Dungeons and Dragons with their friends at",
         "holds a jam session at",
         "plays the most beautiful instrumental song at",
-        "manipulates the people at",
+        "manipulates the people of",
         "will forever haunt",
         "commits the ultimate sin at",
         "makes the front page of the Daily Prophet after the events of",
@@ -189,7 +189,11 @@ def gen_prompt(mention, ran_person):
         "thinks they are alone at",
         "needs to escape",
         "can not find the source of an ominous sound at",
-        "sees the future at"
+        "sees the future at",
+        "experiments with something new at",
+        "has an excellent day at",
+        "has the worst day of their life at",
+        "doesn't know they are being watched at"
 
     ]
     random_action = random.choice(action)
