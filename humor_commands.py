@@ -90,6 +90,11 @@ def gen_prompt(mention, ran_person):
         "The WBWL",
         "A platonic pair",
         "A couple",
+        "A Dementor",
+        "A *very* knowledgeable garden snake",
+        "Bellatrix",
+        "A masked Death Eater",
+        "The Minister of Magic",
         "Your OTP",
         "Your OT3",
         mention,
@@ -193,7 +198,17 @@ def gen_prompt(mention, ran_person):
         "experiments with something new at",
         "has an excellent day at",
         "has the worst day of their life at",
-        "doesn't know they are being watched at"
+        "doesn't know they are being watched at",
+        "runs a shadow empire from",
+        "hides from the world at",
+        "wakes up in the past during a very inopportune moment at",
+        "time travels to find a very different future at",
+        "walks in on an awkward scene at",
+        "is forever imprisoned in",
+        "finds a dangerous family heirloom in",
+        "lays a trap at",
+        "curses",
+        "discovers the secret to immortality at"
 
     ]
     random_action = random.choice(action)
