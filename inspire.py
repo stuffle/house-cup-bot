@@ -62,6 +62,7 @@ def inspireme():
         "Zig Ziglar: People often say that motivation doesn’t last. Well, neither does bathing; that’s why we recommend it daily.",
         "Raymond Carver: It’s possible, in a poem or short story, to write about commonplace things and objects using commonplace but precise language, and to endow those those things—a chair, a window curtain, a fork, a stone, a woman’s earring—with immense, even startling power.",
         "Rebecca Solnit:In [fairy tales], power is rarely the right tool for survival anyway. Rather the powerless thrive on alliances, often in the form of reciprocated acts of kindness - from beehives that were not raided, birds that were not killed but set free or fed, old women who were saluted with respect. Kindness sown among the meek is harvested in crisis.",
+        "Matt Tobey: Write as if David Benioff and DB Weiss will get to finish your story if you don’t.",
 
         # Humour
         "If you’re stuck for ideas, remember the werechair (a chair bitten by a werewolf).",

@@ -208,7 +208,8 @@ def gen_prompt(mention, ran_person):
         "finds a dangerous family heirloom in",
         "lays a trap at",
         "curses",
-        "discovers the secret to immortality at"
+        "discovers the secret to immortality at",
+        "has a romantic proposal at"
 
     ]
     random_action = random.choice(action)
@@ -268,7 +269,7 @@ def gen_prompt(mention, ran_person):
         "Dumbledore’s grave",
         "Diagon Alley",
         "the Riddle house",
-        "the Guant shack",
+        "the Gaunt shack",
         "Azkaban",
         "Hogsmeade",
         "Borgin and Burkes"
