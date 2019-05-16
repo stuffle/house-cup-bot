@@ -1173,6 +1173,8 @@ async def on_message(message):
             return
         elif text.startswith("shouldikillharry"):
             msg = "%s: %s" % (mention, should_i_kill())
+        elif text.startswith("shouldigetbacktowork"):
+            msg = "%s: %s" % (mention, back_to_work())
         elif text.startswith("inspireme"):
             msg = "%s: %s" % (mention, inspireme())
         elif text.startswith("prompt"):

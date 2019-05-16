@@ -23,6 +23,50 @@ def should_i_kill():
     return random.choice(responses)
 
 
+def back_to_work():
+    responses = [
+        # Yes
+        "Yes.",
+        "Do it!! :tada:",
+        "Yes. You can do it; you know you can.",
+        "You are strong, amazing, and competent. Go kick some ass.",
+        "Set a timer for 30 minutes and during that time, do nothing but focus on your work.",
+        "You know you should.",
+        "You already know the answer.",
+        "Don’t ask questions you don’t want answered.",
+        "Just get to the next milestone. :heart:",
+        "Get back to work!",
+        "GET BACK TO WORK!!!!!",
+        "Get. Back. To. Work. NOW!",
+        "Yes. Do it.",
+        "Maybe if you worked more, you’d be worthy of my love.",
+        "If you get back to work, you might not be such a disappointment.",
+        "Are you such a slacker that you need me to tell you what you already know you should be doing?",
+        "You’ll feel better if you get this done.",
+        "Signs point to yes.",
+        "Don't make me remove points.",
+        "I'll give you five points if you do.",
+
+        # No
+        "Take a break, you deserve it.",
+        "Breaks can increase your productivity, just don’t overdo it.",
+        "Take another 10 minutes to relax, and then get down to business.",
+        "Maybe you’ve already done enough?",
+        "Achievement is an addiction. Your choice.",
+        "Do you have to? Good enough is good enough.",
+        "Going the extra mile leads to exhaustion. Take a break and think of how you can get your work done with less effort.",
+        "You could always clean your entire house again.",
+        "What if instead of actually working, you do some reformatting, maybe some color-coding?",
+        "Just one more fic…",
+        "What if you started a new fic instead?",
+        "Not getting back to work would be just like you.",
+        "No, give up.",
+        "Maybe your work would be better off without you.",
+        "Signs point to no."
+    ]
+    return random.choice(responses)
+
+
 def gen_prompt(mention, ran_person):
     person = [
         "Harry",
