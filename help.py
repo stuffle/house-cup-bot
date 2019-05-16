@@ -351,7 +351,7 @@ def general_help(prefix):
         inline=False)
     embed.add_field(
         name="Inspiration Commands:",
-        value="`prompt`, `inspireme`, `shouldikillharry`, shouldigetbacktowork",
+        value="`prompt`, `inspireme`, `shouldikillharry`, `shouldigetbacktowork`",
         inline=False)
 
     return embed
