@@ -294,9 +294,16 @@ def help_command(message, prefix):
             description=msg)
     elif arg == "shouldikillharry":
         msg = "Have stufflebot decide if you should kill Harry. " \
-              "Example: `%sshouldikillharry`"
+              "Example: `%sshouldikillharry`" % prefix
         embed = discord.Embed(
             title="ShouldIKillHarry Help",
+            color=COLOR,
+            description=msg)
+    elif arg == "shouldigetbacktowork":
+        msg = "Ask stufflebot if you should get back to work.\n\n" \
+              "Example: `%sshouldigetbacktowork`"% prefix
+        embed = discord.Embed(
+            title="shouldIGetBacktoWork Help",
             color=COLOR,
             description=msg)
 
@@ -344,7 +351,7 @@ def general_help(prefix):
         inline=False)
     embed.add_field(
         name="Inspiration Commands:",
-        value="`prompt`, `inspireme`, `shouldikillharry`",
+        value="`prompt`, `inspireme`, `shouldikillharry`, shouldigetbacktowork",
         inline=False)
 
     return embed
