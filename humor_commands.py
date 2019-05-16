@@ -31,7 +31,7 @@ def back_to_work():
         "Yes. You can do it; you know you can.",
         "You are strong, amazing, and competent. Go kick some ass.",
         "Set a timer for 30 minutes and during that time, do nothing but focus on your work.",
-        "You know you should.",
+        "Do it for me.",
         "You already know the answer.",
         "Don’t ask questions you don’t want answered.",
         "Just get to the next milestone. :heart:",
@@ -39,8 +39,6 @@ def back_to_work():
         "GET BACK TO WORK!!!!!",
         "Get. Back. To. Work. NOW!",
         "Yes. Do it.",
-        "Maybe if you worked more, you’d be worthy of my love.",
-        "If you get back to work, you might not be such a disappointment.",
         "Are you such a slacker that you need me to tell you what you already know you should be doing?",
         "You’ll feel better if you get this done.",
         "Signs point to yes.",
@@ -59,9 +57,7 @@ def back_to_work():
         "What if instead of actually working, you do some reformatting, maybe some color-coding?",
         "Just one more fic…",
         "What if you started a new fic instead?",
-        "Not getting back to work would be just like you.",
         "No, give up.",
-        "Maybe your work would be better off without you.",
         "Signs point to no."
     ]
     return random.choice(responses)
