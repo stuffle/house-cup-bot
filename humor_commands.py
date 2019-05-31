@@ -50,6 +50,8 @@ def back_to_work():
         "What's the biggest scariest thing about your prject? Can you make a plan for how to address that? Then the biggest hurdle will be dealt with and it will be a lot easier to do the rest. :heart:",
         "Why not?",
         "Is there a way to reframe what you're working on that makes it more fun?",
+        "Please do. I want to see what you'll make.",
+        "Yes, but you're not alone in it. I'm here, cheering you on from the sidelines. :tada:",
 
         # No
         "Take a break; you deserve it.",

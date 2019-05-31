@@ -108,6 +108,11 @@ participants = {}
 CAN_JOIN = False
 
 
+def is_may():
+        now = datetime.datetime.now(datetime.timezone.utc)
+        return now.month == 5 and now.year == 2019
+
+
 class HouseCupException(Exception):
     pass
 
@@ -836,11 +841,22 @@ def calculate_house_score(house):
     sorted_members = sort_participants(members, "total")
     sorted_points = [x[1] for x in sorted_members]
 
-    for index, points in enumerate(sorted_points):
-        iteration = index + 1
-        denominator = 2**iteration
-        weight = 1 / denominator
-        house_score += weight * float(points)
+    if is_may():
+        for index, points in enumerate(sorted_points):
+            iteration = index + 1
+            denominator = 2**iteration
+            weight = 1 / denominator
+            house_score += weight * float(points)
+    else:
+        for index, points in enumerate(sorted_points):
+            iteration = index + 1
+            weight = 1
+            if iteration in [1, 2, 3]:
+                weight = 1 / 4
+            else:
+                denominator = 2**iteration
+                weight = 1 / denominator
+            house_score += weight * float(points)
 
     return house_score
 
