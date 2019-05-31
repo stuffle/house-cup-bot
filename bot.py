@@ -854,7 +854,7 @@ def calculate_house_score(house):
             if iteration in [1, 2, 3]:
                 weight = 1 / 4
             else:
-                denominator = 2**iteration
+                denominator = 2**index
                 weight = 1 / denominator
             house_score += weight * float(points)
 
