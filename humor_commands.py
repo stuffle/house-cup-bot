@@ -531,8 +531,10 @@ def random_pair():
         "Harry",
         "Hermione",
         "Ignotus Peverell",
-        "Justin Finch-Fletchley/James",
+        "Justin Finch-Fletchley",
+        "James",
         "Krum",
+        "Lily",
         "Lupin",
         "Marcus Flint",
         "Merope",
@@ -555,6 +557,12 @@ def random_pair():
 
     person = random.choice(people)
     second_person = random.choice(people)
+    third_person = random.choice(people)
     while person == second_person:
         second_person = random.choice(people)
+    while person == third_person or second_person == third_person:
+        third_person = random.choice(people)
+
+    if random.random() < .20:
+        return "%s/%s/%s" % (person, second_person, third_person)
     return "%s/%s" % (person, second_person)
