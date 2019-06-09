@@ -517,3 +517,44 @@ def at(text, mention, random_person):
     ]
 
     return random.choice(quotes)
+
+
+def random_pair():
+    people = [
+        "Albus",
+        "Bellatrix",
+        "Charlie",
+        "Draco",
+        "Evan Rosier",
+        "Fred",
+        "George",
+        "Harry",
+        "Hermione",
+        "Ignotus Peverell",
+        "Justin Finch-Fletchley/James",
+        "Krum",
+        "Lupin",
+        "Marcus Flint",
+        "Merope",
+        "Myrtle",
+        "Newt",
+        "Oliver Wood",
+        "Pansy",
+        "Percy",
+        "Queenie",
+        "Ron",
+        "Sirius",
+        "Tom",
+        "Umbidge",
+        "Voldemort",
+        "Walburga",
+        "Xenopilius",
+        "You",
+        "Zacharias Smith"
+    ]
+
+    person = random.choice(people)
+    second_person = random.choice(people)
+    while person == second_person:
+        second_person = random.choice(people)
+    return "%s/%s" % (person, second_person)

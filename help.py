@@ -306,6 +306,13 @@ def help_command(message, prefix):
             title="shouldIGetBacktoWork Help",
             color=COLOR,
             description=msg)
+    elif arg == "randompair":
+        msg = "Have stufflebot give you a random pairing. " \
+              "Example: `%srandompair`" % prefix
+        embed = discord.Embed(
+            title="RandomPair Help",
+            color=COLOR,
+            description=msg)
 
     elif embed is None:
         msg = "Sorry! This command is unrecognized. View the general help " \
@@ -351,7 +358,7 @@ def general_help(prefix):
         inline=False)
     embed.add_field(
         name="Inspiration Commands:",
-        value="`prompt`, `inspireme`, `shouldikillharry`, `shouldigetbacktowork`",
+        value="`prompt`, `inspireme`, `shouldikillharry`, `shouldigetbacktowork`, `randompair`",
         inline=False)
 
     return embed
