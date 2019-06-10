@@ -146,6 +146,7 @@ def gen_prompt(mention, ran_person):
         "Bellatrix",
         "A masked Death Eater",
         "The Minister of Magic",
+        "Regulus Black",
         "Your OTP",
         "Your OT3",
         mention,
@@ -260,8 +261,22 @@ def gen_prompt(mention, ran_person):
         "lays a trap at",
         "curses",
         "discovers the secret to immortality at",
-        "has a romantic proposal at"
-
+        "has a romantic proposal at",
+        "uses Godric Gryffindor’s sword at",
+        "drinks from Helga Hufflepuff’s cup at",
+        "uses Rowena Ravenclaw’s diadem at",
+        "rolls around on a bed and hides their face in a pillow at",
+        "orders pizza to",
+        "plays hide and seek at",
+        "solves a mystery at",
+        "crash lands a broom at",
+        "conquers the world using a mysterious item found at",
+        "throws everyone out of",
+        "loves to have date nights at",
+        "likes to paint at",
+        "starts a meeting with “I’m sure you’re wondering why I’ve gathered you all here today” at",
+        "gets chosen to be the savior of",
+        "is selected by the Goblet of Fire as the champion of"
     ]
     random_action = random.choice(action)
 
@@ -323,7 +338,17 @@ def gen_prompt(mention, ran_person):
         "the Gaunt shack",
         "Azkaban",
         "Hogsmeade",
-        "Borgin and Burkes"
+        "Borgin and Burkes",
+        "a galaxy far, far away",
+        "a restaurant at the end of the universe",
+        "Walmart",
+        "an abandoned factory",
+        "an abandoned mine",
+        "a cruise ship",
+        "a volcano",
+        "Ilvermorny",
+        "Beauxbatons",
+        "Durmstrang"
     ]
     random_setting = random.choice(setting)
 
@@ -532,7 +557,10 @@ def random_pair():
         "Alastor (Mad-Eye) Moody",
         "Albus Dumbledore",
         "Alecto Carrow",
+        "Alice Longbottom",
+        "Amelia bones",
         "Amycus Carrow",
+        "Andromeda Tonks",
         "Angelina Johnson",
         "Argus Filch",
         "Bartemius Crouch, Jr.",
@@ -551,6 +579,7 @@ def random_pair():
         "Evan Rosier",
         "Fenrir Greyback",
         "Fleur Delacour",
+        "Frank Longbottom",
         "Fred Weasley",
         "Gellert Grindelwald",
         "Gilderoy Lockhart",
@@ -592,11 +621,13 @@ def random_pair():
         "Parvati Patil",
         "Penelope Clearwater",
         "Percy Weasley",
+        "Peter Pettigrew",
         "Phineas Black",
         "Quirinus Quirrell",
         "Remus Lupin",
         "Rita Skeeter",
         "Ron Weasley",
+        "Rowena Ravenclaw",
         "Rubeus Hagrid",
         "Rufus Scrimgeour",
         "Salazar Slytherin",
@@ -604,6 +635,7 @@ def random_pair():
         "Severus Snape",
         "Sirius Black",
         "Sybill Trelawney",
+        "the Bloody Baron",
         "Theodore Nott",
         "Tom Riddle",
         "Tom Riddle Sr.",
