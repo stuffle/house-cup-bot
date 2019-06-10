@@ -52,6 +52,9 @@ def back_to_work():
         "Is there a way to reframe what you're working on that makes it more fun?",
         "Please do. I want to see what you'll make.",
         "Yes, but you're not alone in it. I'm here, cheering you on from the sidelines. :tada:",
+        "Just start with 5 minutes of work and see how you feel.",
+        "Probably.",
+        "Put on some motivating music, then get back to work.",
 
         # No
         "Take a break; you deserve it.",
@@ -65,7 +68,8 @@ def back_to_work():
         "Just one more fic…",
         "What if you started a new fic instead?",
         "No.",
-        "Signs point to no."
+        "Signs point to no.",
+        "What if you didn’t?"
     ]
     return random.choice(responses)
 
@@ -220,7 +224,7 @@ def gen_prompt(mention, ran_person):
         "becomes a doctor, setting up a clinic at",
         "decides to become a Masterchef Chef, cooking their first big meal at",
         "decides to join the Mafia and starts from",
-        "decides to start a Guild at",
+        "decides to start a guild at",
         "plays Dungeons and Dragons with their friends at",
         "holds a jam session at",
         "plays the most beautiful instrumental song at",
@@ -513,7 +517,10 @@ def at(text, mention, random_person):
         "Don't tell anyone I said this, but you're my favorite.",
         "I want you to know how much I love you. Every time you type in a command, I'm happy. Thank you. :heart:",
         "I love you, but not as much as I love %s" % random_person,
-        "Will you teach me how to love?"
+        "Will you teach me how to love?",
+        ":scream:",
+        "Feed me code and I’ll love you.",
+        "I love you, but it’s time for you to get back to work."
     ]
 
     return random.choice(quotes)
@@ -529,7 +536,7 @@ def random_pair():
         "Angelina Johnson",
         "Argus Filch",
         "Bartemius Crouch, Jr.",
-        "Bellatrix LeSsrange",
+        "Bellatrix Lestrange",
         "Bill Weasley",
         "Blaise Zabini",
         "Cedric Diggory",
@@ -597,7 +604,6 @@ def random_pair():
         "Severus Snape",
         "Sirius Black",
         "Sybill Trelawney",
-        "The Grey Lady",
         "Theodore Nott",
         "Tom Riddle",
         "Tom Riddle Sr.",

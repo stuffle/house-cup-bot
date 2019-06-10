@@ -7,7 +7,7 @@ def inspireme():
     """
     responses = [
         # Quotes
-        "The Latest Kate: It’s okay if you screwed up today. Tomorrow is waiting for you with not mistakes in it.",
+        "The Latest Kate: It’s okay if you screwed up today. Tomorrow is waiting for you with no mistakes in it.",
         "The Latest Kate: Feeling negative doesn’t mean anything is *actually* going to go wrong. Things have a way of working out, you’ve seen it.",
         "The Latest Kate: No beating yourself up anymore. It doesn’t help, and you don’t deserve it.",
         "The Latest Kate: Here's a reminder that the negative voice in your head is not you, and you are actually really fucking delightful.",
@@ -99,6 +99,7 @@ def inspireme():
         "You are enough.",
         "Just do your best. It will be enough.",
         "I know you can do it. I've seen you do it before.",
+        "Motivation follows action.",
         "Remember what it feels like to fight for what you want. It’s the feeling of almost anger, but not frustrated anger that you can get at the world. It's the 'fuck this I will win' feeling, the fight song angry dancing feeling."
     ]
 

@@ -129,7 +129,7 @@ def help_command(message, prefix):
         msg = "Use `%sremove CATEGORY` to remove points from a given category"\
               ". CATEGORY may be `daily`, `post`, `beta`, `workshop`, " \
               "`comment`, or `excred`. If you are removing extra credit or art " \
-              "points, you must provide the ammount of points to remove. " \
+              "points, you must provide the amount of points to remove. " \
               "If you want to remove points from your word count, use " \
               "`%swc TOTAL_WC` to reset your total word count." \
               "\n\nExamples: `%sremove daily`, `%sremove excred 10`, " \
