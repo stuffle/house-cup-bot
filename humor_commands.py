@@ -768,5 +768,39 @@ def kink():
     return "Your random kink is: %s." % random.choice(kinks)
 
 
-def should_they_fuck_yet():
-    return "Yes."
+def when_should_they_fuck():
+    responses = [
+        "page 10",
+        "page 22",
+        "page 122",
+        "chapter 1",
+        "chapter 2",
+        "chapter 3",
+        "chapter 33",
+        "two years ago",
+        "ten years ago",
+        "in ten years",
+        "yesterday",
+        "tomorrow",
+        "after an argument",
+        "during an argument",
+        "on a special occasion",
+        "constantly",
+        "now",
+        "later",
+        "on Christmas Eve",
+        "before breakfast",
+        "after a snack",
+        "when the stars align",
+        "never",
+        "after they fall in love",
+        "their wedding night",
+        "to celebrate their divorce",
+        "before their first kiss",
+        "the first page",
+        "only after the fic ends",
+        "when Hell freezes over",
+        "in 200k words"
+    ]
+
+    return random.choice(responses)

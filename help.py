@@ -309,16 +309,17 @@ def help_command(message, prefix):
             description=msg)
     elif arg == "shouldigetbacktowork":
         msg = "Ask stufflebot if you should get back to work.\n\n" \
-              "Example: `%sshouldigetbacktowork`"% prefix
+              "Example: `%sshouldigetbacktowork`" % prefix
         embed = discord.Embed(
             title="shouldIGetBacktoWork Help",
             color=COLOR,
             description=msg)
-    elif arg == "shouldtheyfuck":
-        msg = "Ask stufflebot if your characters should fuck.\n\n" \
-              "Example: `%sshouldtheyfuck`"% prefix
+    elif arg == "whenshouldtheyfuck":
+        msg = "Ask stufflebot when your characters should fuck. " \
+              "Most responses written by Red.\n\n" \
+              "Example: `%swhenshouldtheyfuck`" % prefix
         embed = discord.Embed(
-            title="ShouldTheyFuck Help",
+            title="WhenShouldTheyFuck Help",
             color=COLOR,
             description=msg)
     elif arg == "randompair":
@@ -376,11 +377,11 @@ def general_help(prefix):
         inline=False)
     embed.add_field(
         name="Fun Commands:",
-        value="`dumbledore`, `snape`, `mcgonagall`, `hermione`, `ron`, `sneak`, `grouphug`, `kidnap`, `pillage`",
+        value="`dumbledore`, `snape`, `mcgonagall`, `harry`, `hermione`, `ron`, `sneak`, `grouphug`, `kidnap`, `pillage`",
         inline=False)
     embed.add_field(
         name="Inspiration Commands:",
-        value="`prompt`, `inspireme`, `shouldikillharry`, `shouldigetbacktowork`, `shouldtheyfuck`, `randompair`, `kink`",
+        value="`prompt`, `inspireme`, `shouldikillharry`, `shouldigetbacktowork`, `whenshouldtheyfuck`, `randompair`, `kink`",
         inline=False)
 
     return embed

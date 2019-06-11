@@ -1197,8 +1197,8 @@ async def on_message(message):
             msg = "%s: %s" % (mention, random_pair())
         elif text.startswith("kink"):
             msg = "%s: %s" % (mention, kink())
-        elif text.startswith("shouldtheyfuck"):
-            msg = "%s: %s" % (mention, should_they_fuck_yet())
+        elif text.startswith("whenshouldtheyfuck"):
+            msg = "%s: %s" % (mention, when_should_they_fuck())
         elif text.startswith("inspireme"):
             msg = "%s: %s" % (mention, inspireme())
         elif text.startswith("prompt"):
