@@ -422,6 +422,17 @@ def sneak(mention, random_person):
     return random.choice(quotes)
 
 
+def harry():
+    quotes = [
+        "What did I do wrong now? I'm innocent, I swear!",
+        "Let me play Exploding Snap in peace, please",
+        "I may be the Chosen One, but you're the one I choose ;)",
+        "Pardon me while I go catch more snitches with my mouth",
+        "If I'm the Seeker, you're quite the catch :wink:"
+    ]
+    return random.choice(quotes)
+
+
 def hermione(house, mention):
     """
     Quotes written by Batsutousai

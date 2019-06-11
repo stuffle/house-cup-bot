@@ -237,6 +237,14 @@ def help_command(message, prefix):
             title="Hermione Help",
             color=COLOR,
             description=msg)
+    elif arg == "harry":
+        msg = "Try it and see. Example: `%sharry`\n" \
+              "Don't worry though, the command is just for fun." \
+              "\n\nQuotes written by Amino." % prefix
+        embed = discord.Embed(
+            title="Harry Help",
+            color=COLOR,
+            description=msg)
     elif arg == "ron":
         msg = "Try it and see. Example: `%sron`\n" \
               "Don't worry though, the command is just for fun." \

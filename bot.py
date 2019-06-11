@@ -1167,6 +1167,8 @@ async def on_message(message):
         elif text.startswith("ron"):
             house = get_house(user)
             msg = ron(house)
+        elif text.startswith("harry"):
+            msg = harry()
         elif text.startswith("mcgonagall"):
             house = get_house(user)
             embed = mcgonagall(house, mention)
