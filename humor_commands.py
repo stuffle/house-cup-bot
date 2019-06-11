@@ -755,3 +755,7 @@ def kink():
     ]
 
     return "Your random kink is: %s." % random.choice(kinks)
+
+
+def should_they_fuck_yet():
+    return "Yes."

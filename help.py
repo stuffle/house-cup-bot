@@ -306,11 +306,25 @@ def help_command(message, prefix):
             title="shouldIGetBacktoWork Help",
             color=COLOR,
             description=msg)
+    elif arg == "shouldtheyfuck":
+        msg = "Ask stufflebot if your characters should fuck.\n\n" \
+              "Example: `%sshouldtheyfuck`"% prefix
+        embed = discord.Embed(
+            title="ShouldTheyFuck Help",
+            color=COLOR,
+            description=msg)
     elif arg == "randompair":
-        msg = "Have stufflebot give you a random pairing. " \
+        msg = "Have stufflebot give you a random pairing.\n\n" \
               "Example: `%srandompair`" % prefix
         embed = discord.Embed(
             title="RandomPair Help",
+            color=COLOR,
+            description=msg)
+    elif arg == "kink":
+        msg = "Have stufflebot give you a random kink.\n\n" \
+              "Example: `%skink`" % prefix
+        embed = discord.Embed(
+            title="Kink Help",
             color=COLOR,
             description=msg)
 
@@ -358,7 +372,7 @@ def general_help(prefix):
         inline=False)
     embed.add_field(
         name="Inspiration Commands:",
-        value="`prompt`, `inspireme`, `shouldikillharry`, `shouldigetbacktowork`, `randompair`",
+        value="`prompt`, `inspireme`, `shouldikillharry`, `shouldigetbacktowork`, `shouldtheyfuck`, `randompair`, `kink`",
         inline=False)
 
     return embed
