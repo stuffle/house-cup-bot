@@ -1185,6 +1185,8 @@ async def on_message(message):
             embed = kidnap(user.mention, message.mentions, text)
             await client.send_message(message.channel, embed=embed)
             return
+        elif text.startswith("wrestle"):
+            msg = wrestle(mention, message.mentions)
         elif text.startswith("pillage"):
             embed = pillage(user.mention)
             await client.send_message(message.channel, embed=embed)

@@ -92,3 +92,58 @@ def pillage(person):
             "A viking woman strikes down a man in front of her ship.")
     ]
     return get_random_embed_same_quote(quote, gif_to_caption, 13632027)
+
+
+def wrestle(hugger, mentions):
+    """Inspiration from RedHorse and other beta readers"""
+    participants = [hugger]
+    if len(mentions) == 1:
+        participants.append(mentions[0].mention)
+    else:
+        return "Please mention one user to wrestle them."
+
+    winner = random.choice(participants)
+    participants.remove(winner)
+    loser = participants[0]
+    fluids = [
+        "mud",
+        "jelly",
+        "icing",
+        "blood",
+        "melted chocolate",
+        "soap",
+        "chili"
+    ]
+    fluid = random.choice(fluids)
+
+    responses = [
+        "%s slips while stepping into the rink, making an easy victory for %s." % (
+            winner, loser),
+        "As soon as the match begins, %s tackles %s. They fall to the ground landing in the %s. They struggle for control until %s manages to flip them over, pinning %s and winning the match." % (
+            loser, winner, fluid, winner, loser),
+        "They size each other up for several moments before %s steps forward, slipping in the %s. Mid fall they reach out, grabbing %s and managing to bring them down too. %s is dazed, and %s takes the win." % (
+            winner, fluid, loser, loser, winner),
+        "%s manages to grasp the legs of %s, lifting them overhead and throwing them into the %s. %s is dazed, and %s takes the win." % (
+            winner, loser, fluid, loser, winner),
+        "They flail feebly at each other as if fighting off invisible bees. %s is out of breath first, allowing %s to subdue them." % (
+            loser, winner),
+        "%s does an impressive throwdown, making %s drink a mouthful of %s. %s splutters feebily for a moment before they tap out, losing the match." % (
+            winner, loser, fluid, loser),
+        "The battle, if you want to call it that, is short-lived. %s always said they weren’t the outdoorsy type. It's an easy victory for %s." % (
+            loser, winner),
+        "After a tense staredown, %s uses bubble beam! The ref calls foul on %s for the illegal use of Pokémon moves. %s wins!" % (
+            loser, loser, winner),
+        "%s stubs a toe and falls into %s. The fight was over before it began. %s shakes their head not quite believing it as they are declared the winner so quickly." % (
+            loser, winner, winner),
+        "%s tries to use the killing curse. The ref, aghast that a death eater has snuck into the match, ends it quickly. The ref needn't have worried—%s has never been able to cast the curse successfully. Harry smirked from the side-lines, pointing at his scar. %s wins." % (
+            loser, loser, winner),
+        "%s distracts %s with NSFW Tomarry pictures and does a successful tackle. The pictures land into the %s and the crowd storm the rings, eager for a better look! %s is trampled into the %s. %s wins!" % (
+            loser, winner, fluid, loser, fluid, winner),
+        "%s and %s face each other across the %s. Neither wants to end up in the %s. %s offers %s a cup of tea, and suggest they settle their differences like reasonable people. %s agrees and, after a lengthy discussion, they come to a mutually beneficial arrangement. According to their agreement, %s wins!" % (
+            winner, loser, fluid, fluid, winner, loser, loser, winner)
+    ]
+
+    commentary = random.choice(responses)
+    return "%s and %s step into a large pool filled with %s. %s" % (
+        winner, loser, fluid, commentary
+    )

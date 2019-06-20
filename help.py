@@ -276,6 +276,14 @@ def help_command(message, prefix):
             title="Kidnap Help",
             color=COLOR,
             description=msg)
+    elif arg == "wrestle":
+        msg = "Wrestle someone to settle a dispute! Example: `%swrestle @red`" \
+              "\n\nInspiration and some responses/fluids supplied by " \
+              "Red, Earth, Caty, May, Chukar, Mik" % prefix
+        embed = discord.Embed(
+            title="Wrestle Help",
+            color=COLOR,
+            description=msg)
     elif arg == "pillage":
         msg = "Go pillaging! Example: `%spillage`" \
               "\n\nMost gifs supplied by Dorea." % prefix
@@ -377,7 +385,7 @@ def general_help(prefix):
         inline=False)
     embed.add_field(
         name="Fun Commands:",
-        value="`dumbledore`, `snape`, `mcgonagall`, `harry`, `hermione`, `ron`, `sneak`, `grouphug`, `kidnap`, `pillage`",
+        value="`dumbledore`, `snape`, `mcgonagall`, `harry`, `hermione`, `ron`, `sneak`, `grouphug`, `kidnap`, `pillage`, `wrestle`",
         inline=False)
     embed.add_field(
         name="Inspiration Commands:",
