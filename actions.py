@@ -97,17 +97,6 @@ def pillage(person):
 def wrestle(hugger, mentions):
     """Inspiration from RedHorse and other beta readers"""
     participants = [hugger]
-    if len(mentions) == 1:
-        m = mentions[0].mention
-        participants.append(m)
-        if m == hugger:
-            return "%s steps into an empty pool by themself. %s raises a hand and slaps their own face.\n\nWhen you wrestle with yourself, there is no winning. Only lonely defeat." % (hugger, hugger)
-    else:
-        return "Please mention one user to wrestle them."
-
-    winner = random.choice(participants)
-    participants.remove(winner)
-    loser = participants[0]
     fluids = [
         "mud",
         "jelly",
@@ -118,6 +107,30 @@ def wrestle(hugger, mentions):
         "chili"
     ]
     fluid = random.choice(fluids)
+
+    if len(mentions) == 1:
+        m = mentions[0].mention
+        participants.append(m)
+        if m == "<@542048148776943657>":
+            rs = [
+                "%s steps into a pool filled with %s. %s looks at stufflebot expectantly. stufflebot blinks. The pool disappears, and %s is suddenly sprawled on the ground.\n\nDo not try to wrestle stufflebot. You will always lose." % (
+                    hugger, fluid, hugger, hugger),
+                "%s wakes up in a pool full of %s with no idea of how they got there. stufflebot stands emotionlessly over them with a trophy in hand. %s is missing 10 points." % (
+                    hugger, fluid, hugger),
+                "%s stares at stufflebot over the edge of the pool filled with %s. stufflebot stares back, its robot face fixed in an unchanging, cute smile. Feeling uneasy, %s steps into the rink. stufflebot takes a step forward. The reflection in its eye that was once so adorable now seems menacing. %s shakes it off and prepares to fight. stufflebot steps into the rink. As soon as the start of the match is called, an electric pulse radiates through the %s, and %s falls to the ground, convulsing." % (
+                    hugger, fluid, hugger, hugger, fluid, hugger),
+                "stufflebot shows up to the wrestling match alone. No one knows where %s is. stufflebot is declared the victor." % (
+                    hugger)
+            ]
+            return random.choice(rs)
+        if m == hugger:
+            return "%s steps into an empty pool by themself. %s raises a hand and slaps their own face.\n\nWhen you wrestle with yourself, there is no winning. Only lonely defeat." % (hugger, hugger)
+    else:
+        return "Please mention one user to wrestle them."
+
+    winner = random.choice(participants)
+    participants.remove(winner)
+    loser = participants[0]
 
     responses = [
         "%s slips while stepping into the rink, making an easy victory for %s." % (
