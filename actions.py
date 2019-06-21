@@ -98,7 +98,10 @@ def wrestle(hugger, mentions):
     """Inspiration from RedHorse and other beta readers"""
     participants = [hugger]
     if len(mentions) == 1:
-        participants.append(mentions[0].mention)
+        m = mentions[0].mention
+        participants.append(m)
+        if m == hugger:
+            return "%s steps into an empty pool by themself. %s raises a hand and slaps their own face.\n\nWhen you wrestle with yourself, there is no winning. Only lonely defeat." % (hugger, hugger)
     else:
         return "Please mention one user to wrestle them."
 
