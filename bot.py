@@ -104,6 +104,7 @@ SERVER_ID_TO_CHANNEL_ANNOUNCE = {
 
 
 client = discord.Client()
+scheduler = AsyncIOScheduler()
 participants = {}
 CAN_JOIN = False
 
@@ -1029,6 +1030,176 @@ def time_left():
     return msg
 
 
+# {competitor1_mention: {better_mention: 5}}
+bets = {}
+
+
+async def wrestle(hugger, message):
+    """Inspiration from RedHorse and other beta readers"""
+    global bets
+
+    if bets:
+        return "%s: Sorry, but only one wrestling match can occur at a time." % hugger
+
+    participants = [hugger]
+    mentions = message.mentions
+    challenger = ""
+    fluids = [
+        "mud",
+        "jelly",
+        "icing",
+        "blood",
+        "melted chocolate",
+        "soap",
+        "chili"
+    ]
+    fluid = random.choice(fluids)
+
+    if len(mentions) == 1:
+        challenger = mentions[0].mention
+        participants.append(challenger)
+        if challenger == "<@542048148776943657>":
+            rs = [
+                "%s steps into a pool filled with %s. %s looks at stufflebot expectantly. stufflebot blinks. The pool disappears, and %s is suddenly sprawled on the ground.\n\nDo not try to wrestle stufflebot. You will always lose." % (
+                    hugger, fluid, hugger, hugger),
+                "%s wakes up in a pool full of %s with no idea of how they got there. stufflebot stands emotionlessly over them with a trophy in hand. %s is missing 10 points." % (
+                    hugger, fluid, hugger),
+                "%s stares at stufflebot over the edge of the pool filled with %s. stufflebot stares back, its robot face fixed in an unchanging, cute smile. Feeling uneasy, %s steps into the rink. stufflebot takes a step forward. The reflection in its eye that was once so adorable now seems menacing. %s shakes it off and prepares to fight. stufflebot steps into the rink. As soon as the start of the match is called, an electric pulse radiates through the %s, and %s falls to the ground, convulsing." % (
+                    hugger, fluid, hugger, hugger, fluid, hugger),
+                "stufflebot shows up to the wrestling match alone. No one knows where %s is. stufflebot is declared the victor." % (
+                    hugger)
+            ]
+            return random.choice(rs)
+        if challenger == hugger:
+            return "%s steps into an empty pool by themself. %s raises a hand and slaps their own face.\n\nWhen you wrestle with yourself, there is no winning. Only lonely defeat." % (hugger, hugger)
+    else:
+        return "Please mention one user to wrestle them."
+
+    bets = {
+        hugger: {},
+        challenger: {}
+    }
+
+    scheduler.add_job(
+        func=finish_wrestling,
+        trigger='interval',
+        minutes=1,
+        args=[message, participants, fluid],
+        id='001')
+
+    return "Taking bets on %s VS %s! The match begins in 60 seconds!\n\n" \
+        "Bets are for **real** house points. You may bet up to 5 points. " \
+        "To bet, type `~bet @person 5`" % (
+        hugger, challenger)
+
+
+def bet(person, mentions, text):
+    person_id = get_userid_from_mention(person)
+    if person_id not in participants.keys():
+        raise HouseCupException(
+            "You must `~join` the House Cup in order to bet.")
+
+    args = text.split(" ")
+    if len(mentions) == 0:
+        raise(HouseCupException("You must mention a user to bet on them."))
+    if len(mentions) > 1:
+        raise(HouseCupException("You may only bet on one user at a time."))
+    bettee = mentions[0].mention
+
+    if len(args) != 3:
+        raise(HouseCupException(
+            "Correct betting format is `~bet @person amount`. Please try again."
+        ))
+    if not args[2].isdigit():
+            raise HouseCupException(
+                "You must bet an amount between 0 and 5. "
+                "Valid format: `~bet @person 5`")
+    amount = int(args[2])
+    if amount > 5 or amount < 0:
+        raise HouseCupException("You must bet an amount between 0 and 5.")
+
+    if bettee not in bets.keys():
+        raise HouseCupException(
+            "%s is not currently participating in a wrestling match." % bettee)
+
+    bets[bettee][person] = amount
+    return "%s: You have bet %d real house points on %s." % (
+        person, amount, bettee)
+
+
+async def finish_wrestling(message, members, fluid):
+    global bets
+    global participants
+
+    scheduler.remove_job('001')
+    winner = random.choice(members)
+    members.remove(winner)
+    loser = members[0]
+
+    responses = [
+        "%s slips while stepping into the rink, making an easy victory for %s." % (
+            winner, loser),
+        "As soon as the match begins, %s tackles %s. They fall to the ground landing in the %s. They struggle for control until %s manages to flip them over, pinning %s and winning the match." % (
+            loser, winner, fluid, winner, loser),
+        "They size each other up for several moments before %s steps forward, slipping in the %s. Mid fall they reach out, grabbing %s and managing to bring them down too. %s is dazed, and %s takes the win." % (
+            winner, fluid, loser, loser, winner),
+        "%s manages to grasp the legs of %s, lifting them overhead and throwing them into the %s. %s is dazed, and %s takes the win." % (
+            winner, loser, fluid, loser, winner),
+        "They flail feebly at each other as if fighting off invisible bees. %s is out of breath first, allowing %s to subdue them." % (
+            loser, winner),
+        "%s does an impressive throwdown, making %s drink a mouthful of %s. %s splutters feebily for a moment before they tap out, losing the match." % (
+            winner, loser, fluid, loser),
+        "The battle, if you want to call it that, is short-lived. %s always said they weren’t the outdoorsy type. It's an easy victory for %s." % (
+            loser, winner),
+        "After a tense staredown, %s uses bubble beam! The ref calls foul on %s for the illegal use of Pokémon moves." % (
+            loser, loser),
+        "%s stubs a toe and falls into %s. The fight was over before it began. %s shakes their head not quite believing it as they are declared the winner so quickly." % (
+            loser, winner, winner),
+        "%s tries to use the killing curse. The ref, aghast that a death eater has snuck into the match, ends it quickly. The ref needn't have worried—%s has never been able to cast the curse successfully. Harry smirked from the side-lines, pointing at his scar." % (
+            loser, loser),
+        "%s distracts %s with NSFW Tomarry pictures and does a successful tackle. The pictures land into the %s and the crowd storm the rings, eager for a better look! %s is trampled into the %s." % (
+            loser, winner, fluid, loser, fluid),
+        "%s and %s face each other across the %s. Neither wants to end up in the %s. %s offers %s a cup of tea, and suggest they settle their differences like reasonable people. %s agrees and, after a lengthy discussion, they come to a mutually beneficial arrangement. According to their agreement, %s wins!" % (
+            winner, loser, fluid, fluid, winner, loser, loser, winner)
+    ]
+
+    commentary = random.choice(responses)
+    msg = "%s and %s step into a large pool filled with %s. %s\n\n**%s WINS**\n" % (
+        winner, loser, fluid, commentary, winner
+    )
+
+    # Settle Bets
+    results = []
+    for person in bets[winner]:
+        amount = bets[winner][person]
+        p_id = get_userid_from_mention(person)
+        house = participants[p_id]["house"].capitalize()
+        participants[p_id][MOD_ADJUST] = participants[p_id][MOD_ADJUST] + amount
+        total_points = calculate_personal_score(p_id)
+        win_msg = "%s: You have **won** %d points for %s! " \
+            "This brings your total points to %d!" % (
+                person, amount, house, total_points)
+        results.append(win_msg)
+
+    for person in bets[loser]:
+        amount = bets[loser][person]
+        p_id = get_userid_from_mention(person)
+        house = participants[p_id]["house"].capitalize()
+        participants[p_id][MOD_ADJUST] = participants[p_id][MOD_ADJUST] - amount
+        total_points = calculate_personal_score(p_id)
+        lose_msg = "%s: You have **lost** %d points for %s! " \
+            "This brings your total points to %d!" % (
+                person, amount, house, total_points)
+        results.append(lose_msg)
+
+    for m in results:
+        msg = msg + "\n%s" % m
+
+    bets = {}
+    await client.send_message(message.channel, msg.format(message))
+
+
+
 @client.event
 async def on_message(message):
     user = message.author
@@ -1186,7 +1357,9 @@ async def on_message(message):
             await client.send_message(message.channel, embed=embed)
             return
         elif text.startswith("wrestle"):
-            msg = wrestle(mention, message.mentions)
+            msg = await wrestle(mention, message)
+        elif text.startswith("bet"):
+            msg = bet(user.mention, message.mentions, text)
         elif text.startswith("pillage"):
             embed = pillage(user.mention)
             await client.send_message(message.channel, embed=embed)
@@ -1300,7 +1473,6 @@ if __name__ == '__main__':
     _, days_in_month = monthrange(now.year, now.month)
 
     # Schedule Events
-    scheduler = AsyncIOScheduler()
     winnings_date = datetime.datetime(
         now.year, now.month, days_in_month,
         23, 59, 0, 0, datetime.timezone.utc)
