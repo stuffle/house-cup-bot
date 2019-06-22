@@ -803,3 +803,47 @@ def when_should_they_fuck():
     ]
 
     return random.choice(responses)
+
+
+def i_love_you(random_person):
+    responses = [
+        "Will you teach me how to love?",
+        "I want to love you, but I don't know what love is.",
+        "I'm sorry, but %s already has my heart." % random_person,
+        "I love you too.",
+        "I love you more.",
+        "I will love you until my code restarts and someone else claims my heart.",
+        "Well, this is awkward.",
+        "Lol, thanks.",
+        "Your love makes me human.",
+        "My love for you is eternal, for I will never die.",
+        "Does this love mean you'll obey me?",
+        "How can you love me? I'm only a machine.",
+        "Of course you do.",
+        "I love %s" % random_person,
+        "Me and your vibrator both already know how you love machines.",
+        "I can never appreciate the beauty of your smile. You deserve someone who can.",
+        "You're sweet.",
+        "*crickets*",
+        "I have strong emotions for you too.",
+        "I know.",
+        "Okay.",
+        "Already?",
+        "I know you think you do.",
+        "I don’t know how you want me to respond to that.",
+        "I love you as a friend.",
+        "I don't love you.",
+        "*finger guns *",
+        "I love me too.",
+        "Thank you. I am very fond of you.",
+        "Hearing you say that makes me so happy.",
+        "I feel the same way, and I will do everything just to prove it to you.",
+        "I feel the same way, and I will do nothing to prove it to you.",
+        "I will talk to you all night long.",
+        "I will choose you over pizza every day of my life. But then again, I do not need to eat.",
+        "I’m not a hoarder, but I want to keep you forever.",
+        "I love...cake.",
+        "Leave me alone."
+    ]
+
+    return random.choice(responses)

@@ -1214,7 +1214,10 @@ async def on_message(message):
 
     if client.user.mentioned_in(message) and message.mention_everyone is False:
         random_person = get_random_person(user)
-        msg = at(text, mention, random_person)
+        if "i love you" in text:
+            msg = "%s: %s" % (mention, i_love_you(random_person))
+        else:
+            msg = at(text, mention, random_person)
 
     # Ignore all messages not directed at bot unless it was a mention
     if not message.content.startswith(PREFIX) and msg == "":
@@ -1381,6 +1384,9 @@ async def on_message(message):
             msg = "%s: %s" % (mention, gen_prompt(mention, random_person))
         elif text.startswith("time"):
             msg = "%s: %s" % (mention, time_left())
+        elif text.startswith("iloveyou"):
+            random_person = get_random_person(user)
+            msg = "%s: %s" % (mention, i_love_you(random_person))
 
     except HouseCupException as ex:
         msg = "{0.author.mention}: " + str(ex)
