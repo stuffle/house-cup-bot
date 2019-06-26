@@ -240,16 +240,6 @@ def join(user):
         raise HouseCupException(
             "You have already joined the house cup for this month.")
 
-    now = datetime.datetime.now(datetime.timezone.utc)
-    day_of_month = now.day
-    _, days_in_month = monthrange(now.year, now.month)
-    if not CAN_JOIN and days_in_month - day_of_month < 7:
-        raise HouseCupException(
-            "I'm sorry, but it is too late to join the House Cup. "
-            "Registration closed a week before the end of the month. "
-            "Please come back next month and we will welcome you "
-            "with open arms. :hugging:")
-
     house = get_house(user)
 
     participant = {
@@ -455,6 +445,7 @@ def log_score(text, user_id):
             wordcount = participants[user_id]["word_count"]
         if WC in participants[user_id]:
             wc_points = participants[user_id][WC]
+        old_word_count = wordcount
         if len(args) <= 2:
             raise HouseCupException(
                 "`%swc` takes arguments. Do something like "
@@ -481,11 +472,12 @@ def log_score(text, user_id):
         participants[user_id]["word_count"] = wordcount
         if args[2] == "add":
             msg = "Congratulations on posting %d words! " \
-                "This brings your total  to %d, giving you %d point%s! " % (
+                "This brings your total to %d, giving you %d point%s! " % (
                     amount, wordcount, wc_points, plural) + msg
         else:
-            msg = "Your total wordcount is now %d, giving you %d point%s! " \
-                "Congratulations! " % (wordcount, wc_points, plural) + msg
+            msg = "Your total wordcount went from %d to %d, giving you %d point%s! " \
+                "Congratulations! " % (
+                    old_word_count, wordcount, wc_points, plural) + msg
         participants[user_id][WC] = wc_points
 
     if category == EXCRED:
