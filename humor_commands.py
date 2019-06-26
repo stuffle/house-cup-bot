@@ -904,7 +904,7 @@ def madness(user_mention, mentions):
                 "A derpy red horse neighs.")
         ],
         # Chukar
-        "<@586695658640244738>": [
+        "<@!586695658640244738>": [
             ("https://cdn.discordapp.com/attachments/592480821890514944/592481617289936897/image0.jpg",
                 "A chukar patridge fights with a white bird."),
             ("https://cdn.discordapp.com/attachments/592480821890514944/592481578379247616/image0.jpg",
