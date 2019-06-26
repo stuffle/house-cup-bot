@@ -1367,6 +1367,10 @@ async def on_message(message):
             embed = pillage(user.mention)
             await client.send_message(message.channel, embed=embed)
             return
+        elif text.startswith("madness"):
+            embed = madness(user.mention, message.mentions)
+            await client.send_message(message.channel, embed=embed)
+            return
         elif text.startswith("shouldikillharry"):
             msg = "%s: %s" % (mention, should_i_kill())
         elif text.startswith("shouldigetbacktowork"):

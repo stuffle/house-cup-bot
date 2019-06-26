@@ -80,6 +80,7 @@ def inspireme():
         "In 2009, Stephen Hawking held a reception for time travelers, but didn’t publicize it until after. This way, only those who could time travel would be able to attend.",
         "Scientists discovered sharks that are living in an active underwater volcano. Divers cannot investigate because they would get burns from the acidity and heat. Life finds a way.",
         "Fun English fact: To properly write adjectives in order, you would list them by amount, value, size, temperature, age, shape, color, origin, and material.",
+        "Did you know scientists aren’t even sure pink is a real colour?  Technically it’s a combination of red and blue, which are at opposite ends of the light spectrum, which means it shouldn’t even be possible to exist.  Our brains just made it up to fill in what isn’t there.",
 
         # Inspirations
         "Sometimes the best thing you can do is walk away and come back later.",

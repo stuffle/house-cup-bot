@@ -351,6 +351,13 @@ def help_command(message, prefix):
             title="I Love You Help",
             color=COLOR,
             description=msg)
+    elif arg == "madness":
+        msg = "Get an image of madness. You can direct this at people.\n\n" \
+              "Example: `%smadness @person`" % prefix
+        embed = discord.Embed(
+            title="Madness Help",
+            color=COLOR,
+            description=msg)
 
     elif embed is None:
         msg = "Sorry! This command is unrecognized. View the general help " \
@@ -392,7 +399,7 @@ def general_help(prefix):
         inline=False)
     embed.add_field(
         name="Fun Commands:",
-        value="`dumbledore`, `snape`, `mcgonagall`, `harry`, `hermione`, `ron`, `sneak`, `grouphug`, `kidnap`, `pillage`, `wrestle`, `iloveyou`",
+        value="`dumbledore`, `snape`, `mcgonagall`, `harry`, `hermione`, `ron`, `sneak`, `grouphug`, `kidnap`, `pillage`, `wrestle`",
         inline=False)
     embed.add_field(
         name="Inspiration Commands:",
