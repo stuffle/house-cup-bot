@@ -974,6 +974,24 @@ def madness(user_mention, mentions):
                 "Viking yells in front of a lightning strike."),
             ("https://cdn.discordapp.com/attachments/592480821890514944/592815500451512320/image0.jpg",
                 "Motivational poster of a viking that reads 'No great mind has ever existed without a touch of madness'.")
+        ],
+        # Mayexisit
+        "<@263390344853323779>": [
+            ("https://cdn.discordapp.com/attachments/592480821890514944/593621427509395477/image0.png",
+                "An angry mushroom stands in front of a massive fire."),
+            ("https://cdn.discordapp.com/attachments/592480821890514944/593621406915362846/image0.jpg",
+                "A cluster of psychedelic mushrooms are blurred with rainbow colors."),
+            ("https://cdn.discordapp.com/attachments/592480821890514944/593621381623709707/image0.jpg",
+                "A mature clathrus archeri, which looks like a creepy, pink, dead tentacle hand.")
+        ],
+        # Amino
+        "<@585839843884662787>": [
+            ("https://cdn.discordapp.com/attachments/592480821890514944/593618530939830288/image0.jpg",
+                "Picture of an amino acid saying 'GIMME YOUR ATOMS!' with the caption 'A-mean-oh Acid'."),
+            ("https://cdn.discordapp.com/attachments/592480821890514944/593618501147688990/image0.png",
+                "Picture of an amino acid with a very cute anime face with the captions 'I was supposed to write amino acids and nearly wrote anime acids.' and 'I hope senpai bonds with me.'"),
+            ("https://cdn.discordapp.com/attachments/592480821890514944/593618485846736898/image0.png",
+                "A derpy cartoon DNA says 'You're made of me!' while waving its arms.")
         ]
     }
 
