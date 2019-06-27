@@ -992,6 +992,15 @@ def madness(user_mention, mentions):
                 "Picture of an amino acid with a very cute anime face with the captions 'I was supposed to write amino acids and nearly wrote anime acids.' and 'I hope senpai bonds with me.'"),
             ("https://cdn.discordapp.com/attachments/592480821890514944/593618485846736898/image0.png",
                 "A derpy cartoon DNA says 'You're made of me!' while waving its arms.")
+        ],
+        # Wolven Spirit
+        "<@593530774104309790>": [
+            ("https://cdn.discordapp.com/attachments/592480821890514944/593914730993942558/image0.jpg",
+                "A spirit wolf made of fire growls."),
+            ("https://cdn.discordapp.com/attachments/592480821890514944/593914716565274624/image0.png",
+                "A wolf, made up of the Northern Lights in the sky, howls."),
+            ("https://cdn.discordapp.com/attachments/592480821890514944/593914233893290010/image0.jpg",
+                "Cover art from the song 'Wolven Spirit' by Eternum")
         ]
     }
 
