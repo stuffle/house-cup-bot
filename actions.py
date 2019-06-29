@@ -30,7 +30,9 @@ def get_mention(mentions, text, default="Harry Potter"):
     text_people = text.split(" ")[1:]
 
     if len(text_people) > len(mentions):
-        person_mention = ", ".join(text_people)
+        stripped = [
+            ''.join(c for c in x if c not in [".", ","]) for x in text_people]
+        person_mention = ", ".join(stripped)
     elif len(mentions) > 0:
         person_mention = ", ".join(str_mentions)
     return person_mention
