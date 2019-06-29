@@ -261,12 +261,13 @@ def help_command(message, prefix):
             title="McGonagall Help",
             color=COLOR,
             description=msg)
-    elif arg == "grouphug" or arg == "group_hug":
-        msg = "Give someone or a group of people a group hug! " \
-              "Example: `%sgrouphug @catyPi @stuffle`" \
-              "\n\nGifs and captions by Caty Pi." % prefix
+    elif arg == "grouphug" or arg == "group_hug" or arg == "hug":
+        msg = "Give someone or a group of people a hug! " \
+              "Examples: `%shug @catyPi @stuffle`, `%shug chukar`" \
+              "\n\nGifs and captions by Stuffle, Chukar, and Caty Pi." % (
+                  prefix, prefix)
         embed = discord.Embed(
-            title="Group Hug Help",
+            title="Hug Help",
             color=COLOR,
             description=msg)
     elif arg == "kidnap":
@@ -399,7 +400,7 @@ def general_help(prefix):
         inline=False)
     embed.add_field(
         name="Fun Commands:",
-        value="`dumbledore`, `snape`, `mcgonagall`, `harry`, `hermione`, `ron`, `sneak`, `grouphug`, `kidnap`, `pillage`, `wrestle`",
+        value="`dumbledore`, `snape`, `mcgonagall`, `harry`, `hermione`, `ron`, `sneak`, `hug`, `kidnap`, `pillage`, `wrestle`",
         inline=False)
     embed.add_field(
         name="Inspiration Commands:",
