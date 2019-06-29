@@ -102,7 +102,7 @@ def hug(hugger, mentions, text):
         ("https://cdn.discordapp.com/attachments/592480821890514944/594472225428602882/image0.gif",
             "Two primates walk towards each other, then embrace in a deep hug."),
         ("https://cdn.discordapp.com/attachments/592480821890514944/594471466792255489/image0.gif",
-            "A cat embraces a dog three times its size, standing so that they can rub their cheeks together. The dogs tail wags quickly."),
+            "A cat embraces a dog three times its size, standing so that they can rub their cheeks together. The dog's tail wags quickly."),
         ("https://cdn.discordapp.com/attachments/592480821890514944/594470674786025482/image0.gif",
             "Two dogs sit next to each other. The one on the left puts its arms around the other, patting its chest."),
         ("https://cdn.discordapp.com/attachments/592480821890514944/594469134193131521/image0.gif",
