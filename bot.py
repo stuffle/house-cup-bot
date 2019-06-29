@@ -1347,6 +1347,10 @@ async def on_message(message):
             embed = group_hug(user.mention, message.mentions, text)
             await client.send_message(message.channel, embed=embed)
             return
+        elif text.startswith("hug"):
+            embed = hug(user.mention, message.mentions, text)
+            await client.send_message(message.channel, embed=embed)
+            return
         elif text.startswith("kidnap"):
             embed = kidnap(user.mention, message.mentions, text)
             await client.send_message(message.channel, embed=embed)
