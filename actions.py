@@ -78,7 +78,9 @@ def group_hug(hugger, mentions, text):
 
 def hug(hugger, mentions, text):
     text_people = text.split(" ")[1:]
-    if len(mentions) > 1 or len(text_people) > 1:
+    args = " ".join(text_people).lower()
+    everyone = ["everyone", "all", "y'all", "yall", "friends"]
+    if len(mentions) > 1 or len(text_people) > 1 or args in everyone:
         return group_hug(hugger, mentions, text)
     victim = get_mention(mentions, text, "Friend")
     quote = "%s: you have been hugged by %s!" % (victim, hugger)
