@@ -69,7 +69,9 @@ def group_hug(hugger, mentions, text):
         ("https://cdn.discordapp.com/attachments/565884495023177728/573523959446765578/image0.gif",
             "Disney’s Aladdin-Genie hugging Aladdin and Jasmine when they run up to each other, then pulling in Abu, Aladdin’s monkey-in-crime, then the Sultan and Raja, who are Jasmine’s father and pet tiger respectively, and then the magic carpet, before squeezing and cuddling them all tightly."),
         ("https://media.discordapp.net/attachments/553382529521025037/588586381786480640/hug-Hy4hxRKtW.gif",
-            "Korra, from Avatar, picks up the air bending family in a hug, then is nuzzled by a giant dog.")
+            "Korra, from Avatar, picks up the air bending family in a hug, then is nuzzled by a giant dog."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/594623420596224021/image0.gif",
+            "The family from The Incredibles smile while they all embrace.")
     ]
     return get_random_embed_same_quote(quote, gif_to_caption, 15761808)
 
@@ -108,7 +110,33 @@ def hug(hugger, mentions, text):
         ("https://thumbs.gfycat.com/EachAridBellfrog-size_restricted.gif",
             "A duck with drawn-on stick figure arms hugs a dog, rubbing its hand nub through the fur. Then, with its “hand” still on the dog, they walk away together."),
         ("https://cdn.discordapp.com/attachments/592480821890514944/594466674216927232/image0.gif",
-            "A baby polar bear smiles as it rubs its face against an adult polar bear’s while hugging.")
+            "A baby polar bear smiles as it rubs its face against an adult polar bear’s while hugging."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/594618248524333080/image0.gif",
+            "A mother cat puts its arm around her baby."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/594618535271989268/image0.gif",
+            "A guy laying on the ground with a cow pets his neck and face, then wraps his arms around the cow’s neck."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/594618874196918302/image0.gif",
+            "Two baby pandas fall over while hugging."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/594620317704519681/image0.gif",
+            "A sleepy cat hugging a stuffed cat, opens its eyes as it pulls its stuffed cat closer."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/594620598853042199/image0.gif",
+            "A gorilla barrel rolls through a window into an attic to hug a pig with the caption “Emergency Hug”."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/594620923433189376/image0.gif",
+            "Sullivan from Monsters Inc pulls Boo into a tender embrace."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/594621805336199169/image0.gif",
+            "A cartoon ghost with tiny arms hugs the air with the caption “ghost hug! You can’t feel it, but it’s there!”"),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/594622146802876426/image0.gif",
+            "Two cartoon bears hug with the caption “sending a hug just for you”"),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/594622886963052554/image0.gif",
+            "An anthropomorphized pig leaps onto its computer monitor in an enthusiast hug with the caption “sending u a cyber hog!”"),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/594623799912169508/image0.gif",
+            "A white kitten pulls the hand of a human into a close hug."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/594624092016082997/image0.gif",
+            "A primate surprises Jane Goodall with a hug."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/594624311441096790/image0.gif",
+            "Two monkeys on leashes hug."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/594625341939515396/image0.gif",
+            "Two cartoon seals jump together in a hug with hearts in the background.")
     ]
     return get_random_embed_same_quote(quote, gif_to_caption, 15761808)
 
