@@ -73,7 +73,21 @@ def group_hug(hugger, mentions, text):
         ("https://media.discordapp.net/attachments/553382529521025037/588586381786480640/hug-Hy4hxRKtW.gif",
             "Korra, from Avatar, picks up the air bending family in a hug, then is nuzzled by a giant dog."),
         ("https://cdn.discordapp.com/attachments/592480821890514944/594623420596224021/image0.gif",
-            "The family from The Incredibles smile while they all embrace.")
+            "The family from The Incredibles smile while they all embrace."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/594669481658286081/image0.gif",
+            "As a big group of meerkats hug, one climbs over the others to the top. It slips off and joins the group hug from the outside."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/594669805194313738/image0.gif",
+            "Joy, from Inside Out, hugs all of the emotions. Anger tries to walk away, but Joy pulls them in to with the caption “C’mon, group hug! You too, Anger.”"),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/594670348608339968/image0.gif",
+            "Hercules, Meg, and the Pegasus descend on Phil in a group hug."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/594670737709727754/image0.gif",
+            "The Simpson family embraces on a sofa, smiling, with the caption “all sighing”."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/594686052263002130/image0.gif",
+            "A bunch of cartoon animals descend on a hedgehog in a group hug."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/594687391495749632/image0.gif",
+            "A group of humans drawn like My Little Pony hug a sad woman, making her smile."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/594688470790832378/image0.gif",
+            "Three ponies run together and link arms. They spin in a circle, jumping with joy.")
     ]
     return get_random_embed_same_quote(quote, gif_to_caption, 15761808)
 
@@ -166,7 +180,25 @@ def hug(hugger, mentions, text):
         ("https://media.discordapp.net/attachments/592467136845447197/594621293614333952/hug1.gif",
             "A big yellow bird reaches out to hug a red bird who is walking by. The red bird hides its face with its wing and hurries away."),
         ("https://cdn.discordapp.com/attachments/592480821890514944/594642723903111220/image0.gif",
-            "A dolphin and its trainer embrace underwater while floating upwards.")
+            "A dolphin and its trainer embrace underwater while floating upwards."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/594685649689509893/image0.gif",
+            "A very happy cartoon bear falls into the lap of another bear, hugging it. That bear pats its head, and pink hearts float off of them."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/594686052263002130/image0.gif",
+            "A bunch of cartoon animals descend on a hedgehog in a group hug."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/594686244106010626/image0.gif",
+            "A big cat hugs a small cat, nuzzling their heads together. Their ears twitch happily as a heart pulses beside them."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/594686599371948042/image0.gif",
+            "A cartoon ghost hugs another ghost with a broken heart. As they hug, the heart mends. The caption reads “have a hug, just in case you need one.”"),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/594686921289105418/image0.gif",
+            "A bear above a loading bar says “sending virtual hug”. When the loading bar fills it says “hug sent!”"),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/594687240169586700/image0.gif",
+            "A monkey hugs a confused baby jaguar."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/594687655384711206/image0.gif",
+            "A cartoon cat jumps into a cartoon dog’s arms. The dog spins the cat in a circle and hearts rise around them."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/594688036240097290/image0.gif",
+            "An orange kitten twitches in its sleep, causing its mother to pull it into a close embrace."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/594688305371676706/image0.gif",
+            "A little dog stands on its hind legs to hug a bigger dog.")
     ]
     return get_random_embed_same_quote(quote, gif_to_caption, 15761808)
 

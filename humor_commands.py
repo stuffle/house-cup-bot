@@ -908,9 +908,7 @@ def madness(user_mention, mentions):
             ("https://cdn.discordapp.com/attachments/592480821890514944/592481617289936897/image0.jpg",
                 "A chukar patridge fights with a white bird."),
             ("https://cdn.discordapp.com/attachments/592480821890514944/592481578379247616/image0.jpg",
-                "Two chukar patridges fight."),
-            ("https://cdn.discordapp.com/attachments/592480821890514944/592481533747658842/image0.jpg",
-                "An intent chukar patridge stares you down.")
+                "Two chukar patridges fight.")
         ],
         # Essa
         "<@!303134019951001601>": [
@@ -937,7 +935,9 @@ def madness(user_mention, mentions):
             ("https://cdn.discordapp.com/attachments/592480821890514944/592481046168207406/image0.jpg",
                 "A cat in a lab coat laughs evilly."),
             ("https://cdn.discordapp.com/attachments/592480821890514944/592481021685923863/image0.jpg",
-                "A cat in the air with the caption: 'Mad science cats breakin' ur gravity.'")
+                "A cat in the air with the caption: 'Mad science cats breakin' ur gravity.'"),
+            ("https://cdn.discordapp.com/attachments/592429793211842581/594701695120834581/flat800x800075f.u1.jpg",
+                "Fermion has a vauge thinky thought. Picture is of a person in a thinking pose with a tea cup held between their toes.")
         ],
         # Caty
         "<@!434734253901742101>": [
