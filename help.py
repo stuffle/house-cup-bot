@@ -66,9 +66,9 @@ def help_command(message, prefix):
             color=COLOR,
             description=msg)
     elif arg == "art":
-        msg = "Log 5, 10, or 15 points for your art. " \
-              "For visual art, full color earns 15 points, " \
-              " flat color earns 10, and a sketch or line art earns 5. " \
+        msg = "Log 5, 10, 15, or 20 points for your art. " \
+              "For visual art, full color earns 20 points, " \
+              " flat color earns 15, line art earns 10, and a sketch earns 5. " \
               "See the [FAQ](%s) in the House Cup Documentation for more info." \
               "\n\nExample: `%sart 10`" % (DOCS_LINK, prefix)
         embed = discord.Embed(

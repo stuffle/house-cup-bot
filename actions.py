@@ -28,11 +28,14 @@ def get_mention(mentions, text, default="Harry Potter"):
     person_mention = default
     str_mentions = [m.mention for m in mentions]
     text_people = text.split(" ")[1:]
+    if "and" in text_people:
+        text_people.remove("and")
 
     if len(text_people) > len(mentions):
         stripped = [
             ''.join(c for c in x if c not in [".", ","]) for x in text_people]
-        person_mention = ", ".join(stripped)
+        capitalised = [person.capitalize() for person in stripped]
+        person_mention = ", ".join(capitalised)
     elif len(mentions) > 0:
         person_mention = ", ".join(str_mentions)
     return person_mention
@@ -100,6 +103,8 @@ def hug(hugger, mentions, text):
         return group_hug(hugger, mentions, text)
     victim = get_mention(mentions, text, "Friend")
     quote = "%s: you have been hugged by %s!" % (victim, hugger)
+    if victim in ["<@542048148776943657>", "stufflebot"]:
+        quote = "%s: Stufflebot hugs you back :heart:" % hugger
     gif_to_caption = [
         ("https://cdn.discordapp.com/attachments/592480821890514944/594587388219490331/f95e1e9bc953789b72d2a900cc00b9d75cd19fa3.gif",
             "A gray kitten with a white nose sinks onto its sibling, deepening their hug."),
@@ -175,7 +180,7 @@ def hug(hugger, mentions, text):
             "A shiba dog embraces its owner, its tail wagging happily."),
         ("https://cdn.discordapp.com/attachments/592480821890514944/594641518128791579/image0.gif",
             "A baby hugs two puppies in its lap."),
-        ("https://cdn.discordapp.com/attachments/592480821890514944/594641783124918292/image0.gif",
+        ("https://cdn.discordapp.com/attachments/592467136845447197/594621266133123095/hug2.gif",
             "One dinosaur reaches out to hug another dinosaur and a volcano erupts in the background, causing lava to engulf them."),
         ("https://media.discordapp.net/attachments/592467136845447197/594621293614333952/hug1.gif",
             "A big yellow bird reaches out to hug a red bird who is walking by. The red bird hides its face with its wing and hurries away."),
@@ -198,7 +203,11 @@ def hug(hugger, mentions, text):
         ("https://cdn.discordapp.com/attachments/592480821890514944/594688036240097290/image0.gif",
             "An orange kitten twitches in its sleep, causing its mother to pull it into a close embrace."),
         ("https://cdn.discordapp.com/attachments/592480821890514944/594688305371676706/image0.gif",
-            "A little dog stands on its hind legs to hug a bigger dog.")
+            "A little dog stands on its hind legs to hug a bigger dog."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/594771015179960322/image0.gif",
+            "A blue cartoon penguin walks back in a giant sling shot before shooting itself forward to land on the camera, hugging it. The caption reads “sending a penguin hug!”."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/594782260927135744/image0.gif",
+            "A baby penguin happily falls into a hug with an adult penguin.")
     ]
     return get_random_embed_same_quote(quote, gif_to_caption, 15761808)
 
