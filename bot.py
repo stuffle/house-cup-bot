@@ -421,21 +421,28 @@ def log_score(text, user_id):
                 "You must wait 24 hours between logging workshops.")
         participants[user_id][WORKSHOP] = participants[user_id][WORKSHOP] + 30
         participants[user_id]["last_workshop"] = now
+
     if category == COMMENT:
+        new_value = participants[user_id][COMMENT]
         if len(args) < 3:
             msg = "Comments are so appreciated. :revolving_hearts: 1 point to"\
                   " " + house + "!"
-            participants[user_id][COMMENT] = participants[user_id][COMMENT] + 1
+            new_value += 1
         elif args[2] in ["extra", "essay", "long", "mystery"]:
             msg = "You've probably made someone really happy with your long " \
                   "and thoughtful comment! Good job! :sparkling_heart: " \
                   "5 points to " + house + "!"
-            participants[user_id][COMMENT] = participants[user_id][COMMENT] + 5
+            new_value += 5
         else:
             raise HouseCupException(
                 "Unrecognized argument to `%scomment`. For a regular comment, "
                 "do `%scomment`. For an essay length comment, do "
                 "`%scomment extra`" % (PREFIX, PREFIX, PREFIX))
+        if new_value >= 200:
+            new_value = 200
+            msg = "Your comment total has been set to the max—200. Thank you " \
+                "for commenting so much. Your efforts are very appreciated. %s" % heart
+        participants[user_id][COMMENT] = new_value
 
     if category == WC:
         wordcount = 0
@@ -833,23 +840,22 @@ def calculate_house_score(house):
     members = get_paticipants(house)
     sorted_members = sort_participants(members, "total")
     sorted_points = [x[1] for x in sorted_members]
+    capped_points = []
+    for points in sorted_points:
+        if points >= 500:
+            capped_points.append(500)
+        else:
+            capped_points.append(points)
 
-    if is_may():
-        for index, points in enumerate(sorted_points):
-            iteration = index + 1
-            denominator = 2**iteration
+    for index, points in enumerate(capped_points):
+        iteration = index + 1
+        weight = 1
+        if iteration in [1, 2, 3]:
+            weight = 1 / 4
+        else:
+            denominator = 2**index
             weight = 1 / denominator
-            house_score += weight * float(points)
-    else:
-        for index, points in enumerate(sorted_points):
-            iteration = index + 1
-            weight = 1
-            if iteration in [1, 2, 3]:
-                weight = 1 / 4
-            else:
-                denominator = 2**index
-                weight = 1 / denominator
-            house_score += weight * float(points)
+        house_score += weight * float(points)
 
     return house_score
 
