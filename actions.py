@@ -80,7 +80,7 @@ def group_hug(hugger, mentions, text):
         ("https://cdn.discordapp.com/attachments/592480821890514944/594669481658286081/image0.gif",
             "As a big group of meerkats hug, one climbs over the others to the top. It slips off and joins the group hug from the outside."),
         ("https://cdn.discordapp.com/attachments/592480821890514944/594669805194313738/image0.gif",
-            "Joy, from Inside Out, hugs all of the emotions. Anger tries to walk away, but Joy pulls them in to with the caption “C’mon, group hug! You too, Anger.”"),
+            "Joy, from Inside Out, hugs all of the emotions. Anger tries to walk away, but Joy pulls them in too with the caption “C’mon, group hug! You too, Anger.”"),
         ("https://cdn.discordapp.com/attachments/592480821890514944/594670348608339968/image0.gif",
             "Hercules, Meg, and the Pegasus descend on Phil in a group hug."),
         ("https://cdn.discordapp.com/attachments/592480821890514944/594670737709727754/image0.gif",

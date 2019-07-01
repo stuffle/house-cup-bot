@@ -1,5 +1,11 @@
 import discord
 import random
+import re
+
+
+def get_userid_from_mention(mention):
+    user_id = re.sub('[!<>@]', '', mention)
+    return user_id
 
 
 def get_random_embed(quote_dict, author, colour):
@@ -852,23 +858,23 @@ def i_love_you(random_person):
 def madness(user_mention, mentions):
     responses = {
         # stufflebot
-        "<@542048148776943657>": [
+        "542048148776943657": [
             ("",
                 "How dare you imply there is madness inside me???")
         ],
         # stuffle
-        "<@438450978690433024>": [
+        "438450978690433024": [
             ("https://i.pinimg.com/originals/7e/0c/f2/7e0cf2cab227d76ffced7c0f79e4b640.jpg",
              "An angry black cat snarls."),
             ("https://cdn.discordapp.com/attachments/592480821890514944/592481200053026817/image0.jpg",
                 "Derpy black cat in the snow"),
             ("https://cdn.discordapp.com/attachments/592480821890514944/592481225709584384/image0.jpg",
-                "Black cat makes an agry, betrayed face at a cactus"),
+                "Black cat makes an angry, betrayed face at a cactus"),
             ("https://cdn.discordapp.com/attachments/592480821890514944/592540343791124501/image0.jpg",
                 "Black cat has its face in the center of an avocado costume.")
         ],
         # ava
-        "<@!516122981156782091>" : [
+        "516122981156782091" : [
             ("https://cdn.discordapp.com/attachments/592480821890514944/592482585641353217/image0.jpg",
                 "Tabby kitten with very large pupils plays between two sofa cushions"),
             ("https://cdn.discordapp.com/attachments/592480821890514944/592482529140015119/image0.jpg",
@@ -877,7 +883,7 @@ def madness(user_mention, mentions):
                 "Tabby cat with one ear meows with passion")
         ],
         # earth
-        "<@!336263526136152065>": [
+        "336263526136152065": [
             ("https://cdn.discordapp.com/attachments/592480821890514944/592482429344677897/image0.jpg",
                 "A cartoon of the earth infected with weapons and humans says 'Ahhhhh! Help me! It's a Crazy World!' as the other planets run away."),
             ("https://cdn.discordapp.com/attachments/592480821890514944/592482329625231452/image0.gif",
@@ -886,7 +892,7 @@ def madness(user_mention, mentions):
                 "A picture of Earth with 4 elements exploding off of it")
         ],
         # Michiyo
-        "<@411608468944846848>": [
+        "411608468944846848": [
             ("https://cdn.discordapp.com/attachments/592480821890514944/592482289024499715/image0.jpg",
                 "A statue of a bald guy despairs"),
             ("https://cdn.discordapp.com/attachments/592480821890514944/592481924727963671/image0.jpg",
@@ -895,7 +901,7 @@ def madness(user_mention, mentions):
                 "A statue of a person with a snake on their shoulder screams.")
         ],
         # RedHorse
-        "<@478970983089438760>": [
+        "478970983089438760": [
             ("https://cdn.discordapp.com/attachments/592480821890514944/592481770058940417/image0.jpg",
                 "A derpy red horse with a braided mane smiles."),
             ("https://cdn.discordapp.com/attachments/592480821890514944/592481693034610698/image0.jpg",
@@ -904,14 +910,14 @@ def madness(user_mention, mentions):
                 "A derpy red horse neighs.")
         ],
         # Chukar
-        "<@!586695658640244738>": [
+        "586695658640244738": [
             ("https://cdn.discordapp.com/attachments/592480821890514944/592481617289936897/image0.jpg",
                 "A chukar patridge fights with a white bird."),
             ("https://cdn.discordapp.com/attachments/592480821890514944/592481578379247616/image0.jpg",
                 "Two chukar patridges fight.")
         ],
         # Essa
-        "<@!303134019951001601>": [
+        "303134019951001601": [
             ("https://cdn.discordapp.com/attachments/592480821890514944/592481495482892298/image0.jpg",
                 "Pikachu laughs maniacally by two other Pokemon."),
             ("https://cdn.discordapp.com/attachments/592480821890514944/592481468371042317/image0.png",
@@ -920,7 +926,7 @@ def madness(user_mention, mentions):
                 "Evil pikachu runs through a dark forest.")
         ],
         # Aubry
-        "<@!490331378605359116>": [
+        "490331378605359116": [
             ("https://cdn.discordapp.com/attachments/592480821890514944/592481393854906368/image0.jpg",
                 "The insanity wolf meme template"),
             ("https://cdn.discordapp.com/attachments/592480821890514944/592481363698122752/image0.jpg",
@@ -929,7 +935,7 @@ def madness(user_mention, mentions):
                 "A black and white anime wolf smiles evilly, showing a mouth full of sharp teeth.")
         ],
         # Fermion
-        "<@!328995549581803544>": [
+        "328995549581803544": [
             ("https://cdn.discordapp.com/attachments/592480821890514944/592481139306790963/image0.jpg",
                 "A picture of a cat on a cat tree, but their body is on the left side of the lower level with their head sticking up from the right side of the platform. Caption reads: 'Heisenberg cat dares you to pinpoint his location.'"),
             ("https://cdn.discordapp.com/attachments/592480821890514944/592481046168207406/image0.jpg",
@@ -940,7 +946,7 @@ def madness(user_mention, mentions):
                 "Fermion has a vauge thinky thought. Picture is of a person in a thinking pose with a tea cup held between their toes.")
         ],
         # Caty
-        "<@!434734253901742101>": [
+        "434734253901742101": [
             ("https://media.discordapp.net/attachments/592480821890514944/592480987720581125/image0.gif",
                 "An absurdly tall pie"),
             ("https://cdn.discordapp.com/attachments/592480821890514944/592480961891926020/image0.png",
@@ -949,7 +955,7 @@ def madness(user_mention, mentions):
                 "Cuthulu pie")
         ],
         # DarkBlue
-        "<@308690760855977984>": [
+        "308690760855977984": [
             ("https://cdn.discordapp.com/attachments/592480821890514944/592520590385086483/image0.jpg",
                 "A shark in a dark blue ocean looks ready to eat you."),
             ("https://cdn.discordapp.com/attachments/592480821890514944/592520563591872522/image0.jpg",
@@ -958,7 +964,7 @@ def madness(user_mention, mentions):
                 "Lightning explodes in a dark blue sky.")
         ],
         # Miklos
-        "<@!404457743345385492>": [
+        "404457743345385492": [
             ("https://cdn.discordapp.com/attachments/592480821890514944/592812851270254603/image0.jpg",
                 "Skeleton Chesire cat grins maniacally."),
             ("https://cdn.discordapp.com/attachments/592480821890514944/592812832911785995/image0.jpg",
@@ -967,7 +973,7 @@ def madness(user_mention, mentions):
                 "Evil clown skull laughs.")
         ],
         # Dorea
-        "<@!446006277034737664>" : [
+        "446006277034737664" : [
             ("https://cdn.discordapp.com/attachments/592480821890514944/592815462207848449/image0.gif",
                 "Battle cry of a viking woman."),
             ("https://cdn.discordapp.com/attachments/592480821890514944/592815480226578458/image0.jpg",
@@ -976,7 +982,7 @@ def madness(user_mention, mentions):
                 "Motivational poster of a viking that reads 'No great mind has ever existed without a touch of madness'.")
         ],
         # Mayexisit
-        "<@263390344853323779>": [
+        "263390344853323779": [
             ("https://cdn.discordapp.com/attachments/592480821890514944/593621427509395477/image0.png",
                 "An angry mushroom stands in front of a massive fire."),
             ("https://cdn.discordapp.com/attachments/592480821890514944/593621406915362846/image0.jpg",
@@ -985,7 +991,7 @@ def madness(user_mention, mentions):
                 "A mature clathrus archeri, which looks like a creepy, pink, dead tentacle hand.")
         ],
         # Amino
-        "<@585839843884662787>": [
+        "585839843884662787": [
             ("https://cdn.discordapp.com/attachments/592480821890514944/593618530939830288/image0.jpg",
                 "Picture of an amino acid saying 'GIMME YOUR ATOMS!' with the caption 'A-mean-oh Acid'."),
             ("https://cdn.discordapp.com/attachments/592480821890514944/593618501147688990/image0.png",
@@ -994,17 +1000,29 @@ def madness(user_mention, mentions):
                 "A derpy cartoon DNA says 'You're made of me!' while waving its arms.")
         ],
         # Wolven Spirit
-        "<@593530774104309790>": [
+        "593530774104309790": [
             ("https://cdn.discordapp.com/attachments/592480821890514944/593914730993942558/image0.jpg",
                 "A spirit wolf made of fire growls."),
             ("https://cdn.discordapp.com/attachments/592480821890514944/593914716565274624/image0.png",
                 "A wolf, made up of the Northern Lights in the sky, howls."),
             ("https://cdn.discordapp.com/attachments/592480821890514944/593914233893290010/image0.jpg",
                 "Cover art from the song 'Wolven Spirit' by Eternum")
+        ],
+        # Drama
+        "414154255738470412": [
+            ("https://cdn.discordapp.com/attachments/569843665124589568/594994282595745792/2580476885_792a464cf4_b.jpg",
+                "A cockatiel bends over, wings held aloft and screams.")
+        ],
+        # Raptor
+        "371859835429322752": [
+            ("https://cdn.discordapp.com/attachments/541321836584239119/595019363757850624/image0.jpg",
+                "Close up of the mouth a raptor howling."),
+            ("https://cdn.discordapp.com/attachments/541321836584239119/595019378752225291/image0.jpg",
+                "A nighthawk, pressed flat against the ground, caws.")
         ]
     }
 
-    mention = random.choice(list(responses.keys()))
+    user_id = random.choice(list(responses.keys()))
     if len(mentions) > 1:
         embed = discord.Embed(
             color=16256554,
@@ -1012,12 +1030,14 @@ def madness(user_mention, mentions):
         return embed
     if len(mentions) == 1:
         mention = mentions[0].mention
-        if mention not in list(responses.keys()):
+        user_id = get_userid_from_mention(mention)
+        if user_id not in list(responses.keys()):
             embed = discord.Embed(
                 color=16256554,
                 description="%s: %s does not have logged madness." % (user_mention, mention))
             return embed
-    response = random.choice(responses[mention])
+
+    response = random.choice(responses[user_id])
     image, caption = response
 
     embed = discord.Embed(
