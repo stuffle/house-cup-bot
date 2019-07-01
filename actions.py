@@ -90,7 +90,15 @@ def group_hug(hugger, mentions, text):
         ("https://cdn.discordapp.com/attachments/592480821890514944/594687391495749632/image0.gif",
             "A group of humans drawn like My Little Pony hug a sad woman, making her smile."),
         ("https://cdn.discordapp.com/attachments/592480821890514944/594688470790832378/image0.gif",
-            "Three ponies run together and link arms. They spin in a circle, jumping with joy.")
+            "Three ponies run together and link arms. They spin in a circle, jumping with joy."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/595066885528092683/image0.gif",
+            "Harry runs up to Ron and Hermione, surprising them with a group hug."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/595068011665293333/image0.gif",
+            "Harry, Ron, and Hermione hug in front of a crowd of Muggles on their last day on the Harry Potter set."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/595068806955663369/image0.gif",
+            "Harry third wheels into Hermione hugging Ron."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/595070762403233802/image0.gif",
+            "A family dressed in Harry Potter costumes hug in front of a green screen and all look towards a camera.")
     ]
     return get_random_embed_same_quote(quote, gif_to_caption, 15761808)
 
@@ -188,8 +196,6 @@ def hug(hugger, mentions, text):
             "A dolphin and its trainer embrace underwater while floating upwards."),
         ("https://cdn.discordapp.com/attachments/592480821890514944/594685649689509893/image0.gif",
             "A very happy cartoon bear falls into the lap of another bear, hugging it. That bear pats its head, and pink hearts float off of them."),
-        ("https://cdn.discordapp.com/attachments/592480821890514944/594686052263002130/image0.gif",
-            "A bunch of cartoon animals descend on a hedgehog in a group hug."),
         ("https://cdn.discordapp.com/attachments/592480821890514944/594686244106010626/image0.gif",
             "A big cat hugs a small cat, nuzzling their heads together. Their ears twitch happily as a heart pulses beside them."),
         ("https://cdn.discordapp.com/attachments/592480821890514944/594686599371948042/image0.gif",
@@ -207,7 +213,25 @@ def hug(hugger, mentions, text):
         ("https://cdn.discordapp.com/attachments/592480821890514944/594771015179960322/image0.gif",
             "A blue cartoon penguin walks back in a giant sling shot before shooting itself forward to land on the camera, hugging it. The caption reads “sending a penguin hug!”."),
         ("https://cdn.discordapp.com/attachments/592480821890514944/594782260927135744/image0.gif",
-            "A baby penguin happily falls into a hug with an adult penguin.")
+            "A baby penguin happily falls into a hug with an adult penguin."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/595066422024208384/image0.gif",
+            "Scene from Deathly Hallows: Draco walks stiffly into Voldemort’s open arms. Voldemort embraces him in the most awkward hug ever."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/595067207470415909/image0.gif",
+            "Sirius rocks back and forth, smiling, while embracing Harry. Remus watches, satisfied."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/595067538262589470/image0.gif",
+            "Hermione jumps through the tent door in the scene where Harry waits to fight a dragon. She catches Harry in an emotional surprise hug."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/595069124044914702/image0.gif",
+            "Hermione hugs Ron after their Harry Polyjuice wears off. Ron looks dazed and smiles as he says “thanks.”"),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/595069586999607345/image0.gif",
+            "Harry jumps into Hagrid’s waiting arms in the Great Hall. Hagrid smiles and rubs his head-sized hand in Harry’s hair."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/595069929187966987/image0.gif",
+            "Molly hugs Harry so warmly that Harry blinks awkwardly. Molly pulls away, putting her hands on his cheeks and giving him a proud smile."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/595070403378937876/image0.gif",
+            "Sirius pets the back of Harry’s head as they embrace in Grimmauld Place."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/595071050962829315/image0.gif",
+            "Adult Harry Potter hugs Albus Potter close at Kings Cross."),
+        ("https://i.imgur.com/epvMxxz.gif",
+            "Hermione, beaming runs up to Harry, catching him in a tight embrace. Harry's face lights up in joy.")
     ]
     return get_random_embed_same_quote(quote, gif_to_caption, 15761808)
 
