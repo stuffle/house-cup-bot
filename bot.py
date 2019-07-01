@@ -566,10 +566,10 @@ def remove_score(text, user_id):
                 "Art amount must be a number. "
                 "Try something like `" + PREFIX + "remove art 10`")
         amount = int(args[2])
-        if amount not in [5, 10, 15]:
+        if amount not in [5, 10, 15, 20]:
             raise HouseCupException(
                 "Please provide a valid amount of art points to "
-                "remove. Amount can be 5, 10, or 15")
+                "remove. Amount can be 5, 10, 15, or 20")
         points = amount
         new_points = participants[user_id][ART] - points
     elif category == "exercise":
