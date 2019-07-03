@@ -2,5 +2,5 @@
 
 while true; do
     python3.6 bot.py
-    sleep 5
+    sleep 60
 done

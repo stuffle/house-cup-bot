@@ -1449,15 +1449,6 @@ async def on_ready():
         now = datetime.datetime.now(datetime.timezone.utc)
         print("Making backup at %s" % str(now))
         make_backup(str(now))
-        # TODO: Use send_to_all_servers
-        for server in client.servers:
-            if server.id in SERVER_ID_TO_CHANNEL:
-                channel = client.get_channel(SERVER_ID_TO_CHANNEL[server.id])
-                if channel:
-                    msg = "I have had a critical data failue! :sob: " \
-                          "I'm going away to rest until <@438450978690433024>"\
-                          " fixes me."
-                    await client.send_message(channel, msg.format(msg))
         await client.logout()
         print("Logged Out")
         raise ex
