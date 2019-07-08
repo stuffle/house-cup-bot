@@ -15,6 +15,7 @@ from humor_commands import *
 from actions import *
 from inspire import *
 from help import *
+from mod import *
 
 
 IS_TEST_ENV = os.environ.get("IS_TEST_ENV")
@@ -1210,27 +1211,33 @@ async def on_message(message):
     if user == client.user:
         return
 
-    if client.user.mentioned_in(message) and message.mention_everyone is False:
-        random_person = get_random_person(user)
-        if "i love you" in text:
-            msg = "%s: %s" % (mention, i_love_you(random_person))
-        else:
-            msg = at(text, mention, random_person)
-
-    # Ignore all messages not directed at bot unless it was a mention
-    if not message.content.startswith(PREFIX) and msg == "":
-        return
-
-    text = text[1:]
-    args = text.split(" ")
-    if len(args) == 0:
-        return
-    command = args[0]
-
     sorted_houses_i = get_sorted_houses()
     first_place_house_i, first_place_score_i = sorted_houses_i[0]
 
     try:
+        # msg will be overwritten if @stufflebot is an argument to another command
+        if client.user.mentioned_in(message) and message.mention_everyone is False:
+            random_person = get_random_person(user)
+            if "i love you" in text:
+                msg = "%s: %s" % (mention, i_love_you(random_person))
+            else:
+                msg = at(text, mention, random_person)
+
+        modded = mod_message(text, mention, message.channel.id)
+        if modded:
+            await client.send_message(message.channel, modded.format(message))
+            return
+
+        # Ignore all messages not directed at bot unless it was a mention
+        if not message.content.startswith(PREFIX) and msg == "":
+            return
+
+        text = text[1:]
+        args = text.split(" ")
+        if len(args) == 0:
+            return
+        command = args[0]
+
         argumentless_commands = [
             "join", "daily", "post", "beta", "workshop", "standings",
             "exercise"]
