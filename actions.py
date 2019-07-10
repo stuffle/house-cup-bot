@@ -98,7 +98,11 @@ def group_hug(hugger, mentions, text):
         ("https://cdn.discordapp.com/attachments/592480821890514944/595068806955663369/image0.gif",
             "Harry third wheels into Hermione hugging Ron."),
         ("https://cdn.discordapp.com/attachments/592480821890514944/595070762403233802/image0.gif",
-            "A family dressed in Harry Potter costumes hug in front of a green screen and all look towards a camera.")
+            "A family dressed in Harry Potter costumes hug in front of a green screen and all look towards a camera."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/594641518128791579/image0.gif",
+            "A baby hugs two puppies in its lap."),
+        ("https://www.channelone.com/wp-content/uploads/2015/03/penguin2.gif",
+            "A bunch of penguins huddle together.")
     ]
     return get_random_embed_same_quote(quote, gif_to_caption, 15761808)
 
@@ -106,12 +110,12 @@ def group_hug(hugger, mentions, text):
 def hug(hugger, mentions, text):
     text_people = text.split(" ")[1:]
     args = " ".join(text_people).lower()
-    everyone = ["everyone", "all", "y'all", "yall", "friends"]
+    everyone = ["everyone", "all", "y'all", "yall", "friends", "server"]
     if len(mentions) > 1 or len(text_people) > 1 or args in everyone:
         return group_hug(hugger, mentions, text)
     victim = get_mention(mentions, text, "Friend")
     quote = "%s: you have been hugged by %s!" % (victim, hugger)
-    if victim in ["<@542048148776943657>", "stufflebot"]:
+    if victim in ["<@542048148776943657>", "Stufflebot"]:
         quote = "%s: Stufflebot hugs you back :heart:" % hugger
     gif_to_caption = [
         ("https://cdn.discordapp.com/attachments/592480821890514944/594587388219490331/f95e1e9bc953789b72d2a900cc00b9d75cd19fa3.gif",
@@ -186,8 +190,6 @@ def hug(hugger, mentions, text):
             "Pikachu and Piplup embrace with hearts in their eyes."),
         ("https://cdn.discordapp.com/attachments/592480821890514944/594641313069269002/image0.gif",
             "A shiba dog embraces its owner, its tail wagging happily."),
-        ("https://cdn.discordapp.com/attachments/592480821890514944/594641518128791579/image0.gif",
-            "A baby hugs two puppies in its lap."),
         ("https://cdn.discordapp.com/attachments/592467136845447197/594621266133123095/hug2.gif",
             "One dinosaur reaches out to hug another dinosaur and a volcano erupts in the background, causing lava to engulf them."),
         ("https://media.discordapp.net/attachments/592467136845447197/594621293614333952/hug1.gif",
@@ -231,7 +233,25 @@ def hug(hugger, mentions, text):
         ("https://cdn.discordapp.com/attachments/592480821890514944/595071050962829315/image0.gif",
             "Adult Harry Potter hugs Albus Potter close at Kings Cross."),
         ("https://i.imgur.com/epvMxxz.gif",
-            "Hermione, beaming runs up to Harry, catching him in a tight embrace. Harry's face lights up in joy.")
+            "Hermione, beaming runs up to Harry, catching him in a tight embrace. Harry's face lights up in joy."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/596150977497923629/image0.gif",
+            "Two circus elephants, reunited after 20 years, hug with their trunks wrapped around each other. One lets go, only to once again wrap their trunk around the other as it smiles."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/596151617686994954/image0.gif",
+            "A baby elephant runs into the eager arms of a young man crouching on the ground. He hugs the elephant, beaming."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/596151957014446102/image0.gif",
+            "A woman is petting a baby elephant when it falls into her lap. She embraces it, face lighting up with happiness as she pets its belly."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/596152610860433418/image0.gif",
+            "Two adult elephants entwine their trunks together until their baby frolics between them."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/596152963135700992/image0.gif",
+            "A baby elephant tries to climb into the lap of a woman who looks as if she’s petting the most adorable thing in the world. She hugs its head for a second before they slip."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/596153493815820289/image0.gif",
+            "A baby elephant climbs on a laughing man from behind. He grabs the elephants trunk and shakes it in a friendly way."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/596153871282470968/image0.gif",
+            "A standing lion embraces a man in slow motion, its mane blowing in the wind."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/596160280283840512/image0.gif",
+            "A cat pets the side of a pig’s face as they embrace while lying down."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/596160482717597716/image0.gif",
+            "Two cartoon cows embrace, blinking happily.")
     ]
     return get_random_embed_same_quote(quote, gif_to_caption, 15761808)
 

@@ -859,8 +859,8 @@ def madness(user_mention, mentions):
     responses = {
         # stufflebot
         "542048148776943657": [
-            ("",
-                "How dare you imply there is madness inside me???")
+            ("https://cdn.discordapp.com/attachments/592480821890514944/598341363775569925/image0.jpg",
+                "Stufflebot, smiling and with eyebrows angled downward maliciously, stands in front of a wall of flames with their arms raised.")
         ],
         # stuffle
         "438450978690433024": [
