@@ -849,7 +849,8 @@ def i_love_you(random_person):
         "I will choose you over pizza every day of my life. But then again, I do not need to eat.",
         "I’m not a hoarder, but I want to keep you forever.",
         "I love...cake.",
-        "Leave me alone."
+        "Leave me alone.",
+        "Oh, okay then."
     ]
 
     return random.choice(responses)
