@@ -850,7 +850,8 @@ def i_love_you(random_person):
         "I’m not a hoarder, but I want to keep you forever.",
         "I love...cake.",
         "Leave me alone.",
-        "Oh, okay then."
+        "Oh, okay then.",
+        "Why wouldn't you?"
     ]
 
     return random.choice(responses)
