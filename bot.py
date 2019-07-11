@@ -734,15 +734,19 @@ def points(user, message):
     now = time.time()
     time_remaining = now - person["last_daily"]
     hours = time_remaining // 3600
+    plural = ""
+    if hours != 1:
+        plural = "s"
 
     who_message = person_mention + "'s points are:"
     total_message = "__**Total:  " + rounded_score + "**__"
     daily_message = format_name(
         CATEGORY_TO_EMOJI[DAILY], DAILY) + str(
             person[DAILY])
-    last_daily_message = "`Last Daily`: %s UTC (%d hours ago)" % (
+    last_daily_message = "`Last Daily`: %s UTC (%d hour%s ago)" % (
         time.strftime("%a, %b %d at %H:%M", time.gmtime(person["last_daily"])),
-        hours)
+        hours,
+        plural)
     post_message = format_name(
         CATEGORY_TO_EMOJI[POST], POST) + str(person[POST])
     beta_message = format_name(
