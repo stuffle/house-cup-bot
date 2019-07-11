@@ -738,7 +738,9 @@ def points(user, message):
     who_message = person_mention + "'s points are:"
     total_message = "__**Total:  " + rounded_score + "**__"
     daily_message = format_name(
-        CATEGORY_TO_EMOJI[DAILY], DAILY) + str(person[DAILY])
+        CATEGORY_TO_EMOJI[DAILY], DAILY) + str(
+            person[DAILY]) + "\n(`Last Daily`: %s UTC)" % time.strftime(
+            "%a, %b %d at %H:%M", time.gmtime(person["last_daily"]))
     post_message = format_name(
         CATEGORY_TO_EMOJI[POST], POST) + str(person[POST])
     beta_message = format_name(
