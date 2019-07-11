@@ -333,14 +333,11 @@ def log_score(text, user_id):
         current_points = participants[user_id][DAILY] + 5
         today = datetime.date.today()
         _, days_in_month = monthrange(today.year, today.month)
-        if current_points >= 5 * (days_in_month + 1):
+        day = today.day
+        if current_points > 5 * (day + 1) or current_points > 5 * days_in_month:
             raise HouseCupException(
                 "This daily was not logged because then you would have "
-                "more dailies than there are days in the month.\n"
-                "\nYou either can't count or you're a cheater. There are "
-                "only %d days in this month.\n"
-                "*rings bell* SHAME!" % days_in_month)
-
+                "more dailies than are possible on this date.")
         last_daily = 0
         if "last_daily" in participants[user_id].keys():
             last_daily = participants[user_id]["last_daily"]
