@@ -734,13 +734,18 @@ def points(user, message):
 
     person = participants[person_id]
     rounded_score = str(round(calculate_personal_score(person_id), 2))
+    now = time.time()
+    time_remaining = now - person["last_daily"]
+    hours = time_remaining // 3600
 
     who_message = person_mention + "'s points are:"
     total_message = "__**Total:  " + rounded_score + "**__"
     daily_message = format_name(
         CATEGORY_TO_EMOJI[DAILY], DAILY) + str(
-            person[DAILY]) + "\n(`Last Daily`: %s UTC)" % time.strftime(
-            "%a, %b %d at %H:%M", time.gmtime(person["last_daily"]))
+            person[DAILY])
+    last_daily_message = "`Last Daily`: %s UTC (%d hours ago)" % (
+        time.strftime("%a, %b %d at %H:%M", time.gmtime(person["last_daily"])),
+        hours)
     post_message = format_name(
         CATEGORY_TO_EMOJI[POST], POST) + str(person[POST])
     beta_message = format_name(
@@ -757,9 +762,13 @@ def points(user, message):
         CATEGORY_TO_EMOJI[WC], WC) + str(person[WC]) + " " \
         "(%d words)" % person["word_count"]
 
-    points_messages = [who_message, total_message, daily_message, post_message,
-                      beta_message, art_message, comment_message, workshop_message,
-                      wc_message, excred_message]
+    points_messages = [who_message, total_message, daily_message]
+    if person["last_daily"] != 0:
+        points_messages.append(last_daily_message)
+    points_messages = points_messages + [
+        post_message, beta_message, art_message,
+        comment_message, workshop_message,
+        wc_message, excred_message]
     msg = "\n".join(points_messages)
 
     if person[MOD_ADJUST] != 0:
