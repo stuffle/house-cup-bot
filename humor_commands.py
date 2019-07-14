@@ -3,7 +3,7 @@ import random
 import re
 
 
-def get_userid_from_mention(mention):
+def get_userid_string_from_mention(mention):
     user_id = re.sub('[!<>@]', '', mention)
     return user_id
 
@@ -1032,7 +1032,7 @@ def madness(user_mention, mentions):
         return embed
     if len(mentions) == 1:
         mention = mentions[0].mention
-        user_id = get_userid_from_mention(mention)
+        user_id = get_userid_string_from_mention(mention)
         if user_id not in list(responses.keys()):
             embed = discord.Embed(
                 color=16256554,

@@ -24,61 +24,61 @@ class TestLogScore(unittest.TestCase):
 
     def setUp(self):
         bot.participants = {
-            "123": sample_user_data
+            123: sample_user_data
         }
 
     def test_valid(self):
-        self.assertIsNotNone(bot.log_score("~log daily", "123"))
-        self.assertIsNotNone(bot.log_score("~log post", "123"))
-        self.assertIsNotNone(bot.log_score("~log beta", "123"))
-        self.assertIsNotNone(bot.log_score("~log art 10", "123"))
-        self.assertIsNotNone(bot.log_score("~log workshop", "123"))
-        self.assertIsNotNone(bot.log_score("~log exercise", "123"))
-        self.assertIsNotNone(bot.log_score("~log comment", "123"))
-        self.assertIsNotNone(bot.log_score("~log comment extra", "123"))
-        self.assertIsNotNone(bot.log_score("~log excred 10", "123"))
-        self.assertIsNotNone(bot.log_score("~log wc 2000", "123"))
-        self.assertIsNotNone(bot.log_score("~log wc add 2000", "123"))
+        self.assertIsNotNone(bot.log_score("~log daily", 123))
+        self.assertIsNotNone(bot.log_score("~log post", 123))
+        self.assertIsNotNone(bot.log_score("~log beta", 123))
+        self.assertIsNotNone(bot.log_score("~log art 10", 123))
+        self.assertIsNotNone(bot.log_score("~log workshop", 123))
+        self.assertIsNotNone(bot.log_score("~log exercise", 123))
+        self.assertIsNotNone(bot.log_score("~log comment", 123))
+        self.assertIsNotNone(bot.log_score("~log comment extra", 123))
+        self.assertIsNotNone(bot.log_score("~log excred 10", 123))
+        self.assertIsNotNone(bot.log_score("~log wc 2000", 123))
+        self.assertIsNotNone(bot.log_score("~log wc add 2000", 123))
 
     def test_invalid(self):
         with self.assertRaises(bot.HouseCupException):
-            bot.log_score("~log wc", "123")
+            bot.log_score("~log wc", 123)
         with self.assertRaises(bot.HouseCupException):
-            bot.log_score("~log excred", "123")
+            bot.log_score("~log excred", 123)
 
 
 class TestRemoveScore(unittest.TestCase):
 
     def setUp(self):
         bot.participants = {
-            "123": sample_user_data
+            123: sample_user_data
         }
 
     def test_valid(self):
-        self.assertIsNotNone(bot.remove_score("~remove daily", "123"))
-        self.assertIsNotNone(bot.remove_score("~remove post", "123"))
-        self.assertIsNotNone(bot.remove_score("~remove beta", "123"))
-        self.assertIsNotNone(bot.remove_score("~remove art 10", "123"))
-        self.assertIsNotNone(bot.remove_score("~remove workshop", "123"))
-        self.assertIsNotNone(bot.remove_score("~remove exercise", "123"))
-        self.assertIsNotNone(bot.remove_score("~remove comment", "123"))
-        self.assertIsNotNone(bot.remove_score("~remove comment extra", "123"))
-        self.assertIsNotNone(bot.remove_score("~remove excred 10", "123"))
+        self.assertIsNotNone(bot.remove_score("~remove daily", 123))
+        self.assertIsNotNone(bot.remove_score("~remove post", 123))
+        self.assertIsNotNone(bot.remove_score("~remove beta", 123))
+        self.assertIsNotNone(bot.remove_score("~remove art 10", 123))
+        self.assertIsNotNone(bot.remove_score("~remove workshop", 123))
+        self.assertIsNotNone(bot.remove_score("~remove exercise", 123))
+        self.assertIsNotNone(bot.remove_score("~remove comment", 123))
+        self.assertIsNotNone(bot.remove_score("~remove comment extra", 123))
+        self.assertIsNotNone(bot.remove_score("~remove excred 10", 123))
 
     def test_invalid(self):
         with self.assertRaises(bot.HouseCupException):
-            bot.remove_score("~remove wc 2000", "123")
+            bot.remove_score("~remove wc 2000", 123)
         with self.assertRaises(bot.HouseCupException):
-            bot.remove_score("~remove excred", "123")
+            bot.remove_score("~remove excred", 123)
         with self.assertRaises(bot.HouseCupException):
-            bot.remove_score("~remove art", "123")
+            bot.remove_score("~remove art", 123)
 
 
 class TestStandings(unittest.TestCase):
 
     def setUp(self):
         bot.participants = {
-            "111111111111111111": sample_user_data
+            111111111111111111: sample_user_data
         }
 
     def test_runs(self):
@@ -89,7 +89,7 @@ class TestLeaderboard(unittest.TestCase):
 
     def setUp(self):
         bot.participants = {
-            "111111111111111111": sample_user_data
+            111111111111111111: sample_user_data
         }
 
     def test_valid(self):
@@ -115,7 +115,7 @@ class TestWinnings(unittest.TestCase):
 
     def setUp(self):
         bot.participants = {
-            "111111111111111111": sample_user_data
+            111111111111111111: sample_user_data
         }
 
     def test_valid(self):

@@ -88,23 +88,23 @@ VALID_CATEGORIES = "Valid arguments to this command are `daily`, `post`," \
 
 SERVER_ID_TO_CHANNEL = {
     # Red's Writing Hood: house-cup-bot
-    "497039992401428498": "553382529521025037",
+    497039992401428498: 553382529521025037,
     # Test: general
-    "539932855845781524": "539932855845781530",
+    539932855845781524: 539932855845781530,
     # COS: bot-spam
-    "426319059009798146": "426322538944266240"
+    426319059009798146: 426322538944266240
 }
 SERVER_ID_TO_CHANNEL_ANNOUNCE = {
     # Red's Writing Hood: house-cup
-    "497039992401428498": "507738193337122840",
+    497039992401428498: 507738193337122840,
     # Test: general
-    "539932855845781524": "539932855845781530",
+    539932855845781524: 539932855845781530,
     # COS: bulletin board
-    "426319059009798146": "549219513204342788"
+    426319059009798146: 549219513204342788
 }
 
 
-client = discord.Client()
+client = discord.Client(status="~help")
 scheduler = AsyncIOScheduler()
 participants = {}
 CAN_JOIN = False
@@ -137,7 +137,7 @@ def save_participants():
 
 
 def is_mod(user, channel):
-    stuffle_id = "438450978690433024"
+    stuffle_id = 438450978690433024
     user_is_mod = user.permissions_in(channel).administrator
     role_names = [role.name.lower() for role in user.roles]
     mod_role = "mod" in role_names
@@ -220,7 +220,7 @@ def sort_participants(members, category):
 
 def get_userid_from_mention(mention):
     user_id = re.sub('[!<>@]', '', mention)
-    return user_id
+    return int(user_id)
 
 
 def calculate_personal_score(user_id):
@@ -1207,12 +1207,13 @@ async def finish_wrestling(message, members, fluid):
         msg = msg + "\n%s" % m
 
     bets = {}
-    await client.send_message(message.channel, msg.format(message))
+    await message.channel.send(msg.format(message))
 
 
 
 @client.event
 async def on_message(message):
+    channel = message.channel
     user = message.author
     user_id = user.id
     mention = user.mention
@@ -1237,7 +1238,7 @@ async def on_message(message):
 
         modded = mod_message(text, mention, message.channel.id)
         if modded:
-            await client.send_message(message.channel, modded.format(message))
+            await channel.send(modded.format(message))
             return
 
         # Ignore all messages not directed at bot unless it was a mention
@@ -1260,7 +1261,7 @@ async def on_message(message):
 
         if text.startswith("help"):
             embed = help_command(message, PREFIX)
-            await client.send_message(message.channel, embed=embed)
+            await channel.send(embed=embed)
             return
 
         # Join and Leave
@@ -1330,30 +1331,30 @@ async def on_message(message):
             msg = ping_everyone(user, message)
         elif text.startswith("winnings"):
             user_is_mod = is_mod(user, message.channel)
-            if user.id not in ["478970983089438760", "438450978690433024"]:
+            if user.id not in [478970983089438760, 438450978690433024]:
                 raise HouseCupException(
                     "Only Stuffle and Red can declare the winners "
                     "and restart the House Cup.")
             msg1, msg2 = winnings()
             print(msg1)
-            await client.send_message(message.channel, msg1.format(message))
-            await client.send_message(message.channel, msg2.format(message))
+            await channel.send(msg1.format(message))
+            await channel.send(msg2.format(message))
 
         # For fun commands
         elif text.startswith("dumbledore"):
             house = get_house(user)
             embed = dumbledore(house, mention)
-            await client.send_message(message.channel, embed=embed)
+            await channel.send(embed=embed)
             return
         elif text.startswith("snape"):
             house = get_house(user)
             embed = snape(house, mention)
-            await client.send_message(message.channel, embed=embed)
+            await channel.send(embed=embed)
             return
         elif text.startswith("hermione"):
             house = get_house(user)
             embed = hermione(house, mention)
-            await client.send_message(message.channel, embed=embed)
+            await channel.send(embed=embed)
             return
         elif text.startswith("ron"):
             house = get_house(user)
@@ -1363,22 +1364,22 @@ async def on_message(message):
         elif text.startswith("mcgonagall"):
             house = get_house(user)
             embed = mcgonagall(house, mention)
-            await client.send_message(message.channel, embed=embed)
+            await channel.send(embed=embed)
             return
         elif text.startswith("sneak"):
             random_person = get_random_person(user)
             msg = sneak(mention, random_person)
         elif text.startswith("grouphug"):
             embed = group_hug(user.mention, message.mentions, text)
-            await client.send_message(message.channel, embed=embed)
+            await channel.send(embed=embed)
             return
         elif text.startswith("hug"):
             embed = hug(user.mention, message.mentions, text)
-            await client.send_message(message.channel, embed=embed)
+            await channel.send(embed=embed)
             return
         elif text.startswith("kidnap"):
             embed = kidnap(user.mention, message.mentions, text)
-            await client.send_message(message.channel, embed=embed)
+            await channel.send(embed=embed)
             return
         elif text.startswith("wrestle"):
             msg = await wrestle(mention, message)
@@ -1386,11 +1387,11 @@ async def on_message(message):
             msg = bet(user.mention, message.mentions, text)
         elif text.startswith("pillage"):
             embed = pillage(user.mention)
-            await client.send_message(message.channel, embed=embed)
+            await channel.send(embed=embed)
             return
         elif text.startswith("madness"):
             embed = madness(user.mention, message.mentions)
-            await client.send_message(message.channel, embed=embed)
+            await channel.send(embed=embed)
             return
         elif text.startswith("shouldikillharry"):
             msg = "%s: %s" % (mention, should_i_kill())
@@ -1420,11 +1421,11 @@ async def on_message(message):
         msg = "Oh no! Something went wrong and I couldn't complete your "\
               " command. I'm so sorry! :sob: Ping stuffle if you need " \
               "help."
-        await client.send_message(message.channel, msg.format(message))
+        await channel.send(msg.format(message))
         raise(ex)
 
     if msg:
-        await client.send_message(message.channel, msg.format(message))
+        await channel.send(msg.format(message))
 
     sorted_houses = get_sorted_houses()
     first_place_house, first_place_score = sorted_houses[0]
@@ -1438,17 +1439,17 @@ async def on_message(message):
 
 
 async def send_to_all_servers(msg, server_dict):
-    for server in client.servers:
+    for server in client.guilds:
         if server.id in server_dict:
             channel = client.get_channel(server_dict[server.id])
             if channel:
-                await client.send_message(channel, msg.format(msg))
+                await channel.send(msg.format(msg))
 
 
 async def list_recs():
     await client.wait_until_ready()
     print("Current servers:")
-    for server in client.servers:
+    for server in client.guilds:
         print(server.name)
 
 
@@ -1458,7 +1459,6 @@ async def on_ready():
     print(client.user.name)
     print(client.user.id)
     print('------')
-    await client.change_presence(game=discord.Game(name="~help"))
 
     # If there is a problem loading data, make a backup and go offline
     # because the bot is effectively broken.
