@@ -11,24 +11,25 @@ if IS_TEST_ENV:
 participants = {}
 
 
-def load_old_participants(dfile):
+def load_old_participants():
     global participants
 
-    with open(dfile, encoding='utf-8') as f:
+    with open(DATA_FILE, encoding='utf-8') as f:
         file_text = f.read()
-        participants = ast.literal_eval(file_text)
-
-    return participants
+        data = ast.literal_eval(file_text)
+        participants = ast.literal_eval(data["participants"])
 
 
 def save_participants():
-    print("in save")
     with open(DATA_FILE, 'w', encoding='utf-8') as f:
         data = {
             "participants": str(participants)
         }
         f.write(str(data))
 
+load_old_participants()
 
-participants = load_old_participants(DATA_FILE)
+for k, v in list(participants.items()):
+    participants[int(k)] = participants.pop(k)
+
 save_participants()
