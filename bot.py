@@ -1460,18 +1460,6 @@ async def on_ready():
     print(client.user.id)
     print('------')
 
-    # If there is a problem loading data, make a backup and go offline
-    # because the bot is effectively broken.
-    try:
-        load_participants()
-    except Exception as ex:
-        now = datetime.datetime.now(datetime.timezone.utc)
-        print("Making backup at %s" % str(now))
-        make_backup(str(now))
-        await client.logout()
-        print("Logged Out")
-        raise ex
-
 
 async def run_winnings():
     print("running winnings")
@@ -1490,6 +1478,15 @@ async def run_announce_two_days():
 if __name__ == '__main__':
     client.loop.create_task(list_recs())
     token = os.environ.get("DISCORD_BOT_SECRET")
+
+    # If there is a problem loading data, make a backup and abort start up
+    try:
+        load_participants()
+    except Exception as ex:
+        now = datetime.datetime.now(datetime.timezone.utc)
+        print("Making backup at %s" % str(now))
+        make_backup(str(now))
+        raise ex
 
     now = datetime.datetime.now(datetime.timezone.utc)
     _, days_in_month = monthrange(now.year, now.month)
