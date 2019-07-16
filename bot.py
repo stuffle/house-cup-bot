@@ -10,12 +10,14 @@ import random
 import time
 from calendar import monthrange
 import datetime
+import pickle
 
 from humor_commands import *
 from actions import *
 from inspire import *
 from help import *
 from mod import *
+import mod
 
 
 IS_TEST_ENV = os.environ.get("IS_TEST_ENV")
@@ -86,14 +88,6 @@ VALID_CATEGORIES = "Valid arguments to this command are `daily`, `post`," \
                    " `art`, `beta`, `workshop`, `exercise`, `comment`, " \
                    "`wc`, and `excred`"
 
-SERVER_ID_TO_CHANNEL = {
-    # Red's Writing Hood: house-cup-bot
-    497039992401428498: 553382529521025037,
-    # Test: general
-    539932855845781524: 539932855845781530,
-    # COS: bot-spam
-    426319059009798146: 426322538944266240
-}
 SERVER_ID_TO_CHANNEL_ANNOUNCE = {
     # Red's Writing Hood: house-cup
     497039992401428498: 507738193337122840,
@@ -122,26 +116,19 @@ class HouseCupException(Exception):
 def load_participants():
     global participants
 
-    with open(DATA_FILE, encoding='utf-8') as f:
-        file_text = f.read()
-        data = ast.literal_eval(file_text)
-        participants = ast.literal_eval(data["participants"])
+    with open(DATA_FILE, 'rb') as f:
+        data = pickle.load(f)
+        participants = data["participants"]
+        mod.voting = data["voting"]
 
 
 def save_participants():
-    with open(DATA_FILE, 'w', encoding='utf-8') as f:
+    with open(DATA_FILE, 'wb') as f:
         data = {
-            "participants": str(participants)
+            "participants": participants,
+            "voting": mod.voting
         }
-        f.write(str(data))
-
-
-def is_mod(user, channel):
-    stuffle_id = 438450978690433024
-    user_is_mod = user.permissions_in(channel).administrator
-    role_names = [role.name.lower() for role in user.roles]
-    mod_role = "mod" in role_names
-    return user_is_mod or mod_role or user.id == stuffle_id
+        pickle.dump(data, f)
 
 
 def get_random_person(user):
@@ -1210,6 +1197,10 @@ async def finish_wrestling(message, members, fluid):
     await message.channel.send(msg.format(message))
 
 
+@client.event
+async def on_raw_reaction_add(payload):
+    await check_reactions(payload, client)
+
 
 @client.event
 async def on_message(message):
@@ -1330,7 +1321,6 @@ async def on_message(message):
         elif text.startswith("pingeveryone"):
             msg = ping_everyone(user, message)
         elif text.startswith("winnings"):
-            user_is_mod = is_mod(user, message.channel)
             if user.id not in [478970983089438760, 438450978690433024]:
                 raise HouseCupException(
                     "Only Stuffle and Red can declare the winners "
@@ -1339,6 +1329,17 @@ async def on_message(message):
             print(msg1)
             await channel.send(msg1.format(message))
             await channel.send(msg2.format(message))
+        elif text.startswith("startmonitoring"):
+            user_is_mod = is_mod(user, message.channel)
+            msg = await monitor_voting(text, is_mod, client)
+            save_participants()
+        elif text.startswith("stopmonitoring"):
+            user_is_mod = is_mod(user, message.channel)
+            msg = stop_monitor_voting(text, is_mod)
+            save_participants()
+        elif text.startswith("showmonitoring"):
+            user_is_mod = is_mod(user, message.channel)
+            msg = show_monitors(text, is_mod)
 
         # For fun commands
         elif text.startswith("dumbledore"):
@@ -1414,7 +1415,7 @@ async def on_message(message):
             random_person = get_random_person(user)
             msg = "%s: %s" % (mention, i_love_you(random_person))
 
-    except HouseCupException as ex:
+    except (HouseCupException, mod.HouseCupException) as ex:
         msg = "{0.author.mention}: " + str(ex)
         print(user.name + ": " + str(ex))
     except Exception as ex:

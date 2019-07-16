@@ -180,6 +180,20 @@ def help_command(message, prefix):
             description=msg)
 
     # Mod Only commands
+    elif arg == "mod":
+        msg = "These are all commands that can only be used by mods."
+        embed = discord.Embed(
+            title="Mod Only Commands Help",
+            color=COLOR,
+            description=msg)
+        embed.add_field(
+            name="House Cup Commands:",
+            value="`award`, `deduct`, `pingeveryone`",
+            inline=False)
+        embed.add_field(
+            name="Voting Monitoring Commands:",
+            value="`startmonitoring`, `stopmonitoring`, `showmonitoring`",
+            inline=False)
     elif arg == "award":
         msg = "Mods only: Award points to someone with a mention and the " \
               "amount of points to give." \
@@ -201,6 +215,31 @@ def help_command(message, prefix):
               "\n\n Example `%spingeveryone`" % prefix
         embed = discord.Embed(
             title="Ping Everyone Help",
+            color=COLOR,
+            description=msg)
+    elif arg == "startmonitoring":
+        msg = "Mods only: Start monitoring the number of emoji reacts " \
+              "on a message. AMOUNT is the number of reactions allowed. " \
+              "If too many reactions are put on a message, stufflebot will " \
+              "delete the extra emoji as it is added and ping the offending person." \
+              "\n\n Example `%sstartmonitoring MESSAGE_ID CHANNEL_ID AMOUNT`" % prefix
+        embed = discord.Embed(
+            title="Start Monitoring Help",
+            color=COLOR,
+            description=msg)
+    elif arg == "stopmonitoring":
+        msg = "Mods only: Stop monitoring the given message." \
+              "\n\n Example `%sstopmonitoring MESSAGE_ID`" % prefix
+        embed = discord.Embed(
+            title="Stop Monitoring Help",
+            color=COLOR,
+            description=msg)
+    elif arg == "showmonitoring":
+        msg = "Mods only: Show the message IDs of the current messages " \
+              "that stufflebot is monitoring." \
+              "\n\n Example `%sshowmonitoring`" % prefix
+        embed = discord.Embed(
+            title="Show Monitoring Help",
             color=COLOR,
             description=msg)
 
@@ -395,16 +434,16 @@ def general_help(prefix):
         value="`points`, `standings`, `housepoints`, `leaderboard`",
         inline=False)
     embed.add_field(
-        name="Mod Only Commands:",
-        value="`award`, `deduct`, `pingeveryone`",
-        inline=False)
-    embed.add_field(
         name="Fun Commands:",
         value="`dumbledore`, `snape`, `mcgonagall`, `harry`, `hermione`, `ron`, `sneak`, `hug`, `kidnap`, `pillage`, `wrestle`",
         inline=False)
     embed.add_field(
         name="Inspiration Commands:",
         value="`prompt`, `inspireme`, `shouldikillharry`, `shouldigetbacktowork`, `whenshouldtheyfuck`, `randompair`, `kink`",
+        inline=False)
+    embed.add_field(
+        name="For More Commands:",
+        value="Mod only commands: `help mod`",
         inline=False)
 
     return embed
