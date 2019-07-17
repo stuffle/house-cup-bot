@@ -29,7 +29,7 @@ def mod_message(text, mention, channel_id):
 
     # Do not allow spoiler tags outside of spoilers
     if text.count("||") >= 2 and channel_id != "553216475708522506":
-        return "Hey %s, we don't allow the usage of spoiler tags outside of #spoilers due to their inaccessibility with screen readers. Please remove them from your message. Thanks!" % mention
+        return "Hey %s, in an effort to be an accessible server, we don't allow the usage of spoiler tags outside of #spoilers (they don't work with screen readers). Help us be a welcoming server to all by removing the spoiler tags from your message. You can also help by captioning your images." % mention
 
     return ""
 
@@ -122,8 +122,7 @@ async def monitor_voting(text, is_mod, client):
                 user_to_count[user] = 1
     for user in user_to_count:
         count = user_to_count[user]
-        #  and not is_mod(user, channel)
-        if count > amount:
+        if count > amount and not is_mod(user, channel):
             msg = "%s: You have reacted to the vote in %s with %d votes, " \
                   "but it only allows %d votes. Please remove your extra " \
                   "reaction(s)" % (user.mention, channel.name, count, amount)
