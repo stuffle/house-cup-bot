@@ -194,6 +194,10 @@ def help_command(message, prefix):
             name="Voting Monitoring Commands:",
             value="`startmonitoring`, `stopmonitoring`, `showmonitoring`",
             inline=False)
+        embed.add_field(
+            name="Utility Commands:",
+            value="`pickwinner`",
+            inline=False)
     elif arg == "award":
         msg = "Mods only: Award points to someone with a mention and the " \
               "amount of points to give." \
@@ -240,6 +244,14 @@ def help_command(message, prefix):
               "\n\n Example `%sshowmonitoring`" % prefix
         embed = discord.Embed(
             title="Show Monitoring Help",
+            color=COLOR,
+            description=msg)
+    elif arg == "pickwinner":
+        msg = "Pick a random person that reacted to a given message. " \
+              "This will work no matter how many times a person has reacted with equal probability." \
+              "\n\n Example `%spickwinner`" % prefix
+        embed = discord.Embed(
+            title="Pick Winner Help",
             color=COLOR,
             description=msg)
 

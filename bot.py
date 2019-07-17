@@ -1340,6 +1340,8 @@ async def on_message(message):
         elif text.startswith("showmonitoring"):
             user_is_mod = is_mod(user, message.channel)
             msg = show_monitors(text, is_mod)
+        elif text.startswith("pickwinner"):
+            msg = await pick_winner(text, client)
 
         # For fun commands
         elif text.startswith("dumbledore"):

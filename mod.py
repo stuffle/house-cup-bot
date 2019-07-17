@@ -1,4 +1,5 @@
 import discord
+import random
 
 
 voting = {}
@@ -25,6 +26,24 @@ def is_mod(user, channel):
     return user_is_mod or mod_role or user.id == stuffle_id
 
 
+async def get_channel_and_message(client, channel_id, message_id):
+    channel = client.get_channel(channel_id)
+    if not channel:
+        raise HouseCupException(
+            "I can't find that channel. Please try again.")
+
+    message = None
+    try:
+        message = await channel.fetch_message(message_id)
+    except Exception:
+        raise HouseCupException("Invalid message ID. Please try again")
+    if not message:
+        raise HouseCupException(
+            "I can't find that message. Please try again.")
+
+    return channel, message
+
+
 def mod_message(text, mention, channel_id):
 
     # Do not allow spoiler tags outside of spoilers
@@ -45,11 +64,7 @@ async def check_reactions(payload, client):
     if channel_id != payload.channel_id:
         return
 
-    channel = client.get_channel(channel_id)
-    try:
-        message = await channel.fetch_message(message_id)
-    except Exception:
-        raise HouseCupException("Message %d could not be found." % message_id)
+    channel, message = await get_channel_and_message(client, channel_id, message_id)
 
     # If user is a mod, react limits do not apply
     user_id = payload.user_id
@@ -91,19 +106,7 @@ async def monitor_voting(text, is_mod, client):
     channel_id = int(args[1])
     amount = int(args[2])
 
-    channel = client.get_channel(channel_id)
-    if not channel:
-        raise HouseCupException(
-            "I can't find that channel. Please try again.")
-
-    message = None
-    try:
-        message = await channel.fetch_message(message_id)
-    except Exception:
-        raise HouseCupException("Invalid message ID. Please try again")
-    if not message:
-        raise HouseCupException(
-            "I can't find that message. Please try again.")
+    channel, message = await get_channel_and_message(client, channel_id, message_id)
 
     voting[message_id] = {
         "channel_id": channel_id,
@@ -160,3 +163,28 @@ def show_monitors(text, is_mod):
     if msg:
         return "I am monitoring these messages: %s" % msg
     return "I'm not monitoring anything right now."
+
+
+async def pick_winner(text, client):
+    args = text.split()[1:]
+    proper_format = "Proper formatting for this function is `~pickwinner MESSADE_ID CHANNEL_ID`"
+    if len(args) != 2:
+        raise HouseCupException(proper_format)
+    if not args[0].isdigit() or not args[1].isdigit():
+        raise HouseCupException(proper_format)
+
+    message_id = int(args[0])
+    channel_id = int(args[1])
+
+    channel, message = await get_channel_and_message(client, channel_id, message_id)
+
+    unique_users = []
+    reactions = message.reactions
+    for reaction in reactions:
+        users = await reaction.users().flatten()
+        for user in users:
+            if user not in unique_users:
+                unique_users.append(user)
+
+    winner = random.choice(unique_users).name
+    return "The winner is %s!" % winner
