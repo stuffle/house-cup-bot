@@ -186,5 +186,8 @@ async def pick_winner(text, client):
             if user not in unique_users:
                 unique_users.append(user)
 
+    if len(unique_users) == 0:
+        return "No one reacted to that message, so there is no winner."
+
     winner = random.choice(unique_users).name
     return "The winner is %s!" % winner
