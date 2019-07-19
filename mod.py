@@ -1,5 +1,10 @@
 import discord
 import random
+import datetime
+import pytz
+
+
+utc = pytz.UTC
 
 
 voting = {}
@@ -191,3 +196,26 @@ async def pick_winner(text, client):
 
     winner = random.choice(unique_users).name
     return "The winner is %s!" % winner
+
+
+async def unwelcome(client):
+    msg = "Unwelcoming complete!!"
+    now = datetime.datetime.now(datetime.timezone.utc)
+    week_ago = now - datetime.timedelta(days=7)
+    welcome_id = 445996352363823104  # real welcome id
+    # welcome_id = 601824945613570089 # Test server welcome ID
+    guild_id = 426319059009798146
+    guild = client.get_guild(guild_id)
+    welcome_role = guild.get_role(welcome_id)
+    boot_msg = "Hi! Sorry to kick you out of the server, but you haven’t chosen a House role in the week we gave you :frowning: If you’d like to come back to the server, here’s an invite link: https://discord.gg/BQD87kS   Please don’t forget this time, and thank you!"
+
+    for member in welcome_role.members:
+        joined = utc.localize(member.joined_at)
+        if joined and joined < week_ago:
+            role_names = [role.name.lower() for role in member.roles]
+            if "slytherin" in role_names or "hufflepuff" in role_names or "ravenclaw" in role_names or "gryffindor" in role_names:
+                await member.remove_roles(welcome_role, reason="They have had this role for a week.")
+            else:
+                await member.send(boot_msg)
+                await member.kick(reason="User failed to pick a house role.")
+    return msg

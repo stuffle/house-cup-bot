@@ -1342,6 +1342,8 @@ async def on_message(message):
             msg = show_monitors(text, is_mod)
         elif text.startswith("pickwinner"):
             msg = await pick_winner(text, client)
+        elif text.startswith("unwelcome"):
+            msg = await unwelcome(client)
 
         # For fun commands
         elif text.startswith("dumbledore"):
