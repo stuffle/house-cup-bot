@@ -33,6 +33,13 @@ def help_command(message, prefix):
             title="Leave Help",
             color=COLOR,
             description=msg)
+    elif arg == "time":
+        msg = "See how much time remains until the end of the House Cup."\
+              "\n\nExample: `%stime`" % prefix
+        embed = discord.Embed(
+            title="Time Help",
+            color=COLOR,
+            description=msg)
 
     # Logging Points
     elif arg == "daily":
@@ -435,7 +442,7 @@ def general_help(prefix):
 
     embed.add_field(
         name="Participating:",
-        value="`join`, `leave`",
+        value="`join`, `leave`, `time`",
         inline=False)
     embed.add_field(
         name="Logging Points:",
