@@ -1382,6 +1382,10 @@ async def on_message(message):
             embed = hug(user.mention, message.mentions, text)
             await channel.send(embed=embed)
             return
+        elif text.startswith("cheer"):
+            embed = cheer(user.mention, message.mentions, text)
+            await channel.send(embed=embed)
+            return
         elif text.startswith("kidnap"):
             embed = kidnap(user.mention, message.mentions, text)
             await channel.send(embed=embed)

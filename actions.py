@@ -272,3 +272,75 @@ def pillage(person):
             "A viking woman strikes down a man in front of her ship.")
     ]
     return get_random_embed_same_quote(quote, gif_to_caption, 13632027)
+
+
+def cheer(cheerleader, mentions, text):
+    victim = get_mention(mentions, text, "Friend")
+    quote = "%s: You are being cheered on by %s!!!" % (victim, cheerleader)
+    if victim in ["<@542048148776943657>", "Stufflebot"]:
+        quote = "%s: Stufflebot cheers you on too! :heart:" % cheerleader
+    gif_to_caption = [
+        ("https://cdn.discordapp.com/attachments/592480821890514944/602356893188489219/image0.gif",
+            "A real cat in a cheer costume wiggles two oversized pom-poms."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/602381128887697429/image0.gif",
+            "Snoopy dances back and forth while waving pom-poms."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/602381353635414027/image0.gif",
+            "A big rabbit waves pink pom-poms over head next to a chick waving a flag."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/602381860508794900/image0.gif",
+            "A cartoon cat dances with pom-poms, it’s whiskers twitching to its movements."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/602382148732977163/image0.gif",
+            "A giant cartoon bunny hops prom foot to foot on a stump, waving bushes like pom-poms. Flowers fly up in the background."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/602382863131738122/image0.gif",
+            "A very happy pikachu cheers with pom-poms."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/602383132800319518/image0.gif",
+            "A Care Bear dances with rainbow tassels."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/602383356092612621/image0.gif",
+            "A cartoon bunny alternates high kicks while a cute white animal hops into view from behind it, throwing confetti."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/602384163558916126/image0.gif",
+            "A cactus with a flower on its head, punches its hands up in an alternating fashion, hitting two big “GO!”s."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/602384583891222529/image0.gif",
+            "A smiling cartoon cat with closed eyes dances side to side, its tail swishing with it. A heart pulses above its head."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/602385048481824768/image0.gif",
+            "A happy cartoon cat jumps into the air, cheering you on with yellow pom-poms and twitching ears."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/602385384198111262/image0.gif",
+            "“Cheerleader chibird” , a yellow blob with pom-poms says “hey! You got this! You’re doing great! Woo! Finish today strong!”"),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/602513976500420628/image0.gif",
+            "A serious looking cartoon bear sways while pumping their pom-poms."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/602514272702169098/image0.gif",
+            "A cartoon penguin with a bow tie waves pom-poms nearly as big as itself around enthusiastically."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/602514596934320138/image0.gif",
+            "A cartoon panda waves pom-poms amidst confetti."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/602515107762929664/image0.gif",
+            "Hello Kitty in a bear costume cheers “GO! GO!”"),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/602515459090153472/image0.gif",
+            "A derpy looking chicken dances enthusiastically with pom-poms."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/602515700380336129/image0.gif",
+            "A happy mushroom runs, then jumps into the air cheerfully."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/602516117683961876/image0.gif",
+            "A small cartoon bunny dances with pom-poms."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/602516281115017217/image0.gif",
+            "Three cartoon animals and a cartoon heart dance in formation with pom-poms."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/602516489433513997/image0.gif",
+            "A happy cartoon fox jumps into the air saying “yeah!”"),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/602516661152776221/image0.gif",
+            "Five cartoon cats in a precarious pyramid formation wave happily."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/602517286569377804/image0.gif",
+            "Two bears dance back and forth, switching places while waving pom-poms in the air with confetti flying off them."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/602517557898903552/image0.gif",
+            "A smiling Patrick (from Spongebob) waves a flag and foam hand."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/602517770923671573/image0.gif",
+            "Hello Kitty waves two flags while marching in place among confetti."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/602518034300796938/image0.gif",
+            "Hello kitty turns to face you, winking and with two thumbs up, while saying “Yes! Yes!”"),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/602518271043829790/image0.gif",
+            "A real kitten standing on its hind legs dances back and forth with pom-poms in a heavily edited way."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/602518679695130645/image0.gif",
+            "A big bunny waves pom-poms up and down, dancing to the beat of floating musical notes."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/602518987770691584/image0.gif",
+            "A stoic cartoon cat steps back and forth while holding pom-poms over their head."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/602519167257542676/image0.gif",
+            "A cartoon panda jumps into the air. As it lands, more pandas appear behind it. They all jump in formation, and more identical pandas spawn in the background."),
+        ("https://cdn.discordapp.com/attachments/592480821890514944/602519690891362337/image0.gif",
+            "A happy shiba claps pom-poms together, then raises one.")
+    ]
+    return get_random_embed_same_quote(quote, gif_to_caption, 10507492)

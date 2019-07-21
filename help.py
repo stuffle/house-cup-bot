@@ -328,6 +328,13 @@ def help_command(message, prefix):
             title="Hug Help",
             color=COLOR,
             description=msg)
+    elif arg == "cheer":
+        msg = "Cheer someone on!\n " \
+              "Examples: `%scheer person`" % prefix
+        embed = discord.Embed(
+            title="Cheer Help",
+            color=COLOR,
+            description=msg)
     elif arg == "kidnap":
         msg = "Kidnap someone! Example: `%skidnap @dorea`" \
               "\n\nMost gifs supplied by Dorea." % prefix
@@ -454,7 +461,7 @@ def general_help(prefix):
         inline=False)
     embed.add_field(
         name="Fun Commands:",
-        value="`dumbledore`, `snape`, `mcgonagall`, `harry`, `hermione`, `ron`, `sneak`, `hug`, `kidnap`, `pillage`, `wrestle`",
+        value="`dumbledore`, `snape`, `mcgonagall`, `harry`, `hermione`, `ron`, `sneak`, `hug`, `cheer`, `kidnap`, `pillage`, `wrestle`",
         inline=False)
     embed.add_field(
         name="Inspiration Commands:",
