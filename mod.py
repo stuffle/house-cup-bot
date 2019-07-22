@@ -52,7 +52,7 @@ async def get_channel_and_message(client, channel_id, message_id):
 def mod_message(text, mention, channel_id):
 
     # Do not allow spoiler tags outside of spoilers
-    if text.count("||") >= 2 and channel_id != "553216475708522506":
+    if text.count("||") >= 2 and channel_id != 553216475708522506:
         return "Hey %s, in an effort to be an accessible server, we don't allow the usage of spoiler tags outside of #spoilers (they don't work with screen readers). Help us be a welcoming server to all by removing the spoiler tags from your message. You can also help by captioning your images." % mention
 
     return ""
