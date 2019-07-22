@@ -219,3 +219,54 @@ async def unwelcome(client):
                 await member.send(boot_msg)
                 await member.kick(reason="User failed to pick a house role.")
     return msg
+
+
+def check_for_chukar(msg):
+    from_chukar = msg.author.id == 586695658640244738
+    #chukars_names = [
+        #"chu", "chukar", "chukarpatridge",
+       # "partridge", "chukarlate", "chukarlatepatridge",
+      #  "586695658640244738", "<@586695658640244738>",
+     #   "<@!586695658640244738>", "patronchu"
+    #]
+    #is_chukar_mentioned = msg.content.lower() in chukars_names
+    return from_chukar
+
+
+
+async def clear_channels(client):
+    channels_to_clear = [
+        # COS, #tea-and-hugs
+        (426319059009798146, 595247008340508683),
+        # COS, snap-snap
+        (426319059009798146, 595247137898627082),
+        # COS, feel-good
+        (426319059009798146, 595247070793826386),
+        # COS, sanity-checking
+        #(426319059009798146, 596466535212777480),
+        # Test, clear
+        (539932855845781524, 601903313310711878)
+    ]
+    #for guild_id, channel_id in channels_to_clear:
+        #channel = client.get_channel(channel_id)
+        #if not channel:
+          #  print("Could not find channel with ID: %d" % channel_id)
+         #   pass
+        #await channe.purge(limit=None, check=lambda msg: not msg.pinned)
+
+    guilds_to_clear = [
+        426319059009798146, 497039992401428498, 539932855845781524
+    ]
+    for guild_id in guilds_to_clear:
+        guild = client.get_guild(guild_id)
+        if guild:
+            for channel in guild.text_channels:
+                # 602950953926393869 596466535212777480
+                if channel and channel.id not in [602950953926393869, 596466535212777480]:
+                    await channel.purge(limit=None, check=lambda msg: check_for_chukar(msg))
+
+
+    #channel = client.get_channel(601903313310711878)
+    #await channel.purge(limit=None, check=lambda msg: check_for_chukar(msg))
+
+    return "Ran clear messages!"

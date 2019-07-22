@@ -1344,6 +1344,8 @@ async def on_message(message):
             msg = await pick_winner(text, client)
         elif text.startswith("unwelcome"):
             msg = await unwelcome(client)
+        elif text.startswith("clearchannels"):
+            msg = await clear_channels(client)
 
         # For fun commands
         elif text.startswith("dumbledore"):
