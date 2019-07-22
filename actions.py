@@ -279,6 +279,7 @@ def cheer(cheerleader, mentions, text):
     quote = "%s: You are being cheered on by %s!!!" % (victim, cheerleader)
     if victim in ["<@542048148776943657>", "Stufflebot"]:
         quote = "%s: Stufflebot cheers you on too! :heart:" % cheerleader
+
     gif_to_caption = [
         ("https://cdn.discordapp.com/attachments/592480821890514944/602356893188489219/image0.gif",
             "A real cat in a cheer costume wiggles two oversized pom-poms."),
