@@ -255,24 +255,28 @@ async def delete_history(client, message):
 async def clear_channels(client):
     channels_to_clear = [
         # COS, #tea-and-hugs
-        (426319059009798146, 595247008340508683),
+        (COS_GUILD_ID, 595247008340508683),
         # COS, snap-snap
-        (426319059009798146, 595247137898627082),
+        (COS_GUILD_ID, 595247137898627082),
         # COS, feel-good
-        (426319059009798146, 595247070793826386),
+        (COS_GUILD_ID, 595247070793826386),
         # COS, sanity-checking
-        #(426319059009798146, 596466535212777480),
+        (COS_GUILD_ID, 603211515625209857),
         # Test, clear
         (539932855845781524, 601903313310711878)
     ]
-    #for guild_id, channel_id in channels_to_clear:
-        #channel = client.get_channel(channel_id)
-        #if not channel:
-          #  print("Could not find channel with ID: %d" % channel_id)
-         #   pass
-        #await channe.purge(limit=None, check=lambda msg: not msg.pinned)
 
-    #channel = client.get_channel(601903313310711878)
-    #await channel.purge(limit=None, check=lambda msg: check_for_chukar(msg))
+    now = datetime.datetime.now()
+    week_ago = now - datetime.timedelta(days=7)
+
+    for guild_id, channel_id in channels_to_clear:
+        channel = client.get_channel(channel_id)
+        if channel:
+            await channel.purge(
+                limit=None,
+                before=week_ago,
+                check=lambda msg: not msg.pinned)
+        else:
+            print("Did not run for %d" % channel_id)
 
     return "Ran clear messages!"
