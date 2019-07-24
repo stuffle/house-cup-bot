@@ -9,13 +9,15 @@ utc = pytz.UTC
 
 voting = {}
 
+COS_GUILD_ID = 426319059009798146
+
 SERVER_ID_TO_CHANNEL = {
     # Red's Writing Hood: house-cup-bot
     497039992401428498: 553382529521025037,
     # Test: general
     539932855845781524: 539932855845781530,
     # COS: bot-spam
-    426319059009798146: 426322538944266240
+    COS_GUILD_ID: 426322538944266240
 }
 
 
@@ -221,17 +223,33 @@ async def unwelcome(client):
     return msg
 
 
-def check_for_chukar(msg):
-    from_chukar = msg.author.id == 586695658640244738
-    #chukars_names = [
-        #"chu", "chukar", "chukarpatridge",
-       # "partridge", "chukarlate", "chukarlatepatridge",
-      #  "586695658640244738", "<@586695658640244738>",
-     #   "<@!586695658640244738>", "patronchu"
-    #]
-    #is_chukar_mentioned = msg.content.lower() in chukars_names
-    return from_chukar
+async def delete_history(client, message):
+    channel = message.channel
+    if not is_mod(message.author, channel):
+        raise HouseCupException("Only mods may run this command.")
 
+    if len(message.mentions) != 1:
+        raise HouseCupException(
+            "Mention one user to delete their history.")
+    member = message.mentions[0]
+    mention = member.mention
+
+    await channel.send(
+        "Running delete history for %s. "
+        "I'll let you know when it's complete. "
+        "This could take a while." % mention)
+
+    for channel in message.guild.text_channels:
+        try:
+            await channel.purge(
+                limit=None,
+                after=member.joined_at,
+                check=lambda msg: msg.author.id == member.id)
+        except Exception:
+            print(Exception)
+    print("Deleted history for %s" % member.name)
+    msg = "Finished running delete history for %s." % mention
+    return msg
 
 
 async def clear_channels(client):
@@ -253,18 +271,6 @@ async def clear_channels(client):
           #  print("Could not find channel with ID: %d" % channel_id)
          #   pass
         #await channe.purge(limit=None, check=lambda msg: not msg.pinned)
-
-    guilds_to_clear = [
-        426319059009798146, 497039992401428498, 539932855845781524
-    ]
-    for guild_id in guilds_to_clear:
-        guild = client.get_guild(guild_id)
-        if guild:
-            for channel in guild.text_channels:
-                # 602950953926393869 596466535212777480
-                if channel and channel.id not in [602950953926393869, 596466535212777480]:
-                    await channel.purge(limit=None, check=lambda msg: check_for_chukar(msg))
-
 
     #channel = client.get_channel(601903313310711878)
     #await channel.purge(limit=None, check=lambda msg: check_for_chukar(msg))

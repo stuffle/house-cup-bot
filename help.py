@@ -205,6 +205,10 @@ def help_command(message, prefix):
             name="Utility Commands:",
             value="`pickwinner`",
             inline=False)
+        embed.add_field(
+            name="Server Management Commands",
+            value="`unwelcome`, `deletehistory`",
+            inline=False)
     elif arg == "award":
         msg = "Mods only: Award points to someone with a mention and the " \
               "amount of points to give." \
@@ -259,6 +263,24 @@ def help_command(message, prefix):
               "\n\n Example `%spickwinner`" % prefix
         embed = discord.Embed(
             title="Pick Winner Help",
+            color=COLOR,
+            description=msg)
+    elif arg == "unwelcome":
+        msg = "Trigger the function to kick everyone in COS with " \
+              "the welcome role that has not chosen a house role and " \
+              "has been in the server for more than a week. " \
+              "This also removes the welcome role for those that have " \
+              "chosen a house role." \
+              "\n\n Example `%sunwelcome`" % prefix
+        embed = discord.Embed(
+            title="Unwelcome Help",
+            color=COLOR,
+            description=msg)
+    elif arg == "deletehistory":
+        msg = "Delete every message by the mentioned person in the server. " \
+              "\n\n Example `%sdeletehistory @person`" % prefix
+        embed = discord.Embed(
+            title="Delete History Help",
             color=COLOR,
             description=msg)
 
