@@ -252,7 +252,16 @@ async def delete_history(client, message):
     return msg
 
 
-async def clear_channels(client):
+async def clear_channels(client, message):
+    channel = message.channel
+    if not is_mod(message.author, channel):
+        raise HouseCupException("Only mods may run this command.")
+
+    await channel.send(
+        "Running clearchannels. "
+        "I'll let you know when it's complete. "
+        "This could take a while.")
+
     channels_to_clear = [
         # COS, #tea-and-hugs
         (COS_GUILD_ID, 595247008340508683),
@@ -279,4 +288,4 @@ async def clear_channels(client):
         else:
             print("Did not run for %d" % channel_id)
 
-    return "Ran clear messages!"
+    return "Ran clear channels!"

@@ -1345,7 +1345,7 @@ async def on_message(message):
         elif text.startswith("unwelcome"):
             msg = await unwelcome(client)
         elif text.startswith("clearchannels"):
-            msg = await clear_channels(client)
+            msg = await clear_channels(client, message)
         elif text.startswith("deletehistory"):
             msg = await delete_history(client, message)
 
