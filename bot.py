@@ -1523,6 +1523,21 @@ if __name__ == '__main__':
         'date',
         run_date=two_days_left)
 
+    scheduler.add_job(
+        func=clear_channels,
+        trigger='cron',
+        day="*",
+        hour="21",
+        timezone="utc",
+        args=[client])
+    scheduler.add_job(
+        func=unwelcome,
+        trigger='cron',
+        day="*",
+        hour="22",
+        timezone="utc",
+        args=[client])
+
     scheduler.start()
     client.run(token)
 

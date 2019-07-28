@@ -201,6 +201,7 @@ async def pick_winner(text, client):
 
 
 async def unwelcome(client):
+    print("Running unwelcome")
     msg = "Unwelcoming complete!!"
     now = datetime.datetime.now(datetime.timezone.utc)
     week_ago = now - datetime.timedelta(days=7)
@@ -208,6 +209,8 @@ async def unwelcome(client):
     # welcome_id = 601824945613570089 # Test server welcome ID
     guild_id = 426319059009798146
     guild = client.get_guild(guild_id)
+    if not guild:
+        return "I'm not in that guild."
     welcome_role = guild.get_role(welcome_id)
     boot_msg = "Hi! Sorry to kick you out of the server, but you haven’t chosen a House role in the week we gave you :frowning: If you’d like to come back to the server, here’s an invite link: https://discord.gg/BQD87kS   Please don’t forget this time, and thank you!"
 
@@ -252,15 +255,17 @@ async def delete_history(client, message):
     return msg
 
 
-async def clear_channels(client, message):
-    channel = message.channel
-    if not is_mod(message.author, channel):
-        raise HouseCupException("Only mods may run this command.")
+async def clear_channels(client, message=None):
+    print("Clearing channels")
 
-    await channel.send(
-        "Running clearchannels. "
-        "I'll let you know when it's complete. "
-        "This could take a while.")
+    if message:
+        channel = message.channel
+        if not is_mod(message.author, channel):
+            raise HouseCupException("Only mods may run this command.")
+        await channel.send(
+            "Running clearchannels. "
+            "I'll let you know when it's complete. "
+            "This could take a while.")
 
     channels_to_clear = [
         # COS, #tea-and-hugs
