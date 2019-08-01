@@ -1229,7 +1229,7 @@ async def on_message(message):
 
         # Add bananalion to everything wolven says in the writing server
         if user.id == 593530774104309790 and message.guild.id == 497039992401428498:
-            banana_lion = client.get_emoji(572278451633913857)
+            banana_lion = client.get_emoji(564830356977483804)
             await message.add_reaction(banana_lion)
 
         modded = mod_message(text, mention, message.channel.id)
