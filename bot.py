@@ -1231,6 +1231,9 @@ async def on_message(message):
         if user.id == 593530774104309790 and message.guild.id == 497039992401428498:
             banana_lion = client.get_emoji(564830356977483804)
             await message.add_reaction(banana_lion)
+        if user.id == 516122981156782091 and message.guild.id == 497039992401428498:
+            banana_bad = client.get_emoji(565106770020925451)
+            await message.add_reaction(banana_bad)
 
         modded = mod_message(text, mention, message.channel.id)
         if modded:
