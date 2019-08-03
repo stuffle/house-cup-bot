@@ -207,7 +207,7 @@ def help_command(message, prefix):
             inline=False)
         embed.add_field(
             name="Server Management Commands",
-            value="`unwelcome`, `deletehistory`, `clearchannels`",
+            value="`unwelcome`, `deletehistory`, `clearchannels`, `clearchannelnow`",
             inline=False)
     elif arg == "award":
         msg = "Mods only: Award points to someone with a mention and the " \
@@ -287,6 +287,14 @@ def help_command(message, prefix):
         msg = "Delete all messages that are more than a week old in " \
               " the personal channels, except for the ones that are pinned. " \
               "\n\n Example `%sclearchannels`" % prefix
+        embed = discord.Embed(
+            title="Clear Channels Help",
+            color=COLOR,
+            description=msg)
+    elif arg == "clearchannelnow":
+        msg = "Delete all messages in the channel this is called from " \
+              "that aren't pinned." \
+              "\n\nExample: `%sclearchannelnow`"
         embed = discord.Embed(
             title="Clear Channels Help",
             color=COLOR,

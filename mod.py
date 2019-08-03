@@ -294,3 +294,18 @@ async def clear_channels(client, message=None):
             print("Did not run for %d" % channel_id)
 
     return "Ran clear channels!"
+
+
+async def clear_channel_now(client, message):
+
+    channel = message.channel
+    if not is_mod(message.author, channel):
+        raise HouseCupException("Only mods may run this command.")
+    await channel.send(
+        "Deleting all messages in this channel that weren't pinned...")
+
+    await channel.purge(
+        limit=None,
+        check=lambda msg: not msg.pinned)
+
+    return "Deleted non-pinned messages in this channel!"
