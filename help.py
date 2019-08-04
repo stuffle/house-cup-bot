@@ -203,7 +203,7 @@ def help_command(message, prefix):
             inline=False)
         embed.add_field(
             name="Utility Commands:",
-            value="`pickwinner`",
+            value="`pickwinner`, `chide`",
             inline=False)
         embed.add_field(
             name="Server Management Commands",
@@ -260,7 +260,7 @@ def help_command(message, prefix):
     elif arg == "pickwinner":
         msg = "Pick a random person that reacted to a given message. " \
               "This will work no matter how many times a person has reacted with equal probability." \
-              "\n\n Example `%spickwinner`" % prefix
+              "\n\n Example `%spickwinner MESSADE_ID CHANNEL_ID`" % prefix
         embed = discord.Embed(
             title="Pick Winner Help",
             color=COLOR,
@@ -297,6 +297,13 @@ def help_command(message, prefix):
               "\n\nExample: `%sclearchannelnow`"
         embed = discord.Embed(
             title="Clear Channels Help",
+            color=COLOR,
+            description=msg)
+    elif arg == "chide":
+        msg = "Chide someone for not captioning their image for a given message ID and channel ID. " \
+              "\n\n Example `%schide MESSADE_ID CHANNEL_ID`" % prefix
+        embed = discord.Embed(
+            title="Chide Help",
             color=COLOR,
             description=msg)
 

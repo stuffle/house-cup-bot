@@ -309,3 +309,25 @@ async def clear_channel_now(client, message):
         check=lambda msg: not msg.pinned)
 
     return "Deleted non-pinned messages in this channel!"
+
+
+async def chide(text, client):
+    args = text.split()[1:]
+    proper_format = "Proper formatting for this function is `~chide MESSADE_ID CHANNEL_ID`"
+    if len(args) != 2:
+        raise HouseCupException(proper_format)
+    if not args[0].isdigit() or not args[1].isdigit():
+        raise HouseCupException(proper_format)
+
+    message_id = int(args[0])
+    channel_id = int(args[1])
+
+    channel, message = await get_channel_and_message(
+        client, channel_id, message_id)
+    await channel.send(
+        "Hey, %s, in an effort to make our server more "
+        "accesible we ask people to caption their images. "
+        "Just transcribe the text and/or describe what it is depicting."
+        " Thanks!" % message.author.mention)
+
+    return "%s has been chided in %s." % (message.author.name, channel.name)

@@ -1358,6 +1358,8 @@ async def on_message(message):
             msg = await delete_history(client, message)
         elif text.startswith("clearchannelnow"):
             msg = await clear_channel_now(client, message)
+        elif text.startswith("chide"):
+            msg = await chide(text, client)
 
         # For fun commands
         elif text.startswith("dumbledore"):
