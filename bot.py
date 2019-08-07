@@ -17,6 +17,8 @@ from actions import *
 from inspire import *
 from help import *
 from mod import *
+from marriages import *
+import marriages
 import mod
 
 
@@ -120,13 +122,17 @@ def load_participants():
         data = pickle.load(f)
         participants = data["participants"]
         mod.voting = data["voting"]
+        marriages.proposals = data["proposals"]
+        marriages.marriage_info = data["marriage_info"]
 
 
 def save_participants():
     with open(DATA_FILE, 'wb') as f:
         data = {
             "participants": participants,
-            "voting": mod.voting
+            "voting": mod.voting,
+            "proposals": marriages.proposals,
+            "marriage_info": marriages.marriage_info
         }
         pickle.dump(data, f)
 
@@ -1361,6 +1367,13 @@ async def on_message(message):
         elif text.startswith("chide"):
             msg = await chide(text, client)
 
+        # Marriage commands
+        elif text.startswith("marry"):
+            msg = marry(client, message)
+            save_participants()
+        elif text.startswith("marriages"):
+            msg = await see_marriages(client, message)
+
         # For fun commands
         elif text.startswith("dumbledore"):
             house = get_house(user)
@@ -1439,7 +1452,7 @@ async def on_message(message):
             random_person = get_random_person(user)
             msg = "%s: %s" % (mention, i_love_you(random_person))
 
-    except (HouseCupException, mod.HouseCupException) as ex:
+    except (HouseCupException, mod.HouseCupException, MarriageException) as ex:
         msg = "{0.author.mention}: " + str(ex)
         print(user.name + ": " + str(ex))
     except Exception as ex:

@@ -403,6 +403,25 @@ def help_command(message, prefix):
             color=COLOR,
             description=msg)
 
+    # Marriage Commands
+    elif arg == "marry":
+        msg = "Marry another user. With this command you can propose to a " \
+              "user, accept a proposal, and remarry.\n\n" \
+              "Example: `%smarry @person`" % prefix
+        embed = discord.Embed(
+            title="Marry Help",
+            color=COLOR,
+            description=msg)
+    elif arg == "marriages":
+        msg = "View all of the people you are married to and how many times" \
+              " (based on the number of heart emoji next to their name)." \
+              "You many mention a person to look up their marriages." \
+              "\n\nExamples: `%smarriages`, `%smarriages @person`" % (prefix, prefix)
+        embed = discord.Embed(
+            title="Marriages Help",
+            color=COLOR,
+            description=msg)
+
     # Writing Commands
     elif arg == "prompt":
         msg = "Get a randomly generated prompt. Example: `%sprompt`" \
@@ -511,6 +530,10 @@ def general_help(prefix):
     embed.add_field(
         name="Inspiration Commands:",
         value="`prompt`, `inspireme`, `shouldikillharry`, `shouldigetbacktowork`, `whenshouldtheyfuck`, `randompair`, `kink`",
+        inline=False)
+    embed.add_field(
+        name="Marriage Commands:",
+        value="`marry`, `marriages`",
         inline=False)
     embed.add_field(
         name="For More Commands:",
