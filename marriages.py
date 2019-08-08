@@ -87,6 +87,48 @@ def marry(client, message):
     return msg
 
 
+def get_heart_string(client, times_married, emojis):
+    if times_married <= 0:
+        return emojis
+    elif times_married >= 500:
+        heart_emoji_500 = str(client.get_emoji(609054991734538242))
+        return get_heart_string(
+            client, times_married - 500, emojis + heart_emoji_500)
+    elif times_married >= 100:
+        heart_emoji_100 = str(client.get_emoji(609054831671508994))
+        return get_heart_string(
+            client, times_married - 100, emojis + heart_emoji_100)
+    elif times_married >= 50:
+        heart_emoji_50 = str(client.get_emoji(609054469459804180))
+        return get_heart_string(
+            client, times_married - 50, emojis + heart_emoji_50)
+    elif times_married >= 10:
+        heart_emoji_10 = str(client.get_emoji(609049620814888990))
+        return get_heart_string(
+            client, times_married - 10, emojis + heart_emoji_10)
+    elif times_married >= 5:
+        heart_emoji_5 = str(client.get_emoji(609048811754618903))
+        return get_heart_string(
+            client, times_married - 5, emojis + heart_emoji_5)
+    else:
+        rainbow_heart = str(client.get_emoji(609071343434203186))
+        return get_heart_string(
+            client, times_married - 1, emojis + rainbow_heart)
+
+
+def test_em(client, text):
+    args = text.split()
+    times_married = int(args[1])
+    emojis = ""
+    if times_married == 69:
+        emojis = str(client.get_emoji(609056473355386880))
+    elif times_married == 420:
+        emojis = str(client.get_emoji(609065627025539085))
+    else:
+        emojis = get_heart_string(client, times_married, "")
+    return emojis
+
+
 async def see_marriages(client, message):
 
     text = message.content
@@ -118,9 +160,15 @@ async def see_marriages(client, message):
         partner = client.get_user(partner_id)
 
         times_married = marriage_info[marriage_id]["times_married"]
-        emoji = ":hearts:"
+        emojis = ""
+        if times_married == 69:
+            emojis = str(client.get_emoji(609056473355386880))
+        elif times_married == 420:
+            emojis = str(client.get_emoji(609065627025539085))
+        else:
+            emojis = get_heart_string(client, times_married, "")
         msg_line = "**%d** `%s` %s\n" % (
-            count, partner.name, emoji * times_married)
+            count, partner.name, emojis)
 
         msg = msg + msg_line
         count += 1

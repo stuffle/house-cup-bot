@@ -415,7 +415,8 @@ def help_command(message, prefix):
     elif arg == "marriages":
         msg = "View all of the people you are married to and how many times" \
               " (based on the number of heart emoji next to their name)." \
-              "You many mention a person to look up their marriages." \
+              "You many mention a person to look up their marriages.\n" \
+              "Heart emoji by Sparky and Kami." \
               "\n\nExamples: `%smarriages`, `%smarriages @person`" % (prefix, prefix)
         embed = discord.Embed(
             title="Marriages Help",

@@ -1378,6 +1378,8 @@ async def on_message(message):
             save_participants()
         elif text.startswith("marriages"):
             msg = await see_marriages(client, message)
+        elif text.startswith("testem"):
+            msg = test_em(client, text)
 
         # For fun commands
         elif text.startswith("dumbledore"):
