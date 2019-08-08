@@ -10,6 +10,7 @@ utc = pytz.UTC
 voting = {}
 
 COS_GUILD_ID = 426319059009798146
+STUFFLE_ID = 438450978690433024
 
 SERVER_ID_TO_CHANNEL = {
     # Red's Writing Hood: house-cup-bot
@@ -26,11 +27,10 @@ class HouseCupException(Exception):
 
 
 def is_mod(user, channel):
-    stuffle_id = 438450978690433024
     user_is_mod = user.permissions_in(channel).administrator
     role_names = [role.name.lower() for role in user.roles]
     mod_role = "mod" in role_names
-    return user_is_mod or mod_role or user.id == stuffle_id
+    return user_is_mod or mod_role or user.id == STUFFLE_ID
 
 
 async def get_channel_and_message(client, channel_id, message_id):

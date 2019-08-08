@@ -128,8 +128,6 @@ async def see_marriages(client, message):
     return msg
 
 
-
-
 def divorce(client, message):
     msg = "RIP"
 
