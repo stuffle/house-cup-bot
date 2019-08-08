@@ -111,9 +111,8 @@ def get_heart_string(client, times_married, emojis):
         return get_heart_string(
             client, times_married - 5, emojis + heart_emoji_5)
     else:
-        rainbow_heart = str(client.get_emoji(609071343434203186))
         return get_heart_string(
-            client, times_married - 1, emojis + rainbow_heart)
+            client, times_married - 1, emojis + ":hearts:")
 
 
 def test_em(client, text):
