@@ -8,6 +8,7 @@ from calendar import monthrange
 import datetime
 
 from humor_commands import *
+from constants import *
 
 
 def get_random_embed_same_quote(quote, gif_and_caption, colour):
@@ -258,7 +259,7 @@ def hug(hugger, mentions, text):
 
 def pillage(person):
     """Inspiration and gif contributions from Dorea"""
-    quote = "%s is on a pillaging spree!!!" % person
+    quote = "%s is on a pillaging spree!!! %s" % (person, VIKING * 3)
     gif_to_caption = [
         ("https://medievalkarl.files.wordpress.com/2015/02/7vh0ndg.gif",
             "A couple stand, peacefully framed by a stone window with vines. They scream when suddenly, the vikings charge."),
