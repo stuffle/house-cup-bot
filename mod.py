@@ -3,23 +3,13 @@ import random
 import datetime
 import pytz
 
+from constants import *
+
 
 utc = pytz.UTC
 
 
 voting = {}
-
-COS_GUILD_ID = 426319059009798146
-STUFFLE_ID = 438450978690433024
-
-SERVER_ID_TO_CHANNEL = {
-    # Red's Writing Hood: house-cup-bot
-    497039992401428498: 553382529521025037,
-    # Test: general
-    539932855845781524: 539932855845781530,
-    # COS: bot-spam
-    COS_GUILD_ID: 426322538944266240
-}
 
 
 class HouseCupException(Exception):
@@ -54,7 +44,7 @@ async def get_channel_and_message(client, channel_id, message_id):
 def mod_message(text, mention, channel_id):
 
     # Do not allow spoiler tags outside of spoilers
-    if text.count("||") >= 2 and channel_id != 553216475708522506:
+    if text.count("||") >= 2 and channel_id != SPOILERS_CHANNEL_ID:
         return "Hey %s, in an effort to be an accessible server, we don't allow the usage of spoiler tags outside of #spoilers (they don't work with screen readers). Help us be a welcoming server to all by removing the spoiler tags from your message. You can also help by captioning your images." % mention
 
     return ""
@@ -326,7 +316,7 @@ async def chide(text, client):
         client, channel_id, message_id)
     await channel.send(
         "Hey, %s, in an effort to make our server more "
-        "accesible we ask people to caption their images. "
+        "accessible we ask people to caption their images. "
         "Just transcribe the text and/or describe what it is depicting."
         " Thanks!" % message.author.mention)
 
