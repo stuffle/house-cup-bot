@@ -66,7 +66,7 @@ def marry(client, message):
     # This is a reproposal that hasn't been accepted yet
     elif partner_id in proposals and proposer_id in proposals[partner_id]:
         if marriage_id in marriage_info:
-            msg = "%s is in so eager to remarry %s that they will ask " \
+            msg = "%s is so eager to remarry %s that they will ask " \
                   "again and again." % (proposer.mention, partner.mention)
         else:
             msg = "%s gets down on one knee and stares pleadingly into " \

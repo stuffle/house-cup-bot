@@ -278,7 +278,7 @@ def pillage(person):
 def cheer(cheerleader, mentions, text):
     victim = get_mention(mentions, text, "Friend")
     quote = "%s: You are being cheered on by %s!!!" % (victim, cheerleader)
-    if victim in ["<@542048148776943657>", "Stufflebot"]:
+    if victim in ["<@542048148776943657>", "Stufflebot", cheerleader]:
         quote = "%s: Stufflebot cheers you on too! :heart:" % cheerleader
 
     gif_to_caption = [
@@ -291,7 +291,7 @@ def cheer(cheerleader, mentions, text):
         ("https://cdn.discordapp.com/attachments/592480821890514944/602381860508794900/image0.gif",
             "A cartoon cat dances with pom-poms, it’s whiskers twitching to its movements."),
         ("https://cdn.discordapp.com/attachments/592480821890514944/602382148732977163/image0.gif",
-            "A giant cartoon bunny hops prom foot to foot on a stump, waving bushes like pom-poms. Flowers fly up in the background."),
+            "A giant cartoon bunny hops from foot to foot on a stump, waving bushes like pom-poms. Flowers fly up in the background."),
         ("https://cdn.discordapp.com/attachments/592480821890514944/602382863131738122/image0.gif",
             "A very happy pikachu cheers with pom-poms."),
         ("https://cdn.discordapp.com/attachments/592480821890514944/602383132800319518/image0.gif",
@@ -309,7 +309,7 @@ def cheer(cheerleader, mentions, text):
         ("https://cdn.discordapp.com/attachments/592480821890514944/602513976500420628/image0.gif",
             "A serious looking cartoon bear sways while pumping their pom-poms."),
         ("https://cdn.discordapp.com/attachments/592480821890514944/602514272702169098/image0.gif",
-            "A cartoon penguin with a bow tie waves pom-poms nearly as big as itself around enthusiastically."),
+            "Rowlet waves pom-poms nearly as big as itself around enthusiastically."),
         ("https://cdn.discordapp.com/attachments/592480821890514944/602514596934320138/image0.gif",
             "A cartoon panda waves pom-poms amidst confetti."),
         ("https://cdn.discordapp.com/attachments/592480821890514944/602515107762929664/image0.gif",
