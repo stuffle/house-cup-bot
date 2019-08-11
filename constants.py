@@ -5,6 +5,8 @@ RED_GUILD_ID = 497039992401428498
 TEST_GUILD_ID = 539932855845781524
 
 # Discord Channel IDs
+BULLETIN_BOARD = 549219513204342788
+HOUSE_CUP = 507738193337122840
 HOUSE_CUP_BOT = 553382529521025037
 GENERAL_IN_TEST = 539932855845781530
 BOT_SPAM = 426322538944266240
@@ -16,12 +18,72 @@ STUFFLEBOT_ID = 542048148776943657
 
 # Discord Mappings
 SERVER_ID_TO_CHANNEL = {
-    # Red's Writing Hood: house-cup-bot
     RED_GUILD_ID: HOUSE_CUP_BOT,
-    # Test: general
     TEST_GUILD_ID: GENERAL_IN_TEST,
-    # COS: bot-spam
     COS_GUILD_ID: BOT_SPAM
+}
+SERVER_ID_TO_CHANNEL_ANNOUNCE = {
+    RED_GUILD_ID: HOUSE_CUP,
+    COS_GUILD_ID: BULLETIN_BOARD
+}
+
+
+# Houses
+SLYTHERIN = "slytherin"
+RAVENCLAW = "ravenclaw"
+GRYFFINDOR = "gryffindor"
+HUFFLEPUFF = "hufflepuff"
+HOUSES = [SLYTHERIN, GRYFFINDOR, RAVENCLAW, HUFFLEPUFF]
+HOUSE_TO_EMOJI = {
+    SLYTHERIN: ":snake:",
+    RAVENCLAW: ":eagle:",
+    GRYFFINDOR: ":lion:",
+    HUFFLEPUFF: "🦡"
+}
+HOUSE_TO_HEART = {
+    SLYTHERIN: ":green_heart:",
+    RAVENCLAW: ":blue_heart:",
+    GRYFFINDOR: ":heart:",
+    HUFFLEPUFF: ":yellow_heart:"
+}
+HOUSE_TO_ADJECTIVE = {
+    SLYTHERIN: "cunning",
+    RAVENCLAW: "wise",
+    GRYFFINDOR: "brave",
+    HUFFLEPUFF: "loyal"
+}
+
+# House Cup Points
+DAILY = "daily"
+POST = "post"
+BETA = "beta"
+WORKSHOP = "workshop"
+COMMENT = "comment"
+EXCRED = "excred"
+MOD_ADJUST = "mod_adjust"
+WC = "wc"
+ART = "art"
+CATEGORIES = [DAILY, POST, BETA, ART, WORKSHOP,
+              COMMENT, WC, EXCRED, MOD_ADJUST]
+CATEGORY_TO_POINTS = {
+    DAILY: 5,
+    POST: 10,
+    BETA: 10,
+    WORKSHOP: 30,
+    COMMENT: 1
+}
+CATEGORY_TO_EMOJI = {
+    "total": ":trophy:",
+    DAILY: ":white_sun_small_cloud:",
+    POST: ":book:",
+    BETA: ":pencil:",
+    ART: ":art:",
+    COMMENT: ":keyboard:",
+    WORKSHOP: ":sweat_smile:",
+    EXCRED: ":star2:",
+    MOD_ADJUST: ":innocent:",
+    WC: ":chart_with_upwards_trend:",
+    "word_count": ":books:"
 }
 
 

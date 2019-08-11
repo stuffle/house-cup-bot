@@ -18,6 +18,7 @@ from inspire import *
 from help import *
 from mod import *
 from marriages import *
+from constants import *
 import marriages
 import mod
 
@@ -31,84 +32,14 @@ if IS_TEST_ENV:
     DATA_FILE = "test_data.json"
 
 
-SLYTHERIN = "slytherin"
-RAVENCLAW = "ravenclaw"
-GRYFFINDOR = "gryffindor"
-HUFFLEPUFF = "hufflepuff"
-HOUSES = [SLYTHERIN, GRYFFINDOR, RAVENCLAW, HUFFLEPUFF]
-HOUSE_TO_EMOJI = {
-    SLYTHERIN: ":snake:",
-    RAVENCLAW: ":eagle:",
-    GRYFFINDOR: ":lion:",
-    HUFFLEPUFF: ":unicorn:"
-}
-HOUSE_TO_HEART = {
-    SLYTHERIN: ":green_heart:",
-    RAVENCLAW: ":blue_heart:",
-    GRYFFINDOR: ":heart:",
-    HUFFLEPUFF: ":yellow_heart:"
-}
-HOUSE_TO_ADJECTIVE = {
-    SLYTHERIN: "cunning",
-    RAVENCLAW: "wise",
-    GRYFFINDOR: "brave",
-    HUFFLEPUFF: "loyal"
-}
-
-DAILY = "daily"
-POST = "post"
-BETA = "beta"
-WORKSHOP = "workshop"
-COMMENT = "comment"
-EXCRED = "excred"
-MOD_ADJUST = "mod_adjust"
-WC = "wc"
-ART = "art"
-CATEGORIES = [DAILY, POST, BETA, ART, WORKSHOP,
-              COMMENT, WC, EXCRED, MOD_ADJUST]
-CATEGORY_TO_POINTS = {
-    DAILY: 5,
-    POST: 10,
-    BETA: 10,
-    WORKSHOP: 30,
-    COMMENT: 1
-}
-CATEGORY_TO_EMOJI = {
-    "total": ":trophy:",
-    DAILY: ":white_sun_small_cloud:",
-    POST: ":book:",
-    BETA: ":pencil:",
-    ART: ":art:",
-    COMMENT: ":keyboard:",
-    WORKSHOP: ":sweat_smile:",
-    EXCRED: ":star2:",
-    MOD_ADJUST: ":innocent:",
-    WC: ":chart_with_upwards_trend:",
-    "word_count": ":books:"
-}
 VALID_CATEGORIES = "Valid arguments to this command are `daily`, `post`," \
                    " `art`, `beta`, `workshop`, `exercise`, `comment`, " \
                    "`wc`, and `excred`"
-
-SERVER_ID_TO_CHANNEL_ANNOUNCE = {
-    # Red's Writing Hood: house-cup
-    497039992401428498: 507738193337122840,
-    # Test: general
-    539932855845781524: 539932855845781530,
-    # COS: bulletin board
-    426319059009798146: 549219513204342788
-}
-
 
 client = discord.Client(status="~help")
 scheduler = AsyncIOScheduler()
 participants = {}
 CAN_JOIN = False
-
-
-def is_may():
-        now = datetime.datetime.now(datetime.timezone.utc)
-        return now.month == 5 and now.year == 2019
 
 
 class HouseCupException(Exception):
