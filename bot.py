@@ -1300,8 +1300,10 @@ async def on_message(message):
             msg = await delete_history(client, message)
         elif text.startswith("clearchannelnow"):
             msg = await clear_channel_now(client, message)
-        elif text.startswith("chide"):
-            msg = await chide(text, client)
+        elif text.startswith("captionshame"):
+            msg = await captionshame(text, client)
+        elif text.startswith("caption"):
+            msg = await caption(text, client)
 
         # Marriage commands
         elif text.startswith("marry"):

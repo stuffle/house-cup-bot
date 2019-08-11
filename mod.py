@@ -301,9 +301,10 @@ async def clear_channel_now(client, message):
     return "Deleted non-pinned messages in this channel!"
 
 
-async def chide(text, client):
+async def tell(client, text, function_name, rebuke):
     args = text.split()[1:]
-    proper_format = "Proper formatting for this function is `~chide MESSADE_ID CHANNEL_ID`"
+    proper_format = "Proper formatting for this function is " \
+                    "`~%s MESSADE_ID CHANNEL_ID`" % function_name
     if len(args) != 2:
         raise HouseCupException(proper_format)
     if not args[0].isdigit() or not args[1].isdigit():
@@ -314,10 +315,24 @@ async def chide(text, client):
 
     channel, message = await get_channel_and_message(
         client, channel_id, message_id)
-    await channel.send(
+    await channel.send(rebuke % message.author.mention)
+
+    return "%s has been chided in #%s." % (
+        message.author.name, channel.name)
+
+
+async def caption(text, client):
+    rebuke = (
         "Hey, %s, in an effort to make our server more "
         "accessible we ask people to caption their images. "
         "Just transcribe the text and/or describe what it is depicting."
-        " Thanks!" % message.author.mention)
+        " Thanks!")
+    return await tell(client, text, "caption", rebuke)
 
-    return "%s has been chided in %s." % (message.author.name, channel.name)
+
+async def captionshame(text, client):
+    rebuke = (
+        "Hey, %s, by not captioning your image, you’re "
+        "excluding people who use screen readers from the conversation."
+        " The world is ableist enough. Do better.")
+    return await tell(client, text, "captionshame", rebuke)

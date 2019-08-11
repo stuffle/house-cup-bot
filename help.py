@@ -203,7 +203,7 @@ def help_command(message, prefix):
             inline=False)
         embed.add_field(
             name="Utility Commands:",
-            value="`pickwinner`, `chide`",
+            value="`pickwinner`, `caption`, `captionshame`",
             inline=False)
         embed.add_field(
             name="Server Management Commands",
@@ -299,11 +299,18 @@ def help_command(message, prefix):
             title="Clear Channels Help",
             color=COLOR,
             description=msg)
-    elif arg == "chide":
+    elif arg == "caption":
         msg = "Chide someone for not captioning their image for a given message ID and channel ID. " \
-              "\n\n Example `%schide MESSADE_ID CHANNEL_ID`" % prefix
+              "\n\n Example `%scaption MESSADE_ID CHANNEL_ID`" % prefix
         embed = discord.Embed(
-            title="Chide Help",
+            title="Caption Help",
+            color=COLOR,
+            description=msg)
+    elif arg == "captionshame":
+        msg = "Like `~caption`, but with a little more oomph." \
+              "\n\n Example `~captionshame MESSADE_ID CHANNEL_ID`"
+        embed = discord.Embed(
+            title="Caption Shame Help",
             color=COLOR,
             description=msg)
 
