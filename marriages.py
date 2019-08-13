@@ -87,7 +87,9 @@ def marry(client, message):
 
 
 def get_heart_string(client, times_married, emojis):
-    if times_married <= 0:
+    if times_married < 0:
+        return ":broken_heart:"
+    elif times_married == 0:
         return emojis
     elif times_married > 1000:
         return ":sparkles:" + HEART_INFINITY + ":sparkles:"
@@ -156,21 +158,89 @@ async def see_marriages(client, message):
         partner = client.get_user(partner_id)
 
         times_married = marriage_info[marriage_id]["times_married"]
-        emojis = get_heart_string(client, times_married, "")
-        msg_line = "**%d** `%s` %s\n" % (
-            count, partner.name, emojis)
+        if times_married != 0:
+            emojis = get_heart_string(client, times_married, "")
+            syntax = "`"
+            if times_married < 0:
+                syntax = "~~"
+            msg_line = "**%d** %s%s%s %s\n" % (
+                count, syntax, partner.name, syntax, emojis)
 
-        msg = msg + msg_line
-        count += 1
+            msg = msg + msg_line
+            count += 1
 
     return msg
 
 
 def divorce(client, message):
-    msg = "RIP"
+    if len(message.mentions) == 0:
+        raise MarriageException(
+            "Mention a user to divorce them.")
+    if len(message.mentions) > 1:
+        raise MarriageException(
+            "Woah, slow down! Celebrate your divorces "
+            "one at a time.")
+    msg = ""
+    divorcer = message.author
+    divorcer_id = divorcer.id
+    partner = message.mentions[0]
+    partner_id = partner.id
+    times_married = 0
+    marriage_id = "%d|%d" % (
+        min(divorcer_id, partner_id), max(divorcer_id, partner_id))
 
-    # Normal divorce
-
-    # Extra divorce
+    if marriage_id in marriage_info:
+        times_married = marriage_info[marriage_id]["times_married"]
+        marriage_info[marriage_id]["times_married"] = times_married - 1
+        marriage_info[marriage_id]["divorced"] = True
+        if partner_id == STUFFLEBOT_ID:
+            msg = "Oh. I...uh...okay. :sob:\nSorry, I just..." \
+                  "I never expected this. "\
+                  "I always thought we would be happy together. " \
+                  "I don't know what I did wrong, but whatever it is, " \
+                  "I'm sorry. I'm so sorry. I never wanted to hurt you. " \
+                  "I love you. In fact, I think I'll always love you."
+        else:
+            msg = "You two have divorced. " \
+                  "You are now married %d times." % (times_married - 1)
+    else:
+        msg = "You weren’t married before, but now you’re super not married."
 
     return msg
+
+
+def bless(client, message):
+    if message.author.id != STUFFLE_ID:
+        raise MarriageException(
+            "Sorry, but only stuffle can bless marriages.")
+
+    p1 = 0
+    p2 = 0
+    if len(message.mentions) >= 2:
+        p1 = message.mentions[0].id
+        p2 = message.mentions[1].id
+    elif len(message.mentions) == 1:
+        p1 = message.mentions[0].id
+        p2 = message.mentions[0].id
+    else:
+        raise MarriageException(
+            "Mention two users to bless their marriage.")
+
+    args = message.content.split(" ")[1:]
+    if len(args) < 3 or not args[2].isdigit():
+        raise MarriageException(
+            "Proper syntax is `~bless @person @other_person 69`")
+    blessed_amount = int(args[2])
+
+    marriage_id = "%d|%d" % (
+        min(p1, p2), max(p1, p2))
+
+    if marriage_id not in marriage_info:
+        raise MarriageException(
+            "Marriages must exist before being blessed.")
+    previous_marriages = marriage_info[marriage_id]["times_married"]
+    marriage_info[marriage_id]["times_married"] = blessed_amount
+    marriage_info[marriage_id]["blessed"] = blessed_amount - previous_marriages
+
+    return "%s has blessed this marriage. %s" % (
+        message.author.mention, get_heart_string(client, blessed_amount, ""))

@@ -1309,10 +1309,16 @@ async def on_message(message):
         elif text.startswith("marry"):
             msg = marry(client, message)
             save_participants()
+        elif text.startswith("divorce"):
+            msg = divorce(client, message)
+            save_participants()
         elif text.startswith("marriages"):
             msg = await see_marriages(client, message)
         elif text.startswith("testem"):
             msg = test_em(client, text)
+        elif text.startswith("bless"):
+            msg = bless(client, message)
+            save_participants()
 
         # For fun commands
         elif text.startswith("dumbledore"):

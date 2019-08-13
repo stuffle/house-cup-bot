@@ -429,6 +429,16 @@ def help_command(message, prefix):
             title="Marriages Help",
             color=COLOR,
             description=msg)
+    elif arg == "divorce":
+        msg = "Divorce someone. If you divorce them enough that your " \
+              "marriage count drops below 0, they will show up in your " \
+              "marriage list with a broken heart. " \
+              "With 0 marriages, they'll disappear." \
+              "\n\nExample: `~divorce @person`"
+        embed = discord.Embed(
+            title="Divorce Help",
+            color = COLOR,
+            description=msg)
 
     # Writing Commands
     elif arg == "prompt":
@@ -541,7 +551,7 @@ def general_help(prefix):
         inline=False)
     embed.add_field(
         name="Marriage Commands:",
-        value="`marry`, `marriages`",
+        value="`marry`, `divorce`, `marriages`",
         inline=False)
     embed.add_field(
         name="For More Commands:",
