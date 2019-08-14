@@ -440,6 +440,34 @@ def help_command(message, prefix):
             color = COLOR,
             description=msg)
 
+    # Pact Commands
+    elif arg == "formpact":
+        msg = "Form a pact with another user. " \
+              "This will show the promise in `~pacts` until they release you." \
+              "\n\nExample: `%sformpact I swear to @person " \
+              "that I will write today.`" % prefix
+        embed = discord.Embed(
+            title="Form Pact Help",
+            color=COLOR,
+            description=msg)
+    elif arg == "pacts":
+        msg = "View all of the current pacts you or someone else has. " \
+              "Idea for the pact system came from RedHorse!" \
+              "\n\nExamples: `%spacts`, `%spacts @person`" % (prefix, prefix)
+        embed = discord.Embed(
+            title="Pacts Help",
+            color=COLOR,
+            description=msg)
+    elif arg == "release":
+        msg = "Release someone from their pact to you. " \
+              "If they have multiple pacts with you, you will need to " \
+              "provide a pact ID, which you can find in `~pacts @person`" \
+              "\n\nExamples: `~release @person`, `~release @person 1`"
+        embed = discord.Embed(
+            title="Release Help",
+            color = COLOR,
+            description=msg)
+
     # Writing Commands
     elif arg == "prompt":
         msg = "Get a randomly generated prompt. Example: `%sprompt`" \
@@ -552,6 +580,10 @@ def general_help(prefix):
     embed.add_field(
         name="Marriage Commands:",
         value="`marry`, `divorce`, `marriages`",
+        inline=False)
+    embed.add_field(
+        name="Pact Commands:",
+        value="`formpact`, `release`, `pacts`",
         inline=False)
     embed.add_field(
         name="For More Commands:",

@@ -18,9 +18,11 @@ from inspire import *
 from help import *
 from mod import *
 from marriages import *
+from pact import *
 from constants import *
 import marriages
 import mod
+import pact
 
 
 IS_TEST_ENV = os.environ.get("IS_TEST_ENV")
@@ -55,6 +57,7 @@ def load_participants():
         mod.voting = data["voting"]
         marriages.proposals = data["proposals"]
         marriages.marriage_info = data["marriage_info"]
+        pact.pacts = data["pacts"]
 
 
 def save_participants():
@@ -63,7 +66,8 @@ def save_participants():
             "participants": participants,
             "voting": mod.voting,
             "proposals": marriages.proposals,
-            "marriage_info": marriages.marriage_info
+            "marriage_info": marriages.marriage_info,
+            "pacts": pact.pacts
         }
         pickle.dump(data, f)
 
@@ -1324,6 +1328,16 @@ async def on_message(message):
             msg = bless(client, message)
             save_participants()
 
+        # Pacts
+        elif text.startswith("formpact"):
+            msg = form_pact(client, message)
+            save_participants()
+        elif text.startswith("release"):
+            msg = release_pact(client, message)
+            save_participants()
+        elif text.startswith("pacts"):
+            msg = see_pacts(client, message)
+
         # For fun commands
         elif text.startswith("dumbledore"):
             house = get_house(user)
@@ -1402,7 +1416,8 @@ async def on_message(message):
             random_person = get_random_person(user)
             msg = "%s: %s" % (mention, i_love_you(random_person))
 
-    except (HouseCupException, mod.HouseCupException, MarriageException) as ex:
+    except (HouseCupException, mod.HouseCupException,
+            MarriageException, PactException) as ex:
         msg = "{0.author.mention}: " + str(ex)
         print(user.name + ": " + str(ex))
     except Exception as ex:

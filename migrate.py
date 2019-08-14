@@ -3,6 +3,7 @@ import os
 import pickle
 import mod
 import marriages
+import pact
 
 
 IS_TEST_ENV = os.environ.get("IS_TEST_ENV")
@@ -22,6 +23,8 @@ def load_old_participants():
         data = pickle.load(f)
         participants = data["participants"]
         mod.voting = data["voting"]
+        marriages.proposals = data["proposals"]
+        marriages.marriage_info = data["marriage_info"]
 
 
 def save_participants():
@@ -29,8 +32,9 @@ def save_participants():
         data = {
             "participants": participants,
             "voting": mod.voting,
-            "proposals": {},
-            "marriage_info": {}
+            "proposals": marriages.proposals,
+            "marriage_info": marriages.marriage_info,
+            "pacts": {}
         }
         pickle.dump(data, f)
 
