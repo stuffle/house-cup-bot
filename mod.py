@@ -94,7 +94,7 @@ async def check_reactions(payload, client):
 async def on_join(client, member):
     if member.id in imprisoned and member.guild.id == COS_GUILD_ID:
         mod_pings_role = member.guild.get_role(602956352565805087)
-        await member.add_roles(mod_pings_role, "User ID is in the imprisoned list.")
+        await member.add_roles(mod_pings_role, reason="User ID is in the imprisoned list.")
         reason = imprisoned[member.id]
         print("The prisoner has come! %d:%s" % (member.id, reason))
         channel = client.get_channel(SANITY_CHECKING)
