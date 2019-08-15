@@ -161,10 +161,13 @@ async def see_marriages(client, message):
         if times_married != 0:
             emojis = get_heart_string(client, times_married, "")
             syntax = "`"
-            if times_married < 0:
+            if times_married < 0 or not partner:
                 syntax = "~~"
+            partner_name = str(partner_id)
+            if partner:
+                partner_name = partner.name
             msg_line = "**%d** %s%s%s %s\n" % (
-                count, syntax, partner.name, syntax, emojis)
+                count, syntax, partner_name, syntax, emojis)
 
             msg = msg + msg_line
             count += 1
