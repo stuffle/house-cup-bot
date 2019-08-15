@@ -207,7 +207,7 @@ def help_command(message, prefix):
             inline=False)
         embed.add_field(
             name="Server Management Commands",
-            value="`unwelcome`, `deletehistory`, `clearchannels`, `clearchannelnow`",
+            value="`deletehistory`, `clearchannelnow`, `imprison`, `showimprisoned`",
             inline=False)
     elif arg == "award":
         msg = "Mods only: Award points to someone with a mention and the " \
@@ -311,6 +311,23 @@ def help_command(message, prefix):
               "\n\n Example `~captionshame MESSADE_ID CHANNEL_ID`"
         embed = discord.Embed(
             title="Caption Shame Help",
+            color=COLOR,
+            description=msg)
+    elif arg == "imprison":
+        msg = "Give someone the mod-pings role automatically when they join COS. " \
+              "REASON can be anything, but I recommend including their " \
+              "original name and why they're being imprisoned." \
+              "\n\n Example `~imprison USER_ID REASON`"
+        embed = discord.Embed(
+            title="Imprison Help",
+            color=COLOR,
+            description=msg)
+    elif arg == "showimprisoned":
+        msg = "View the current list of people that are being monitored " \
+              "and why for when they join the server." \
+              "\n\n Example `~showimprisoned`"
+        embed = discord.Embed(
+            title="Show Imprisoned Help",
             color=COLOR,
             description=msg)
 

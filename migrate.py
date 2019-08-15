@@ -25,16 +25,18 @@ def load_old_participants():
         mod.voting = data["voting"]
         marriages.proposals = data["proposals"]
         marriages.marriage_info = data["marriage_info"]
+        pact.pacts = data["pacts"]
 
 
 def save_participants():
     with open(DATA_FILE, 'wb') as f:
         data = {
             "participants": participants,
+            "imprisoned": {},
             "voting": mod.voting,
             "proposals": marriages.proposals,
             "marriage_info": marriages.marriage_info,
-            "pacts": {}
+            "pacts": pact.pacts
         }
         pickle.dump(data, f)
 

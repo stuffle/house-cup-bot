@@ -8,8 +8,11 @@ from constants import *
 
 utc = pytz.UTC
 
-
+# Record of all the posts that are being monitored for voting
 voting = {}
+
+# Users that should have the #mod-pings role added to them when they join COS
+imprisoned = {}
 
 
 class HouseCupException(Exception):
@@ -86,6 +89,54 @@ async def check_reactions(payload, client):
         send_channel_id = SERVER_ID_TO_CHANNEL[payload.guild_id]
         send_channel = client.get_channel(send_channel_id)
         await send_channel.send(msg)
+
+
+async def on_join(client, member):
+    if member.id in imprisoned and member.guild.id == COS_GUILD_ID:
+        mod_pings_role = member.guild.get_role(602956352565805087)
+        member.add_roles(mod_pings_role, "User ID is in the imprisoned list.")
+        reason = imprisoned[member.id]
+        print("The prisoner has come! %d:%s" % member.id, reason)
+        channel = client.get_channel(SANITY_CHECKING)
+        await channel.send(
+            "%s has rejoined the server."
+            " I have locked them in #mod-pings."
+            "They were `~imprison`ed for:\n\"%s\"" % (member.name, reason))
+
+
+def imprison(client, message):
+    if not is_mod(message.author, message.channel):
+        raise HouseCupException(
+            "Only mods can imprison people.")
+    if message.guild.id != COS_GUILD_ID:
+        raise HouseCupException(
+            "This command currently only works in COS.")
+    args = message.content.split(" ")[1:]
+    if len(args) < 2 or not args[0].isdigit():
+        raise HouseCupException(
+            "Proper formatting is `~imprison USER_ID reason`")
+    user_id = int(args[0])
+    guild = client.get_guild(COS_GUILD_ID)
+    member = guild.get_member(user_id)
+    in_server = ""
+    if member:
+        in_server = " Heads up that they are currently in the " \
+                    "server with the name: %s" % member.name
+    reason = " ".join(args[1:])
+    imprisoned[user_id] = reason
+    return "I will imprison them if they join the COS again.%s" % in_server
+
+
+def view_imprisoned(client, message):
+    if not is_mod(message.author, message.channel):
+        raise HouseCupException(
+            "Only mods can view the imprisoned people.")
+    msg = ""
+    count = 1
+    for user_id in imprisoned:
+        msg += "**%d** `%d`: %s" % (count, user_id, imprisoned[user_id])
+        count += 1
+    return msg
 
 
 async def monitor_voting(text, is_mod, client):
@@ -265,7 +316,7 @@ async def clear_channels(client, message=None):
         # COS, feel-good
         (COS_GUILD_ID, 595247070793826386),
         # COS, sanity-checking
-        (COS_GUILD_ID, 603211515625209857),
+        (COS_GUILD_ID, SANITY_CHECKING),
         # Test, clear
         (539932855845781524, 601903313310711878)
     ]

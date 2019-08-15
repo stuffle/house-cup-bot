@@ -54,6 +54,7 @@ def load_participants():
     with open(DATA_FILE, 'rb') as f:
         data = pickle.load(f)
         participants = data["participants"]
+        mod.imprisoned = data["imprisoned"]
         mod.voting = data["voting"]
         marriages.proposals = data["proposals"]
         marriages.marriage_info = data["marriage_info"]
@@ -64,6 +65,7 @@ def save_participants():
     with open(DATA_FILE, 'wb') as f:
         data = {
             "participants": participants,
+            "imprisoned": mod.imprisoned,
             "voting": mod.voting,
             "proposals": marriages.proposals,
             "marriage_info": marriages.marriage_info,
@@ -1144,6 +1146,11 @@ async def on_raw_reaction_add(payload):
 
 
 @client.event
+async def on_member_join(member):
+    await on_join(client, member)
+
+
+@client.event
 async def on_message(message):
     channel = message.channel
     user = message.author
@@ -1312,6 +1319,11 @@ async def on_message(message):
             msg = await captionshame(text, client)
         elif text.startswith("caption"):
             msg = await caption(text, client)
+        elif text.startswith("showimprisoned"):
+            msg = view_imprisoned(client, message)
+        elif text.startswith("imprison"):
+            msg = imprison(client, message)
+            save_participants()
 
         # Marriage commands
         elif text.startswith("marry"):
