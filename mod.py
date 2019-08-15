@@ -96,7 +96,7 @@ async def on_join(client, member):
         mod_pings_role = member.guild.get_role(602956352565805087)
         member.add_roles(mod_pings_role, "User ID is in the imprisoned list.")
         reason = imprisoned[member.id]
-        print("The prisoner has come! %d:%s" % member.id, reason)
+        print("The prisoner has come! %d:%s" % (member.id, reason))
         channel = client.get_channel(SANITY_CHECKING)
         await channel.send(
             "%s has rejoined the server."
