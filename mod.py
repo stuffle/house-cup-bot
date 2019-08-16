@@ -136,10 +136,10 @@ def view_imprisoned(client, message):
     if not is_mod(message.author, message.channel):
         raise HouseCupException(
             "Only mods can view the imprisoned people.")
-    msg = ""
+    msg = "**__Locked in Mod-Pings on Rejoin__**"
     count = 1
     for user_id in imprisoned:
-        msg += "**%d** `%d`: %s" % (count, user_id, imprisoned[user_id])
+        msg += "**%d** `%d`: %s\n" % (count, user_id, imprisoned[user_id])
         count += 1
     return msg
 
