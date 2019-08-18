@@ -357,6 +357,12 @@ async def clear_channel_now(client, message):
     return "Deleted non-pinned messages in this channel!"
 
 
+CAPTIONS_REQUIRED = [
+    SNAP_SNAP, SHITPOSTING, NSFW_SHITPOSTING,
+    ART, ART_DISCUSSION, NSFW_ART, NSFW_ART_DISCUSSION,
+    SFW_FLUFF, GAMING]
+
+
 async def tell(client, text, function_name, rebuke):
     args = text.split()[1:]
     proper_format = "Proper formatting for this function is " \
@@ -368,6 +374,10 @@ async def tell(client, text, function_name, rebuke):
 
     message_id = int(args[0])
     channel_id = int(args[1])
+
+    if function_name in ["caption", "captionshame"]:
+        if channel_id in CAPTIONS_REQUIRED:
+            return "That channel does not require captions."
 
     channel, message = await get_channel_and_message(
         client, channel_id, message_id)
