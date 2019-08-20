@@ -34,6 +34,7 @@ def form_pact(client, message):
 
     promiser = message.author
     holder = message.mentions[0]
+    pact = pact.replace(holder.mention, holder.name)
     if holder.id == STUFFLEBOT_ID:
         raise PactException(
             "I'm sorry, but I only witness pacts.")
