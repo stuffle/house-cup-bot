@@ -20,6 +20,7 @@ from mod import *
 from marriages import *
 from pact import *
 from constants import *
+from config import *
 import marriages
 import mod
 import pact
@@ -41,6 +42,7 @@ VALID_CATEGORIES = "Valid arguments to this command are `daily`, `post`," \
 client = discord.Client(status="~help")
 scheduler = AsyncIOScheduler()
 participants = {}
+servers = {}
 CAN_JOIN = False
 
 
@@ -50,9 +52,11 @@ class HouseCupException(Exception):
 
 def load_participants():
     global participants
+    global servers
 
     with open(DATA_FILE, 'rb') as f:
         data = pickle.load(f)
+        servers = data["servers"]
         participants = data["participants"]
         mod.imprisoned = data["imprisoned"]
         mod.voting = data["voting"]
@@ -65,6 +69,7 @@ def save_participants():
     with open(DATA_FILE, 'wb') as f:
         data = {
             "participants": participants,
+            "servers": servers,
             "imprisoned": mod.imprisoned,
             "voting": mod.voting,
             "proposals": marriages.proposals,
@@ -1155,6 +1160,7 @@ async def on_message(message):
     channel = message.channel
     user = message.author
     user_id = user.id
+    guild_id = message.guild.id
     mention = user.mention
     text = message.content.lower()
     msg = ""
@@ -1177,21 +1183,22 @@ async def on_message(message):
 
         if message.channel.type.name in ["private", "group"]:
             raise HouseCupException(
-                "Please communicate with in a server we share.")
+                "Please communicate with me in a server we share.")
 
         # Add bananalion to everything wolven says in the writing server
-        if user.id == 593530774104309790 and message.guild.id == 497039992401428498:
+        if user.id == 593530774104309790 and guild_id == RED_GUILD_ID:
             banana_lion = client.get_emoji(564830356977483804)
             await message.add_reaction(banana_lion)
         # Add banana badger to everything Ava says in the writing server
-        if user.id == 516122981156782091 and message.guild.id == 497039992401428498:
+        if user.id == 516122981156782091 and guild_id == RED_GUILD_ID:
             banana_bad = client.get_emoji(565106770020925451)
             await message.add_reaction(banana_bad)
 
-        modded = mod_message(text, mention, message.channel.id)
-        if modded:
-            await channel.send(modded.format(message))
-            return
+        if guild_id in COS_SERVERS + [HP_FEMSLASH]:
+            modded = mod_message(text, mention, message.channel.id)
+            if modded:
+                await channel.send(modded.format(message))
+                return
 
         # Ignore all messages not directed at bot unless it was a mention
         if not message.content.startswith(PREFIX) and msg == "":
@@ -1202,6 +1209,14 @@ async def on_message(message):
         if len(args) == 0:
             return
         command = args[0]
+
+        if guild_id not in COS_SERVERS:
+            if command in COS_EXCLUSIVE:
+                raise HouseCupException(
+                    "Sorry, but this command is currently only available "
+                    "in select servers. "
+                    "Talk to stuffle if you're interested in bringing it here."
+                )
 
         argumentless_commands = [
             "join", "daily", "post", "beta", "workshop", "standings",
@@ -1334,8 +1349,6 @@ async def on_message(message):
             save_participants()
         elif text.startswith("marriages"):
             msg = await see_marriages(client, message)
-        elif text.startswith("testem"):
-            msg = test_em(client, text)
         elif text.startswith("bless"):
             msg = bless(client, message)
             save_participants()
@@ -1407,7 +1420,7 @@ async def on_message(message):
             embed = madness(user.mention, message.mentions)
             await channel.send(embed=embed)
             return
-        elif text.startswith("shouldikillharry"):
+        elif text.startswith("shouldikill"):
             msg = "%s: %s" % (mention, should_i_kill())
         elif text.startswith("shouldigetbacktowork"):
             msg = "%s: %s" % (mention, back_to_work())

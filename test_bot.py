@@ -8,7 +8,7 @@ sample_user_data = {
     'last_daily': 1555433597.4030607,
     'last_workshop': 0,
     'word_count': 0,
-    'daily': 10,
+    'daily': 0,
     'post': 30,
     'beta': 0,
     'workshop': 0,

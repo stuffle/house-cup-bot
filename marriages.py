@@ -121,12 +121,6 @@ def get_heart_string(client, times_married, emojis):
             client, times_married - 1, emojis + ":hearts:")
 
 
-def test_em(client, text):
-    args = text.split()
-    times_married = int(args[1])
-    return get_heart_string(client, times_married, "")
-
-
 async def see_marriages(client, message):
 
     text = message.content

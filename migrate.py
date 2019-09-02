@@ -13,9 +13,6 @@ DATA_FILE = "data.json"
 if IS_TEST_ENV:
     DATA_FILE = "test_data.json"
 
-participants = {}
-voting = {}
-
 
 def load_old_participants():
     global participants
@@ -34,7 +31,8 @@ def save_participants():
     with open(DATA_FILE, 'wb') as f:
         data = {
             "participants": participants,
-            "imprisoned": {},
+            "servers": {},
+            "imprisoned": mod.imprisoned,
             "voting": mod.voting,
             "proposals": marriages.proposals,
             "marriage_info": marriages.marriage_info,
@@ -44,25 +42,5 @@ def save_participants():
 
 
 load_old_participants()
-
-to_replace = {
-    STUFFLE_ID: "stuffle",
-    208220191832801280: "mith",
-    478970983089438760: "red",
-    522514714643660820: "bluepandas"
-}
-
-for p_list in pact.pacts:
-    count = 0
-    for p in pact.pacts[p_list]:
-        pact.pacts[p_list][count]["pact"] = p["pact"].replace(str(STUFFLE_ID), "stuffle")
-        pact.pacts[p_list][count]["pact"] = p["pact"].replace("<", "")
-        pact.pacts[p_list][count]["pact"] = p["pact"].replace(">", "")
-        pact.pacts[p_list][count]["pact"] = p["pact"].replace("@", "")
-        pact.pacts[p_list][count]["pact"] = p["pact"].replace("!", "")
-        pact.pacts[p_list][count]["pact"] = p["pact"].replace(str(208220191832801280), "mith")
-        pact.pacts[p_list][count]["pact"] = p["pact"].replace("478970983089438760", "red")
-        pact.pacts[p_list][count]["pact"] = p["pact"].replace("522514714643660820", "bluepandas")
-        count += 1
 
 save_participants()

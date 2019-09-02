@@ -1,4 +1,5 @@
 import discord
+from config import *
 
 
 DOCS_LINK = "https://docs.google.com/document/d/1z03xR7jpi-oXwmI9N1XpU6N9" \
@@ -7,11 +8,12 @@ COLOR = 6095788
 
 
 def help_command(message, prefix):
+    guild_id = message.guild.id
     text = message.content.lower()
     args = text.split()
 
     if len(args) == 1:
-        return general_help(prefix)
+        return general_help(prefix, guild_id)
 
     arg = args[1]
     embed = None
@@ -193,22 +195,29 @@ def help_command(message, prefix):
             title="Mod Only Commands Help",
             color=COLOR,
             description=msg)
-        embed.add_field(
-            name="House Cup Commands:",
-            value="`award`, `deduct`, `pingeveryone`",
-            inline=False)
-        embed.add_field(
-            name="Voting Monitoring Commands:",
-            value="`startmonitoring`, `stopmonitoring`, `showmonitoring`",
-            inline=False)
+        if guild_id in COS_SERVERS:
+            embed.add_field(
+                name="House Cup Commands:",
+                value="`award`, `deduct`, `pingeveryone`",
+                inline=False)
+            embed.add_field(
+                name="Voting Monitoring Commands:",
+                value="`startmonitoring`, `stopmonitoring`, `showmonitoring`",
+                inline=False)
         embed.add_field(
             name="Utility Commands:",
             value="`pickwinner`, `caption`, `captionshame`",
             inline=False)
-        embed.add_field(
-            name="Server Management Commands",
-            value="`deletehistory`, `clearchannelnow`, `imprison`, `showimprisoned`",
-            inline=False)
+        if guild_id in COS_SERVERS:
+            embed.add_field(
+                name="Server Management Commands",
+                value="`deletehistory`, `clearchannelnow`, `imprison`, `showimprisoned`",
+                inline=False)
+        else:
+            embed.add_field(
+                name="Server Management Commands",
+                value="`deletehistory`, `clearchannelnow`",
+                inline=False)
     elif arg == "award":
         msg = "Mods only: Award points to someone with a mention and the " \
               "amount of points to give." \
@@ -501,11 +510,11 @@ def help_command(message, prefix):
             title="InspireMe Help",
             color=COLOR,
             description=msg)
-    elif arg == "shouldikillharry":
-        msg = "Have stufflebot decide if you should kill Harry. " \
-              "Example: `%sshouldikillharry`" % prefix
+    elif arg.startswith("shouldikill"):
+        msg = "Have stufflebot decide if you should kill your character. " \
+              "Example: `%sshouldikillmycharacter`" % prefix
         embed = discord.Embed(
-            title="ShouldIKillHarry Help",
+            title="ShouldIKillMyCharacter Help",
             color=COLOR,
             description=msg)
     elif arg == "shouldigetbacktowork":
@@ -563,44 +572,51 @@ def help_command(message, prefix):
     return embed
 
 
-def general_help(prefix):
+def general_help(prefix, guild_id):
     msg = "Commands list. For help on a specific command, run " \
-          "`%shelp COMMAND`.\n" \
-          "Documentation on how the bot and competition work are " \
-          "available [here](%s)." % (prefix, DOCS_LINK)
+          "`~help COMMAND`."
+    if guild_id in COS_SERVERS:
+        msg = msg + "\nDocumentation on how the bot and competition work" \
+                     " are available [here](%s)." % DOCS_LINK
 
     embed = discord.Embed(
         title="StuffleBot Help",
         color=COLOR,
         description=msg)
 
-    embed.add_field(
-        name="Participating:",
-        value="`join`, `leave`, `time`",
-        inline=False)
-    embed.add_field(
-        name="Logging Points:",
-        value="`daily`, `post`, `beta`, `art`, `comment`, `workshop`, `exercise`, `excred`, `wc` (total), `wc add`, `remove`",
-        inline=False)
-    embed.add_field(
-        name="Viewing Points:",
-        value="`points`, `standings`, `housepoints`, `leaderboard`",
-        inline=False)
-    embed.add_field(
-        name="Fun Commands:",
-        value="`dumbledore`, `snape`, `mcgonagall`, `harry`, `hermione`, `ron`, `sneak`, `hug`, `cheer`, `kidnap`, `pillage`, `wrestle`",
-        inline=False)
-    embed.add_field(
-        name="Inspiration Commands:",
-        value="`prompt`, `inspireme`, `shouldikillharry`, `shouldigetbacktowork`, `whenshouldtheyfuck`, `randompair`, `kink`",
-        inline=False)
+    if guild_id in COS_SERVERS:
+        embed.add_field(
+            name="Participating:",
+            value="`join`, `leave`, `time`",
+            inline=False)
+        embed.add_field(
+            name="Logging Points:",
+            value="`daily`, `post`, `beta`, `art`, `comment`, `workshop`, `exercise`, `excred`, `wc` (total), `wc add`, `remove`, `sneak`",
+            inline=False)
+        embed.add_field(
+            name="Viewing Points:",
+            value="`points`, `standings`, `housepoints`, `leaderboard`",
+            inline=False)
+
     embed.add_field(
         name="Marriage Commands:",
         value="`marry`, `divorce`, `marriages`",
         inline=False)
     embed.add_field(
+        name="Action Commands:",
+        value="`hug`, `cheer`, `kidnap`, `pillage`, `wrestle`",
+        inline=False)
+    embed.add_field(
+        name="Harry Potter Commands:",
+        value="`prompt`, `randompair`, `dumbledore`, `snape`, `mcgonagall`, `harry`, `hermione`, `ron`",
+        inline=False)
+    embed.add_field(
         name="Pact Commands:",
         value="`formpact`, `release`, `pacts`",
+        inline=False)
+    embed.add_field(
+        name="Inspiration Commands:",
+        value="`inspireme`, `shouldikillmycharacter`, `shouldigetbacktowork`, `whenshouldtheyfuck`",
         inline=False)
     embed.add_field(
         name="For More Commands:",
