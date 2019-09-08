@@ -1284,11 +1284,11 @@ async def on_message(message):
         # Point viewing commands
         elif text.startswith("points"):
             msg = points(user, message)
-        elif text.startswith("housepoints"):
+        elif text.startswith("housepoint"):
             msg = house_points(user, message)
         elif text.startswith("leaderboard"):
             msg = leader_board(text)
-        elif text.startswith("standings"):
+        elif text.startswith("standing"):
             msg = standings()
 
         # Mod only commands
@@ -1351,7 +1351,7 @@ async def on_message(message):
         elif text.startswith("divorce"):
             msg = divorce(client, message)
             save_participants()
-        elif text.startswith("marriages"):
+        elif text.startswith("marriage"):
             msg = await see_marriages(client, message)
         elif text.startswith("bless"):
             msg = bless(client, message)

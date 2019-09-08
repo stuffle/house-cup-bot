@@ -206,12 +206,12 @@ def help_command(message, prefix):
                 inline=False)
         embed.add_field(
             name="Utility Commands:",
-            value="`pickwinner`, `caption`, `captionshame`",
+            value="`pickwinner`",
             inline=False)
         if guild_id in COS_SERVERS:
             embed.add_field(
                 name="Server Management Commands",
-                value="`deletehistory`, `clearchannelnow`, `imprison`, `showimprisoned`",
+                value="`deletehistory`, `clearchannelnow`, `imprison`, `showimprisoned`, `caption`, `captionshame`",
                 inline=False)
         else:
             embed.add_field(

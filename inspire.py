@@ -101,7 +101,8 @@ def inspireme():
         "Just do your best. It will be enough.",
         "I know you can do it. I've seen you do it before.",
         "Motivation follows action.",
-        "Remember what it feels like to fight for what you want. It’s the feeling of almost anger, but not frustrated anger that you can get at the world. It's the 'fuck this I will win' feeling, the fight song angry dancing feeling."
+        "Remember what it feels like to fight for what you want. It’s the feeling of almost anger, but not frustrated anger that you can get at the world. It's the 'fuck this I will win' feeling, the fight song angry dancing feeling.",
+        "The most powerful, efficient energy source in the world is your own mind. Explore and discover that it can make creative fuel from anything."
     ]
 
     return random.choice(responses)
