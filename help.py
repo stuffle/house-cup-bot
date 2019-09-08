@@ -469,7 +469,7 @@ def help_command(message, prefix):
     # Pact Commands
     elif arg == "formpact":
         msg = "Form a pact with another user. " \
-              "This will show the promise in `~pacts` until they release you." \
+              "This will show the promise in `~pacts` until they `~fulfill` of `~acceptfailure`." \
               "\n\nExample: `%sformpact I swear to @person " \
               "that I will write today.`" % prefix
         embed = discord.Embed(
@@ -484,13 +484,36 @@ def help_command(message, prefix):
             title="Pacts Help",
             color=COLOR,
             description=msg)
-    elif arg == "release":
-        msg = "Release someone from their pact to you. " \
+    elif arg == "completed":
+        msg = "View all of the completed pacts you or someone else has. " \
+              "\n\nExamples: `~completed`, `~completed @person`"
+        embed = discord.Embed(
+            title="Completed Pacts Help",
+            color=COLOR,
+            description=msg)
+    elif arg == "failed":
+        msg = "View all of the failed pacts you or someone else has. " \
+              "\n\nExamples: `~failed`, `~failed @person`"
+        embed = discord.Embed(
+            title="Pacts Help",
+            color=COLOR,
+            description=msg)
+    elif arg == "fulfill":
+        msg = "Release someone from their pact to you by acknowledging that they completed it. " \
               "If they have multiple pacts with you, you will need to " \
               "provide a pact ID, which you can find in `~pacts @person`" \
-              "\n\nExamples: `~release @person`, `~release @person 1`"
+              "\n\nExamples: `~fulfill @person`, `~fulfill @person 1`"
         embed = discord.Embed(
-            title="Release Help",
+            title="Fulfill Help",
+            color = COLOR,
+            description=msg)
+    elif arg == "acceptfailure":
+        msg = "Release someone from their pact to you that they did not complete. " \
+              "If they have multiple pacts with you, you will need to " \
+              "provide a pact ID, which you can find in `~pacts @person`" \
+              "\n\nExamples: `~acceptfailure @person`, `~acceptfailure @person 1`"
+        embed = discord.Embed(
+            title="Accept Failure Help",
             color = COLOR,
             description=msg)
 
@@ -586,21 +609,20 @@ def general_help(prefix, guild_id):
 
     if guild_id in COS_SERVERS:
         embed.add_field(
-            name="Participating:",
-            value="`join`, `leave`, `time`",
-            inline=False)
-        embed.add_field(
-            name="Logging Points:",
-            value="`daily`, `post`, `beta`, `art`, `comment`, `workshop`, `exercise`, `excred`, `wc` (total), `wc add`, `remove`, `sneak`",
-            inline=False)
-        embed.add_field(
-            name="Viewing Points:",
-            value="`points`, `standings`, `housepoints`, `leaderboard`",
+            name="House Cup:",
+            value="Participating: `join`, `leave`, `time`\n"
+                  "Logging Points: `daily`, `post`, `beta`, `art`, `comment`, `workshop`, `exercise`, `excred`, `wc` (total), `wc add`, `remove`, `sneak`\n"
+                  "Viewing Points: `points`, `standings`, `housepoints`, `leaderboard`",
             inline=False)
 
     embed.add_field(
         name="Marriage Commands:",
         value="`marry`, `divorce`, `marriages`",
+        inline=False)
+    embed.add_field(
+        name="Pact Commands:",
+        value="Managing Pacts: `formpact`, `fulfill`, `acceptfailure`\n" \
+              "Viewing Pacts: `pacts`, `completed`, `failed`",
         inline=False)
     embed.add_field(
         name="Action Commands:",
@@ -609,10 +631,6 @@ def general_help(prefix, guild_id):
     embed.add_field(
         name="Harry Potter Commands:",
         value="`prompt`, `randompair`, `dumbledore`, `snape`, `mcgonagall`, `harry`, `hermione`, `ron`",
-        inline=False)
-    embed.add_field(
-        name="Pact Commands:",
-        value="`formpact`, `release`, `pacts`",
         inline=False)
     embed.add_field(
         name="Inspiration Commands:",

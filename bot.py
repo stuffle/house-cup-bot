@@ -63,6 +63,8 @@ def load_participants():
         marriages.proposals = data["proposals"]
         marriages.marriage_info = data["marriage_info"]
         pact.pacts = data["pacts"]
+        pact.failed_pacts = data["failed_pacts"]
+        pact.finished_pacts = data["finished_pacts"]
 
 
 def save_participants():
@@ -74,7 +76,9 @@ def save_participants():
             "voting": mod.voting,
             "proposals": marriages.proposals,
             "marriage_info": marriages.marriage_info,
-            "pacts": pact.pacts
+            "pacts": pact.pacts,
+            "failed_pacts": pact.failed_pacts,
+            "finished_pacts": pact.finished_pacts
         }
         pickle.dump(data, f)
 
@@ -1358,10 +1362,19 @@ async def on_message(message):
             msg = form_pact(client, message)
             save_participants()
         elif text.startswith("release"):
+            raise HouseCupException("Please use `~acceptfailure` or `~fulfill`.")
+        elif text.startswith("acceptfailure"):
             msg = release_pact(client, message)
             save_participants()
+        elif text.startswith("fulfill"):
+            msg = release_pact(client, message, True)
+            save_participants()
         elif text.startswith("pacts"):
-            msg = see_pacts(client, message)
+            msg = see_pacts(client, message, type="open")
+        elif text.startswith("completed"):
+            msg = see_pacts(client, message, type="completed")
+        elif text.startswith("failed"):
+            msg = see_pacts(client, message, type="failed")
 
         # For fun commands
         elif text.startswith("dumbledore"):

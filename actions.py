@@ -69,7 +69,7 @@ def group_hug(hugger, mentions, text):
         ("https://cdn.discordapp.com/attachments/565884495023177728/573523732652359686/image0.gif",
             "My Litttle Pony-Pinky Pie impossibly reaching off screen and pulling Twilight Sparkle, Fluttershy, Apple Jack, Rainbow Dash and Rarity into a hug."),
         ("https://cdn.discordapp.com/attachments/565884495023177728/573523907064233996/image0.gif",
-            "1st shot-Five girls jump onto screen and hug (their teacher?)  2nd shot-Five girls hug a classmate  3rd shot-Two girls are hugged by five other students who all pile onto hug one by one"),
+            "1st shot-Five girls from \"K-ON\" jump onto screen and hug their teacher  2nd shot-Five girls hug a classmate  3rd shot-Two girls are hugged by five other students who all pile onto hug one by one"),
         ("https://cdn.discordapp.com/attachments/565884495023177728/573523944469168168/image0.gif",
             "The Simpsons-Homer Simpson being hugged by lots of children, including Rod and Tod, all eight of Apu’s children, Ralph Wiggum, and others. Another child, Üter, jumps on top of pile, hugging Homer’s face and squishing the other children."),
         ("https://cdn.discordapp.com/attachments/565884495023177728/573523959446765578/image0.gif",

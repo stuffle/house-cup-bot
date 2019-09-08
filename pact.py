@@ -6,6 +6,8 @@ from constants import *
 
 # UserId: [{pact: string, holder: userID, timestamp: timestamp}]
 pacts = {}
+finished_pacts = {}
+failed_pacts = {}
 
 
 class PactException(Exception):
@@ -55,7 +57,7 @@ def form_pact(client, message):
     return msg
 
 
-def release_pact(client, message):
+def release_pact(client, message, fulfilled=False):
     if len(message.mentions) != 1:
         raise PactException(
             "Mention one user to release them from their pact.")
@@ -66,6 +68,8 @@ def release_pact(client, message):
     if promiser.id not in pacts.keys():
         raise PactException("There are no pacts for %s" % promiser.mention)
 
+    # This works by relying on the consistent ordering of Python's dicts
+    # Which yeah...it's quite hacky
     count = 1
     sworn_pacts = {}
     for pact in pacts[promiser.id]:
@@ -96,13 +100,27 @@ def release_pact(client, message):
                     pact_id, promiser.mention))
 
     finished_pact = sworn_pacts[pact_id]
+    if fulfilled:
+        if promiser.id in finished_pacts:
+            finished_pacts[promiser.id].append(finished_pact)
+        else:
+            finished_pacts[promiser.id] = [finished_pact]
+    else:
+        if promiser.id in failed_pacts:
+            failed_pacts[promiser.id].append(finished_pacts)
+        else:
+            failed_pacts[promiser.id] = [finished_pact]
     pacts[promiser.id].remove(pact)
 
-    return "%s has released %s from their vow:\n\"%s\"" % (
+    msg = "%s has released %s from their uncompleted vow:\n\"%s\"" % (
         releaser.mention, promiser.mention, finished_pact["pact"])
+    if fulfilled:
+        msg = "%s has acknowledged %s's completion of their vow:\n\"%s\"" % (
+        releaser.mention, promiser.mention, finished_pact["pact"])
+    return msg
 
 
-def see_pacts(client, message):
+def see_pacts(client, message, type="open"):
     text = message.content
     args = text.split()
     mentions = message.mentions
@@ -117,11 +135,20 @@ def see_pacts(client, message):
         raise MarriageException(
             "To look up another user's pacts, mention them.")
 
+    the_pacts = pacts
     msg = ":page_with_curl: __**%s's Pacts**__ :page_with_curl:\n" % user.mention
 
-    if user_id in pacts.keys():
+    if type == "completed":
+        the_pacts = finished_pacts
+        msg = ":sparkles: __**%s's Completed Pacts**__ :sparkles:\n" % user.mention
+    if type == "failed":
+        the_pacts = failed_pacts
+        msg = "%s __**%s's Failed Pacts**__ %s\n" % (
+            YOU_TRIED_EMOJI, user.mention, YOU_TRIED_EMOJI)
+
+    if user_id in the_pacts.keys():
         count = 1
-        for pact in pacts[user_id]:
+        for pact in the_pacts[user_id]:
             msg += "**%d** %s\n" % (count, pact["pact"])
             count += 1
 
