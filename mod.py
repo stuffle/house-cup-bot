@@ -47,7 +47,11 @@ async def get_channel_and_message(client, channel_id, message_id):
 def mod_message(text, mention, channel_id):
 
     # Do not allow spoiler tags outside of spoilers
-    if text.count("||") >= 2 and channel_id != SPOILERS_CHANNEL_ID:
+    spoilers_allowed = [
+        SPOILERS_CHANNEL_ID, SANITY_CHECKING, MOD_MINUTES, SHOP_TALK,  # COS
+        MOD_CHAT,  # Writing
+        TODO]  #Test
+    if text.count("||") >= 2 and channel_id not in spoilers_allowed:
         return "Hey %s, in an effort to be an accessible server, we don't allow the usage of spoiler tags outside of #spoilers (they don't work with screen readers). Help us be a welcoming server to all by removing the spoiler tags from your message. You can also help by captioning your images." % mention
 
     return ""
@@ -264,7 +268,7 @@ async def unwelcome(client):
         joined = utc.localize(member.joined_at)
         if joined and joined < week_ago:
             role_names = [role.name.lower() for role in member.roles]
-            if "slytherin" in role_names or "hufflepuff" in role_names or "ravenclaw" in role_names or "gryffindor" in role_names:
+            if "slytherin" in role_names or "hufflepuff" in role_names or "ravenclaw" in role_names or "gryffindor" in role_names or "mod pings" in role_names or "time out" in role_names:
                 await member.remove_roles(welcome_role, reason="They have had this role for a week.")
             else:
                 await member.send(boot_msg)
@@ -357,9 +361,10 @@ async def clear_channel_now(client, message):
     return "Deleted non-pinned messages in this channel!"
 
 
-CAPTIONS_REQUIRED = [
+CAPTIONS_NOT_REQUIRED = [
     SNAP_SNAP, SHITPOSTING, NSFW_SHITPOSTING,
     ART, ART_DISCUSSION, NSFW_ART, NSFW_ART_DISCUSSION,
+    CHALLENGE_TIME,
     SFW_FLUFF, GAMING]
 
 
@@ -376,7 +381,7 @@ async def tell(client, text, function_name, rebuke):
     channel_id = int(args[1])
 
     if function_name in ["caption", "captionshame"]:
-        if channel_id in CAPTIONS_REQUIRED:
+        if channel_id in CAPTIONS_NOT_REQUIRED:
             return "That channel does not require captions."
 
     channel, message = await get_channel_and_message(

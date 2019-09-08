@@ -26,18 +26,15 @@ def get_random_embed_same_quote(quote, gif_and_caption, colour):
 
 
 def get_mention(mentions, text, default="Harry Potter"):
-    person_mention = default
+    person_mention = ""
     str_mentions = [m.mention for m in mentions]
-    text_people = text.split(" ")[1:]
-    if "and" in text_people:
-        text_people.remove("and")
 
-    if len(text_people) > len(mentions):
-        stripped = [
-            ''.join(c for c in x if c not in [".", ","]) for x in text_people]
-        capitalised = [person.capitalize() for person in stripped]
-        person_mention = ", ".join(capitalised)
-    elif len(mentions) > 0:
+    if len(mentions) == 0:
+        if text and len(text.split(" ")) > 1:
+            person_mention = " ".join(text.split(" ")[1:])
+        else:
+            person_mention = default
+    else:
         person_mention = ", ".join(str_mentions)
     return person_mention
 
@@ -110,6 +107,7 @@ def group_hug(hugger, mentions, text):
 
 def hug(hugger, mentions, text):
     text_people = text.split(" ")[1:]
+    text_people = [s for s in text_people if s]  # Strip empty strings
     args = " ".join(text_people).lower()
     everyone = ["everyone", "all", "y'all", "yall", "friends", "server"]
     if len(mentions) > 1 or len(text_people) > 1 or args in everyone:

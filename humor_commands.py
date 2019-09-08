@@ -962,7 +962,7 @@ def madness(user_mention, mentions):
                 "A cat in a lab coat laughs evilly."),
             ("https://cdn.discordapp.com/attachments/592480821890514944/592481021685923863/image0.jpg",
                 "A cat in the air with the caption: 'Mad science cats breakin' ur gravity.'"),
-            ("https://cdn.discordapp.com/attachments/592429793211842581/594701695120834581/flat800x800075f.u1.jpg",
+            ("https://cdn.discordapp.com/attachments/592480821890514944/614480305239359499/image0.jpg",
                 "Fermion has a vauge thinky thought. Picture is of a person in a thinking pose with a tea cup held between their toes.")
         ],
         # Caty
