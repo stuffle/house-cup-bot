@@ -271,9 +271,12 @@ async def unwelcome(client):
             if "slytherin" in role_names or "hufflepuff" in role_names or "ravenclaw" in role_names or "gryffindor" in role_names or "mod pings" in role_names or "time out" in role_names:
                 await member.remove_roles(welcome_role, reason="They have had this role for a week.")
             else:
-                print("Booting %s from the server as part of unwelcome" % member.name)
-                await member.send(boot_msg)
-                await member.kick(reason="User failed to pick a house role.")
+                try:
+                    print("Booting %s from the server as part of unwelcome" % member.name)
+                    await member.send(boot_msg)
+                    await member.kick(reason="User failed to pick a house role.")
+                except Exception as ex:
+                    return "Error on %s" % member.name
     return msg
 
 
