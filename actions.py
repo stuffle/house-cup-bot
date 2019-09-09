@@ -96,7 +96,7 @@ def group_hug(hugger, mentions, text):
         ("https://cdn.discordapp.com/attachments/592480821890514944/595068806955663369/image0.gif",
             "Harry third wheels into Hermione hugging Ron."),
         ("https://cdn.discordapp.com/attachments/592480821890514944/595070762403233802/image0.gif",
-            "A family dressed in Harry Potter costumes hug in front of a green screen and all look towards a camera."),
+            "A family dressed in Harry Potter costumes hug in front of a green screen and all look towards a camera. As the family hugs, the mother's long, flowing robes completely envelope the littlest girl so she disappears like a magic trick."),
         ("https://cdn.discordapp.com/attachments/592480821890514944/594641518128791579/image0.gif",
             "A baby hugs two puppies in its lap."),
         ("https://www.channelone.com/wp-content/uploads/2015/03/penguin2.gif",

@@ -52,7 +52,7 @@ def mod_message(text, mention, channel_id):
         MOD_CHAT,  # Writing
         TODO]  #Test
     if text.count("||") >= 2 and channel_id not in spoilers_allowed:
-        return "Hey %s, in an effort to be an accessible server, we don't allow the usage of spoiler tags outside of #spoilers (they don't work with screen readers). Help us be a welcoming server to all by removing the spoiler tags from your message. You can also help by captioning your images." % mention
+        return "Hey %s, in an effort to support our members who are blind or use screen readers for other reasons, we don't allow the usage of spoiler tags outside of #spoilers (they don't work with screen readers). Help us be a welcoming server to all by removing the spoiler tags from your message. You can also help by captioning your images." % mention
 
     return ""
 
@@ -271,6 +271,7 @@ async def unwelcome(client):
             if "slytherin" in role_names or "hufflepuff" in role_names or "ravenclaw" in role_names or "gryffindor" in role_names or "mod pings" in role_names or "time out" in role_names:
                 await member.remove_roles(welcome_role, reason="They have had this role for a week.")
             else:
+                print("Booting %s from the server as part of unwelcome" % member.name)
                 await member.send(boot_msg)
                 await member.kick(reason="User failed to pick a house role.")
     return msg
@@ -395,7 +396,8 @@ async def tell(client, text, function_name, rebuke):
 async def caption(text, client):
     rebuke = (
         "Hey, %s, in an effort to make our server more "
-        "accessible we ask people to caption their images. "
+        "**accessible to blind people and others that use screen readers**"
+        " we ask people to caption their images. "
         "Just transcribe the text and/or describe what it is depicting."
         " Thanks!")
     return await tell(client, text, "caption", rebuke)
@@ -404,6 +406,6 @@ async def caption(text, client):
 async def captionshame(text, client):
     rebuke = (
         "Hey, %s, by not captioning your image, you’re "
-        "excluding people who use screen readers from the conversation."
+        "**excluding blind people and others who use screen readers**."
         " The world is ableist enough. Do better.")
     return await tell(client, text, "captionshame", rebuke)
