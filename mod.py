@@ -276,7 +276,7 @@ async def unwelcome(client):
                     await member.send(boot_msg)
                     await member.kick(reason="User failed to pick a house role.")
                 except Exception as ex:
-                    return "Error on %s" % member.name
+                    msg = "Error on %s" % member.name
     return msg
 
 
