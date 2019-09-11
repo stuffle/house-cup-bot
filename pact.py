@@ -110,7 +110,7 @@ def release_pact(client, message, fulfilled=False):
             failed_pacts[promiser.id].append(finished_pacts)
         else:
             failed_pacts[promiser.id] = [finished_pact]
-    pacts[promiser.id].pop(pact)
+    pacts[promiser.id].pop(pact_id)
 
     msg = "%s has released %s from their uncompleted vow:\n\"%s\"" % (
         releaser.mention, promiser.mention, finished_pact["pact"])
