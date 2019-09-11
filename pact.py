@@ -58,6 +58,9 @@ def form_pact(client, message):
 
 
 def release_pact(client, message, fulfilled=False):
+    raise PactException("This command is currently under construction. "
+                        "Please try again later.")
+
     if len(message.mentions) != 1:
         raise PactException(
             "Mention one user to release them from their pact.")
