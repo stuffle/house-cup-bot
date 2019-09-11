@@ -1164,7 +1164,9 @@ async def on_message(message):
     channel = message.channel
     user = message.author
     user_id = user.id
-    guild_id = message.guild.id
+    guild_id = 0
+    if message.guild:
+        guild_id = message.guild.id
     mention = user.mention
     text = message.content.lower()
     msg = ""
