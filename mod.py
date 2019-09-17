@@ -52,7 +52,7 @@ def mod_message(text, mention, channel_id):
         MOD_CHAT,  # Writing
         TODO]  #Test
     if text.count("||") >= 2 and channel_id not in spoilers_allowed:
-        return "Hey %s, in an effort to support our members who are blind or use screen readers for other reasons, we don't allow the usage of spoiler tags outside of #spoilers (they don't work with screen readers). Help us be a welcoming server to all by removing the spoiler tags from your message. You can also help by captioning your images." % mention
+        return "Hey %s, in an effort to support **our members who are blind or use screen readers** for other reasons, **we don't allow the usage of spoiler tags** outside of #spoilers (they don't work with screen readers). Help us be a welcoming server to all by removing the spoiler tags from your message. You can also help by captioning your images." % mention
 
     return ""
 
@@ -328,8 +328,9 @@ async def clear_channels(client, message=None):
         (COS_GUILD_ID, 595247137898627082),
         # COS, feel-good
         (COS_GUILD_ID, 595247070793826386),
-        # COS, sanity-checking
         (COS_GUILD_ID, SANITY_CHECKING),
+        (COS_GUILD_ID, MOD_PINGS),
+        (COS_GUILD_ID, HALL_MONITORS),
         # Test, clear
         (539932855845781524, 601903313310711878)
     ]
@@ -368,11 +369,18 @@ async def clear_channel_now(client, message):
 CAPTIONS_NOT_REQUIRED = [
     SNAP_SNAP, SHITPOSTING, NSFW_SHITPOSTING,
     ART, ART_DISCUSSION, NSFW_ART, NSFW_ART_DISCUSSION,
-    CHALLENGE_TIME,
+    CHALLENGE_TIME, TIME_CAPSULE,
     SFW_FLUFF, GAMING]
 
 
-async def tell(client, text, function_name, rebuke):
+async def tell(client, message, function_name, rebuke):
+    role_names = [role.name.lower() for role in message.author.roles]
+    hall_monitor_role = "hall monitor" in role_names
+    if not(is_mod(message.author, message.channel) or hall_monitor_role):
+        raise HouseCupException(
+            "Only mods and hall monitors may use this command")
+
+    text = message.content.lower()
     args = text.split()[1:]
     proper_format = "Proper formatting for this function is " \
                     "`~%s MESSADE_ID CHANNEL_ID`" % function_name
@@ -396,19 +404,19 @@ async def tell(client, text, function_name, rebuke):
         message.author.name, channel.name)
 
 
-async def caption(text, client):
+async def caption(message, client):
     rebuke = (
         "Hey, %s, in an effort to make our server more "
         "**accessible to blind people and others that use screen readers**"
         " we ask people to caption their images. "
         "Just transcribe the text and/or describe what it is depicting."
         " Thanks!")
-    return await tell(client, text, "caption", rebuke)
+    return await tell(client, message, "caption", rebuke)
 
 
-async def captionshame(text, client):
+async def captionshame(message, client):
     rebuke = (
         "Hey, %s, by not captioning your image, you’re "
         "**excluding blind people and others who use screen readers**."
         " The world is ableist enough. Do better.")
-    return await tell(client, text, "captionshame", rebuke)
+    return await tell(client, message, "captionshame", rebuke)

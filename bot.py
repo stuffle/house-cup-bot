@@ -1337,9 +1337,9 @@ async def on_message(message):
         elif text.startswith("clearchannelnow"):
             msg = await clear_channel_now(client, message)
         elif text.startswith("captionshame"):
-            msg = await captionshame(text, client)
+            msg = await captionshame(message, client)
         elif text.startswith("caption"):
-            msg = await caption(text, client)
+            msg = await caption(message, client)
         elif text.startswith("showimprisoned"):
             msg = view_imprisoned(client, message)
         elif text.startswith("imprison"):
