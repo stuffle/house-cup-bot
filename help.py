@@ -4,6 +4,8 @@ from config import *
 
 DOCS_LINK = "https://docs.google.com/document/d/1z03xR7jpi-oXwmI9N1XpU6N9" \
             "0BnXmj5ptyASdWnIkNA/edit?usp=sharing"
+CAPTION_DOC_LINK = "https://docs.google.com/document/d/1VXoi-oesHpQ1l3payu" \
+                   "NtEeQFfD_Dht3Emc3JIznOZXU/edit?usp=sharing"
 COLOR = 6095788
 
 
@@ -310,14 +312,16 @@ def help_command(message, prefix):
             description=msg)
     elif arg == "caption":
         msg = "Chide someone for not captioning their image for a given message ID and channel ID. " \
-              "\n\n Example `%scaption MESSADE_ID CHANNEL_ID`" % prefix
+              "\nFor more info on how to do this, see [this help doc](%s)" \
+              "\n\n Example `~caption MESSADE_ID CHANNEL_ID`" % CAPTION_DOC_LINK
         embed = discord.Embed(
             title="Caption Help",
             color=COLOR,
             description=msg)
     elif arg == "captionshame":
         msg = "Like `~caption`, but with a little more oomph." \
-              "\n\n Example `~captionshame MESSADE_ID CHANNEL_ID`"
+              "\nFor more info on how to do this, see [this help doc](%s)" \
+              "\n\n Example `~captionshame MESSADE_ID CHANNEL_ID`" % CAPTION_DOC_LINK
         embed = discord.Embed(
             title="Caption Shame Help",
             color=COLOR,
@@ -469,14 +473,14 @@ def help_command(message, prefix):
     # Pact Commands
     elif arg == "formpact":
         msg = "Form a pact with another user. " \
-              "This will show the promise in `~pacts` until they `~fulfill` of `~acceptfailure`." \
+              "This will show the promise in `~pacts` until they `~fulfill` or `~acceptfailure`." \
               "\n\nExample: `%sformpact I swear to @person " \
               "that I will write today.`" % prefix
         embed = discord.Embed(
             title="Form Pact Help",
             color=COLOR,
             description=msg)
-    elif arg == "pacts":
+    elif arg == "pacts" or arg == "pact":
         msg = "View all of the current pacts you or someone else has. " \
               "Idea for the pact system came from RedHorse!" \
               "\n\nExamples: `%spacts`, `%spacts @person`" % (prefix, prefix)

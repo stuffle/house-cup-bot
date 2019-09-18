@@ -109,7 +109,7 @@ def hug(hugger, mentions, text):
     text_people = text.split(" ")[1:]
     text_people = [s for s in text_people if s]  # Strip empty strings
     args = " ".join(text_people).lower()
-    everyone = ["everyone", "all", "y'all", "yall", "friends", "server"]
+    everyone = ["everyone", "all", "y'all", "yall", "friends", "server", "channel"]
     if len(mentions) > 1 or len(text_people) > 1 or args in everyone:
         return group_hug(hugger, mentions, text)
     victim = get_mention(mentions, text, "Friend")
