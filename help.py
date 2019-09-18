@@ -454,6 +454,7 @@ def help_command(message, prefix):
               " (based on the number of heart emoji next to their name)." \
               "You many mention a person to look up their marriages.\n" \
               "Heart emoji by Sparky and Kami." \
+              "\nTo see all marriage commands, view the list of all commands with `~help`." \
               "\n\nExamples: `%smarriages`, `%smarriages @person`" % (prefix, prefix)
         embed = discord.Embed(
             title="Marriages Help",
@@ -483,6 +484,7 @@ def help_command(message, prefix):
     elif arg == "pacts" or arg == "pact":
         msg = "View all of the current pacts you or someone else has. " \
               "Idea for the pact system came from RedHorse!" \
+              "\nTo see all pact commands, view the list of all commands with `~help`." \
               "\n\nExamples: `%spacts`, `%spacts @person`" % (prefix, prefix)
         embed = discord.Embed(
             title="Pacts Help",

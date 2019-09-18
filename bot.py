@@ -1224,6 +1224,17 @@ async def on_message(message):
                     "Talk to stuffle if you're interested in bringing it here."
                 )
 
+        if text.startswith("help"):
+            embed = help_command(message, PREFIX)
+            await channel.send(embed=embed)
+            return
+
+        if len(args) > 1 and "help" in args:
+            raise HouseCupException(
+                "Use `~help %s` or `~help` to see the help information "
+                "for %s or a list of all commands." % (command, command)
+            )
+
         argumentless_commands = [
             "join", "daily", "post", "beta", "workshop", "standings",
             "exercise"]
@@ -1231,11 +1242,6 @@ async def on_message(message):
             raise HouseCupException(
                 "`%s%s` does not take any arguments. See `%shelp %s` "
                 "for more information." % (PREFIX, command, PREFIX, command))
-
-        if text.startswith("help"):
-            embed = help_command(message, PREFIX)
-            await channel.send(embed=embed)
-            return
 
         # Join and Leave
         elif text.startswith("join"):
@@ -1458,7 +1464,7 @@ async def on_message(message):
 
     except (HouseCupException, mod.HouseCupException,
             MarriageException, PactException) as ex:
-        msg = "{0.author.mention}: " + str(ex)
+        msg = "Error: " + str(ex)
         print(user.name + ": " + str(ex))
     except Exception as ex:
         msg = "Oh no! Something went wrong and I couldn't complete your "\
