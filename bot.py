@@ -1360,7 +1360,9 @@ async def on_message(message):
             msg = divorce(client, message)
             save_participants()
         elif text.startswith("marriage"):
-            msg = await see_marriages(client, message)
+            msgs = await see_marriages(client, message)
+            for m in msgs:
+                await channel.send(m.format(message))
         elif text.startswith("bless"):
             msg = bless(client, message)
             save_participants()

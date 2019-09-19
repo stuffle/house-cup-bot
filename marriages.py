@@ -138,13 +138,14 @@ async def see_marriages(client, message):
             "To look up another user's partners, mention them.")
 
     marriages = []
-    msg = ":sparkles:__**%s's Partners**__:sparkles:\n" % user.mention
+    msg_header = ":sparkles:__**%s's Partners**__:sparkles:\n" % user.mention
 
     for marriage_id in marriage_info.keys():
         if str(user_id) in marriage_id:
             marriages.append(marriage_id)
 
     count = 1
+    marriage_msgs = []
     for marriage_id in marriages:
         people = marriage_id.split("|")
         people.remove(str(user_id))
@@ -152,21 +153,29 @@ async def see_marriages(client, message):
         partner = client.get_user(partner_id)
 
         times_married = marriage_info[marriage_id]["times_married"]
-        if times_married != 0:
+        if times_married != 0 and partner:
             emojis = get_heart_string(client, times_married, "")
             syntax = "`"
-            if times_married < 0 or not partner:
+            if times_married < 0:
                 syntax = "~~"
-            partner_name = str(partner_id)
-            if partner:
-                partner_name = partner.name
+            partner_name = partner.name
             msg_line = "**%d** %s%s%s %s\n" % (
                 count, syntax, partner_name, syntax, emojis)
 
-            msg = msg + msg_line
+            marriage_msgs.append(msg_line)
             count += 1
 
-    return msg
+    # Form as many messages as it takes to send all of the marriages
+    msgs = [msg_header]
+    current_index = 0
+    for msg in marriage_msgs:
+        combined = msgs[current_index] + msg
+        if len(combined) < 2000:
+            msgs[current_index] = combined
+        else:
+            msgs.append(msg)
+            current_index += 1
+    return msgs
 
 
 def divorce(client, message):
