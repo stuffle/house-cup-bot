@@ -2,6 +2,7 @@ import discord
 import random
 import datetime
 import pytz
+import mimetypes
 
 from constants import *
 
@@ -44,7 +45,12 @@ async def get_channel_and_message(client, channel_id, message_id):
     return channel, message
 
 
-def mod_message(text, mention, channel_id):
+async def mod_message(client, message):
+    text = message.content.lower()
+    mention = message.author.mention
+    channel_id = message.channel.id
+    guild_id = message.guild.id
+    msg = ""
 
     # Do not allow spoiler tags outside of spoilers
     spoilers_allowed = [
@@ -52,9 +58,31 @@ def mod_message(text, mention, channel_id):
         MOD_CHAT,  # Writing
         TODO]  #Test
     if text.count("||") >= 2 and channel_id not in spoilers_allowed:
-        return "Hey %s, in an effort to support **our members who are blind or use screen readers** for other reasons, **we don't allow the usage of spoiler tags** outside of #spoilers (they don't work with screen readers). Help us be a welcoming server to all by removing the spoiler tags from your message. You can also help by captioning your images." % mention
+        msg = "Hey %s, in an effort to support **our members who are blind or use screen readers** for other reasons, **we don't allow the usage of spoiler tags** outside of #spoilers (they don't work with screen readers). Help us be a welcoming server to all by removing the spoiler tags from your message. You can also help by captioning your images." % mention
 
-    return ""
+    role_names = [role.name for role in message.author.roles]
+    if guild_id == COS_GUILD_ID or guild_id == TEST_GUILD_ID:
+        if "No Imaj" in role_names and len(message.attachments) >= 1:
+            for attachment in message.attachments:
+                file_type, encoding = mimetypes.guess_type(attachment.filename)
+                if file_type and "image" in file_type:
+                    image_id_types = ["id", "caption", "alt text"]
+                    contains_identifier = "id" in text or "caption" in text or "alt text" in text
+                    if not contains_identifier or len(text.split(" ")) < 10:
+                        msg = (
+                            "Hey %s, since you have the No Imaj role, "
+                            "we require you to post image IDs with your image. "
+                            "In order to encourage you to post adequate captions, "
+                            "your image ID must contain at least 10 words. "
+                            "I've deleted your message because it did not meet "
+                            "this requirement. You may repost with an adequate image ID. "
+                            "Thank you for helping us make this server a more "
+                            "accessible place :slight_smile:" % mention)
+                        print("Deleteing a message from %s with file: %s and text:%s" % (
+                            message.author.name, attachment.filename, text))
+                        await message.delete()
+
+    return msg
 
 
 async def check_reactions(payload, client):

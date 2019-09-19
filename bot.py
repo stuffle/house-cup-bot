@@ -1201,7 +1201,7 @@ async def on_message(message):
             await message.add_reaction(banana_bad)
 
         if guild_id in COS_SERVERS + [HP_FEMSLASH]:
-            modded = mod_message(text, mention, message.channel.id)
+            modded = await mod_message(client, message)
             if modded:
                 await channel.send(modded.format(message))
                 return
