@@ -1160,6 +1160,11 @@ async def on_member_join(member):
 
 
 @client.event
+async def on_member_update(before, after):
+    await on_guild_member_update(client, before, after)
+
+
+@client.event
 async def on_message(message):
     channel = message.channel
     user = message.author

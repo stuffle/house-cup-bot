@@ -141,6 +141,16 @@ async def on_join(client, member):
             await member.add_roles(welcome_role)
 
 
+async def on_guild_member_update(client, before, after):
+    if after.guild.id not in [COS_GUILD_ID, TEST_GUILD_ID]:
+        return
+
+    mod_pings_role = after.guild.get_role(602956352565805087)
+    if mod_pings_role in after.roles and mod_pings_role not in before.roles:
+        channel = client.get_channel(SANITY_CHECKING)
+        await channel.send("%s is now in #mod-pings." % after.name)
+
+
 def imprison(client, message):
     if not is_mod(message.author, message.channel):
         raise HouseCupException(
