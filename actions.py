@@ -154,7 +154,7 @@ def hug(hugger, mentions, text):
         ("https://cdn.discordapp.com/attachments/592480821890514944/594620317704519681/image0.gif",
             "A sleepy cat hugging a stuffed cat, opens its eyes as it pulls its stuffed cat closer."),
         ("https://cdn.discordapp.com/attachments/592480821890514944/594620598853042199/image0.gif",
-            "A gorilla barrel rolls through a window into an attic to hug a pig with the caption “Emergency Hug”."),
+            "A SWAT guy barrel rolls through a window into an attic to hug a pig with the caption “Emergency Hug”."),
         ("https://cdn.discordapp.com/attachments/592480821890514944/594620923433189376/image0.gif",
             "Sullivan from Monsters Inc pulls Boo into a tender embrace."),
         ("https://cdn.discordapp.com/attachments/592480821890514944/594621805336199169/image0.gif",

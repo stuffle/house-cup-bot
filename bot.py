@@ -1184,6 +1184,9 @@ async def on_message(message):
             random_person = get_random_person(user)
             if "i love you" in text:
                 msg = "%s: %s" % (mention, i_love_you(random_person))
+            elif text[1:].startswith("fuck"):
+                # Why do people keep doing this? :weary:
+                msg = "%s I'm not even a year old. Leave me alone." % WAT_EMOJI
             else:
                 msg = at(text, mention, random_person)
 
