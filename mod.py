@@ -83,6 +83,10 @@ async def mod_message(client, message):
                         await message.delete()
                         return msg
 
+    if "the mods" in text:
+        petunia_emoji = client.get_emoji(626144919538630657)
+        await message.add_reaction(petunia_emoji)
+
     return msg
 
 
