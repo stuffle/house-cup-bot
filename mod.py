@@ -370,6 +370,7 @@ async def clear_channels(client, message=None):
         (COS_GUILD_ID, SANITY_CHECKING),
         (COS_GUILD_ID, MOD_PINGS),
         (COS_GUILD_ID, HALL_MONITORS),
+        (COS_GUILD_ID, NSFW),
         # Test, clear
         (539932855845781524, 601903313310711878)
     ]
