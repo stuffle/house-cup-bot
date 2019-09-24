@@ -81,6 +81,7 @@ async def mod_message(client, message):
                         print("Deleteing a message from %s with file: %s and text:%s" % (
                             message.author.name, attachment.filename, text))
                         await message.delete()
+                        return msg
 
     return msg
 
