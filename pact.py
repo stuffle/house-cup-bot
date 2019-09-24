@@ -132,7 +132,7 @@ def see_pacts(client, message, type="open"):
         user = mentions[0]
         user_id = mentions[0].id
     elif len(args) > 1:
-        raise MarriageException(
+        raise PactException(
             "To look up another user's pacts, mention them.")
 
     the_pacts = pacts
