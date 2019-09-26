@@ -16,6 +16,14 @@ voting = {}
 imprisoned = {}
 
 
+CAPTIONS_NOT_REQUIRED = [
+    SNAP_SNAP, SHITPOSTING, NSFW_SHITPOSTING,
+    ART, ART_DISCUSSION, NSFW_ART, NSFW_ART_DISCUSSION,
+    CHALLENGE_TIME, TIME_CAPSULE,
+    SFW_FLUFF, GAMING,
+    CLEARING_TEST]
+
+
 class HouseCupException(Exception):
     pass
 
@@ -60,8 +68,9 @@ async def mod_message(client, message):
     if text.count("||") >= 2 and channel_id not in spoilers_allowed:
         msg = "Hey %s, in an effort to support **our members who are blind or use screen readers** for other reasons, **we don't allow the usage of spoiler tags** outside of #spoilers (they don't work with screen readers). Help us be a welcoming server to all by removing the spoiler tags from your message. You can also help by captioning your images." % mention
 
-    role_names = [role.name for role in message.author.roles]
-    if guild_id == COS_GUILD_ID or guild_id == TEST_GUILD_ID:
+    # Mod messages that contain images for No Imaj role users in COS
+    if (guild_id == COS_GUILD_ID or guild_id == TEST_GUILD_ID) and channel_id not in CAPTIONS_NOT_REQUIRED:
+        role_names = [role.name for role in message.author.roles]
         if "No Imaj" in role_names and len(message.attachments) >= 1:
             for attachment in message.attachments:
                 file_type, encoding = mimetypes.guess_type(attachment.filename)
@@ -83,7 +92,8 @@ async def mod_message(client, message):
                         await message.delete()
                         return msg
 
-    if "the mods" in text:
+    # Add react for certain messages (just for fun)
+    if "the mods" in text or "the cryptids" in text:
         petunia_emoji = client.get_emoji(626144919538630657)
         await message.add_reaction(petunia_emoji)
 
@@ -408,13 +418,6 @@ async def clear_channel_now(client, message):
         check=lambda msg: not msg.pinned)
 
     return "Deleted non-pinned messages in this channel!"
-
-
-CAPTIONS_NOT_REQUIRED = [
-    SNAP_SNAP, SHITPOSTING, NSFW_SHITPOSTING,
-    ART, ART_DISCUSSION, NSFW_ART, NSFW_ART_DISCUSSION,
-    CHALLENGE_TIME, TIME_CAPSULE,
-    SFW_FLUFF, GAMING]
 
 
 async def tell(client, message, function_name, rebuke):

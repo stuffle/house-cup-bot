@@ -1088,7 +1088,7 @@ async def finish_wrestling(message, members, fluid):
 
     responses = [
         "%s slips while stepping into the rink, making an easy victory for %s." % (
-            winner, loser),
+            loser, winner),
         "As soon as the match begins, %s tackles %s. They fall to the ground landing in the %s. They struggle for control until %s manages to flip them over, pinning %s and winning the match." % (
             loser, winner, fluid, winner, loser),
         "They size each other up for several moments before %s steps forward, slipping in the %s. Mid fall they reach out, grabbing %s and managing to bring them down too. %s is dazed, and %s takes the win." % (
