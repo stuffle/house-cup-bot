@@ -418,7 +418,7 @@ async def clear_channel_now(client, message):
 
 async def tell(client, message, function_name, rebuke):
     role_names = [role.name.lower() for role in message.author.roles]
-    hall_monitor_role = "hall monitor" in role_names
+    hall_monitor_role = "here to help" in role_names
     if not(is_mod(message.author, message.channel) or hall_monitor_role):
         raise HouseCupException(
             "Only mods and hall monitors may use this command")
