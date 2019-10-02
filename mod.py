@@ -19,7 +19,7 @@ imprisoned = {}
 CAPTIONS_NOT_REQUIRED = [
     SNAP_SNAP, SHITPOSTING, NSFW_SHITPOSTING,
     ART_CHANNEL, ART_DISCUSSION, NSFW_ART, NSFW_ART_DISCUSSION,
-    CHALLENGE_TIME, TIME_CAPSULE,
+    CHALLENGE_TIME,
     SFW_FLUFF, GAMING,
     IMAGES_TEST]
 
@@ -76,18 +76,15 @@ async def mod_message(client, message):
                 for attachment in message.attachments:
                     file_type, encoding = mimetypes.guess_type(attachment.filename)
                     if file_type and "image" in file_type:
-                        image_id_types = ["id", "caption", "alt text"]
-                        contains_identifier = "id" in text or "caption" in text or "alt text" in text
+                        contains_identifier = "id" in text or "caption" in text or "alt text" in text or "image" in text
                         if not contains_identifier or len(text.split(" ")) < 10:
                             msg = (
                                 "Hey %s, since you have the No Imaj role, "
                                 "we require you to post image IDs with your image. "
-                                "In order to encourage you to post adequate captions, "
-                                "your image ID must contain at least 10 words. "
+                                "Your image ID must contain at least 10 words "
+                                " and be formatted like '[Image ID: description]'. "
                                 "I've deleted your message because it did not meet "
-                                "this requirement. You may repost with an adequate image ID. "
-                                "Thank you for helping us make this server a more "
-                                "accessible place :slight_smile:" % mention)
+                                "this requirement. You may repost if you follow these guidlines." % mention)
                             print("Deleteing a message from %s with file: %s and text:%s" % (
                                 message.author.name, attachment.filename, text))
                             await message.delete()
