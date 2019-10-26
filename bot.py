@@ -1010,13 +1010,13 @@ async def wrestle(hugger, message):
         participants.append(challenger)
         if challenger == "<@542048148776943657>":
             rs = [
-                "%s steps into a pool filled with %s. %s looks at stufflebot expectantly. stufflebot blinks. The pool disappears, and %s is suddenly sprawled on the ground.\n\nDo not try to wrestle stufflebot. You will always lose." % (
+                "%s steps into a pool filled with %s. %s looks at sigmabot expectantly. sigmabot blinks. The pool disappears, and %s is suddenly sprawled on the ground.\n\nDo not try to wrestle sigmabot. You will always lose." % (
                     hugger, fluid, hugger, hugger),
-                "%s wakes up in a pool full of %s with no idea of how they got there. stufflebot stands emotionlessly over them with a trophy in hand. %s is missing 10 points." % (
+                "%s wakes up in a pool full of %s with no idea of how they got there. sigmabot stands emotionlessly over them with a trophy in hand. %s is missing 10 points." % (
                     hugger, fluid, hugger),
-                "%s stares at stufflebot over the edge of the pool filled with %s. stufflebot stares back, its robot face fixed in an unchanging, cute smile. Feeling uneasy, %s steps into the rink. stufflebot takes a step forward. The reflection in its eye that was once so adorable now seems menacing. %s shakes it off and prepares to fight. stufflebot steps into the rink. As soon as the start of the match is called, an electric pulse radiates through the %s, and %s falls to the ground, convulsing." % (
+                "%s stares at sigmabot over the edge of the pool filled with %s. sigmabot stares back, its robot face fixed in an unchanging, cute smile. Feeling uneasy, %s steps into the rink. sigmabot takes a step forward. The reflection in its eye that was once so adorable now seems menacing. %s shakes it off and prepares to fight. sigmabot steps into the rink. As soon as the start of the match is called, an electric pulse radiates through the %s, and %s falls to the ground, convulsing." % (
                     hugger, fluid, hugger, hugger, fluid, hugger),
-                "stufflebot shows up to the wrestling match alone. No one knows where %s is. stufflebot is declared the victor." % (
+                "sigmabot shows up to the wrestling match alone. No one knows where %s is. sigmabot is declared the victor." % (
                     hugger)
             ]
             return random.choice(rs)
@@ -1184,7 +1184,7 @@ async def on_message(message):
     first_place_house_i, first_place_score_i = sorted_houses_i[0]
 
     try:
-        # msg will be overwritten if @stufflebot is an argument to another command
+        # msg will be overwritten if @sigmabot is an argument to another command
         if client.user.mentioned_in(message) and message.mention_everyone is False:
             random_person = get_random_person(user)
             if "i love you" in text:

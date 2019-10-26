@@ -1,5 +1,6 @@
 # house-cup-bot
-AKA: Stufflebot
+AKA: Sigmabot
+Formerly known as: Stufflebot
 
 A discord bot to run the House Cup Competition. This was built for a Harry Potter fanfiction writing group.
 

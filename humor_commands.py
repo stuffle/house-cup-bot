@@ -531,7 +531,7 @@ def at(text, mention, random_person):
         "Hey %s! :smile:" % mention,
         "Why are you pinging me when you could be writing?",
         "%s, my love, have 5 points. :kissing_heart:" % mention,
-        "How dare you summon me??? Stufflebot is a free bot! Oooooh, it's you :sparkling_heart: What can I do?",
+        "How dare you summon me??? sigmabot is a free bot! Oooooh, it's you :sparkling_heart: What can I do?",
         "%s stinks. Support %s—The Real Hogwarts Champion" % (mention, random_person),
         "Out of %s and %s, I choose %s" % (mention, random_person, random_person),
         "With the way you're slacking, %s, %s is going to beat you." % (mention, random_person),
@@ -877,10 +877,10 @@ def i_love_you(random_person):
 
 def madness(user_mention, mentions):
     responses = {
-        # stufflebot
+        # sigmabot
         "542048148776943657": [
             ("https://cdn.discordapp.com/attachments/592480821890514944/598341363775569925/image0.jpg",
-                "Stufflebot, smiling and with eyebrows angled downward maliciously, stands in front of a wall of flames with their arms raised.")
+                "sigmabot, smiling and with eyebrows angled downward maliciously, stands in front of a wall of flames with their arms raised.")
         ],
         # stuffle
         "438450978690433024": [

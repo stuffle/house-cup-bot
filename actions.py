@@ -114,8 +114,8 @@ def hug(hugger, mentions, text):
         return group_hug(hugger, mentions, text)
     victim = get_mention(mentions, text, "Friend")
     quote = "%s: you have been hugged by %s!" % (victim, hugger)
-    if victim in ["<@542048148776943657>", "Stufflebot"]:
-        quote = "%s: Stufflebot hugs you back :heart:" % hugger
+    if victim.lower() in ["<@542048148776943657>", "stufflebot", "sigmabot"]:
+        quote = "%s: Sigmabot hugs you back :heart:" % hugger
     gif_to_caption = [
         ("https://cdn.discordapp.com/attachments/592480821890514944/594587388219490331/f95e1e9bc953789b72d2a900cc00b9d75cd19fa3.gif",
             "A gray kitten with a white nose sinks onto its sibling, deepening their hug."),
@@ -276,8 +276,8 @@ def pillage(person):
 def cheer(cheerleader, mentions, text):
     victim = get_mention(mentions, text, "Friend")
     quote = "%s: You are being cheered on by %s!!!" % (victim, cheerleader)
-    if victim in ["<@542048148776943657>", "Stufflebot", cheerleader]:
-        quote = "%s: Stufflebot cheers you on too! :heart:" % cheerleader
+    if victim.lower() in ["<@542048148776943657>", "stufflebot", "sigmabot", cheerleader]:
+        quote = "%s: Sigmabot cheers you on too! :heart:" % cheerleader
 
     gif_to_caption = [
         ("https://cdn.discordapp.com/attachments/592480821890514944/602356893188489219/image0.gif",

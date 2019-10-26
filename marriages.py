@@ -31,7 +31,7 @@ def marry(client, message):
     marriage_id = "%d|%d" % (
         min(proposer_id, partner_id), max(proposer_id, partner_id))
 
-    # stufflebot auto accepts
+    # sigmabot auto accepts
     if partner_id == STUFFLEBOT_ID:
         # remarrying
         if marriage_id in marriage_info:

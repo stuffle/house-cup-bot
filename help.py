@@ -246,7 +246,7 @@ def help_command(message, prefix):
     elif arg == "startmonitoring":
         msg = "Mods only: Start monitoring the number of emoji reacts " \
               "on a message. AMOUNT is the number of reactions allowed. " \
-              "If too many reactions are put on a message, stufflebot will " \
+              "If too many reactions are put on a message, sigmabot will " \
               "delete the extra emoji as it is added and ping the offending person." \
               "\n\n Example `%sstartmonitoring MESSAGE_ID CHANNEL_ID AMOUNT`" % prefix
         embed = discord.Embed(
@@ -262,7 +262,7 @@ def help_command(message, prefix):
             description=msg)
     elif arg == "showmonitoring":
         msg = "Mods only: Show the message IDs of the current messages " \
-              "that stufflebot is monitoring." \
+              "that sigmabot is monitoring." \
               "\n\n Example `%sshowmonitoring`" % prefix
         embed = discord.Embed(
             title="Show Monitoring Help",
@@ -533,28 +533,28 @@ def help_command(message, prefix):
             color=COLOR,
             description=msg)
     elif arg == "inspireme":
-        msg = "Get some inspiration from stufflebot. Example: `%sinspireme`" \
+        msg = "Get some inspiration from sigmabot. Example: `%sinspireme`" \
               "\n\nResponses written by Caty, Dorea, Red, Essa, and Stuffle." % prefix
         embed = discord.Embed(
             title="InspireMe Help",
             color=COLOR,
             description=msg)
     elif arg.startswith("shouldikill"):
-        msg = "Have stufflebot decide if you should kill your character. " \
+        msg = "Have sigmabot decide if you should kill your character. " \
               "Example: `%sshouldikillmycharacter`" % prefix
         embed = discord.Embed(
             title="ShouldIKillMyCharacter Help",
             color=COLOR,
             description=msg)
     elif arg == "shouldigetbacktowork":
-        msg = "Ask stufflebot if you should get back to work.\n\n" \
+        msg = "Ask sigmabot if you should get back to work.\n\n" \
               "Example: `%sshouldigetbacktowork`" % prefix
         embed = discord.Embed(
             title="shouldIGetBacktoWork Help",
             color=COLOR,
             description=msg)
     elif arg == "whenshouldtheyfuck":
-        msg = "Ask stufflebot when your characters should fuck. " \
+        msg = "Ask sigmabot when your characters should fuck. " \
               "Most responses written by Red.\n\n" \
               "Example: `%swhenshouldtheyfuck`" % prefix
         embed = discord.Embed(
@@ -562,21 +562,21 @@ def help_command(message, prefix):
             color=COLOR,
             description=msg)
     elif arg == "randompair":
-        msg = "Have stufflebot give you a random pairing.\n\n" \
+        msg = "Have sigmabot give you a random pairing.\n\n" \
               "Example: `%srandompair`" % prefix
         embed = discord.Embed(
             title="RandomPair Help",
             color=COLOR,
             description=msg)
     elif arg == "kink":
-        msg = "Have stufflebot give you a random kink.\n\n" \
+        msg = "Have sigmabot give you a random kink.\n\n" \
               "Example: `%skink`" % prefix
         embed = discord.Embed(
             title="Kink Help",
             color=COLOR,
             description=msg)
     elif arg == "iloveyou":
-        msg = "Tell stufflebot how much you love it.\n\n" \
+        msg = "Tell sigmabot how much you love it.\n\n" \
               "Example: `%siloveyou`" % prefix
         embed = discord.Embed(
             title="I Love You Help",
@@ -609,7 +609,7 @@ def general_help(prefix, guild_id):
                      " are available [here](%s)." % DOCS_LINK
 
     embed = discord.Embed(
-        title="StuffleBot Help",
+        title="SigmaBot Help",
         color=COLOR,
         description=msg)
 
