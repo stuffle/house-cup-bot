@@ -1481,10 +1481,6 @@ async def on_message(message):
     if user.id == 593530774104309790 and guild_id == RED_GUILD_ID:
         banana_lion = client.get_emoji(564830356977483804)
         await message.add_reaction(banana_lion)
-    # Add bananabirb to everything kit says in the writing server
-    if user.id == 629163659117068289 and guild_id == RED_GUILD_ID:
-        banana_birb = client.get_emoji(564918695395065866)
-        await message.add_reaction(banana_birb)
     # Add banana badger to everything Ava says in the writing server
     if user.id == 516122981156782091 and guild_id == RED_GUILD_ID:
         banana_bad = client.get_emoji(565106770020925451)
