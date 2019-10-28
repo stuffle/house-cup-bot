@@ -1183,6 +1183,12 @@ async def on_message(message):
     sorted_houses_i = get_sorted_houses()
     first_place_house_i, first_place_score_i = sorted_houses_i[0]
 
+    if guild_id in COS_SERVERS + [HP_FEMSLASH]:
+            modded = await mod_message(client, message)
+            if modded:
+                await channel.send(modded.format(message))
+                return
+
     try:
         # msg will be overwritten if @sigmabot is an argument to another command
         if client.user.mentioned_in(message) and message.mention_everyone is False:
@@ -1198,21 +1204,6 @@ async def on_message(message):
         if message.channel.type.name in ["private", "group"]:
             raise HouseCupException(
                 "Please communicate with me in a server we share.")
-
-        # Add bananalion to everything wolven says in the writing server
-        if user.id == 593530774104309790 and guild_id == RED_GUILD_ID:
-            banana_lion = client.get_emoji(564830356977483804)
-            await message.add_reaction(banana_lion)
-        # Add banana badger to everything Ava says in the writing server
-        if user.id == 516122981156782091 and guild_id == RED_GUILD_ID:
-            banana_bad = client.get_emoji(565106770020925451)
-            await message.add_reaction(banana_bad)
-
-        if guild_id in COS_SERVERS + [HP_FEMSLASH]:
-            modded = await mod_message(client, message)
-            if modded:
-                await channel.send(modded.format(message))
-                return
 
         # Ignore all messages not directed at bot unless it was a mention
         if not message.content.startswith(PREFIX) and msg == "":
@@ -1485,6 +1476,19 @@ async def on_message(message):
 
     if msg:
         await channel.send(msg.format(message))
+
+    # Add bananalion to everything wolven says in the writing server
+    if user.id == 593530774104309790 and guild_id == RED_GUILD_ID:
+        banana_lion = client.get_emoji(564830356977483804)
+        await message.add_reaction(banana_lion)
+    # Add bananabirb to everything kit says in the writing server
+    if user.id == 629163659117068289 and guild_id == RED_GUILD_ID:
+        banana_birb = client.get_emoji(564918695395065866)
+        await message.add_reaction(banana_birb)
+    # Add banana badger to everything Ava says in the writing server
+    if user.id == 516122981156782091 and guild_id == RED_GUILD_ID:
+        banana_bad = client.get_emoji(565106770020925451)
+        await message.add_reaction(banana_bad)
 
     sorted_houses = get_sorted_houses()
     first_place_house, first_place_score = sorted_houses[0]
