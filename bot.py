@@ -1353,7 +1353,10 @@ async def on_message(message):
 
         # Marriage commands
         elif text.startswith("marry"):
-            msg = marry(client, message)
+            (embed, msg) = marry(client, message)
+            if embed:
+                await channel.send(embed=embed)
+                return
             save_participants()
         elif text.startswith("divorce"):
             msg = divorce(client, message)

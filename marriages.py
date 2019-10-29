@@ -1,5 +1,6 @@
 import discord
 from constants import *
+from actions import *
 
 
 # User ID to list of open proposals for that person
@@ -14,6 +15,24 @@ class MarriageException(Exception):
     pass
 
 
+newlywed_gifs = [
+    ("https://cdn.discordapp.com/attachments/565884495023177728/629253632315097108/image0.gif",
+        "The Simpsons: Homer is wearing a long-sleeved white wedding dress, holding a bouquet of pink flowers and wearing a crown woven of the same flowers. He lifts the skirt to step down the first step of the stairs in his home, exposing the garter he’s wearing over his knee, then he pauses, dropping the skirt and turning his head to breathe in the fragrance from the flowers."),
+    ("https://cdn.discordapp.com/attachments/565884495023177728/629253929154117643/image0.gif",
+        "The Simpsons: A young Homer and a young, pregnant Marge having a shotgun wedding in a dingy chapel. They look into each other’s eyes as the officiator is saying, “I now pronounce you man and wife.”"),
+    ("https://cdn.discordapp.com/attachments/565884495023177728/629254122729766922/image0.gif",
+        "The Simpsons: Homer standing under a wedding arch, presiding over the wedding of two men wearing matching suits and bow ties. Homer places his hand on his chest reverently as he says, “It brings me great joy to unite two such loving people.”"),
+    ("https://cdn.discordapp.com/attachments/565884495023177728/629254275083796481/image0.gif",
+        "The Simpsons: Homer standing under a wedding arch, presiding over the wedding of his sister-in-law Patty and her bride Veronica (who is secretly a man named Leslie). Homer is saying, “Queerly beloved, we’re here to join Veronica and Patty in matrimony.”"),
+    ("https://cdn.discordapp.com/attachments/565884495023177728/629254479535013888/image0.gif",
+        "The Simpsons: Homer standing under a wedding arch , presiding over the wedding of Cletus and Brandine, Springfield’s resident hillbillies. Homer is looking between the official document in his hands and the bride a groom with a confused expression on his face saying, “Wait an minute. Are you two brother and sister?”"),
+    ("https://cdn.discordapp.com/attachments/565884495023177728/629254972697214997/image0.gif",
+        "Homer is standing at the front door, angry at Mel Gibson who is at the threshhold. Homer reaches behind himself, grabbing Marge’s arm and then waving her wedding ring in Mel’s face saying, “You see this? It symbolizes that she’s my property, and I own her.” Marge doesn’t look too happy at this."),
+    ("https://cdn.discordapp.com/attachments/565884495023177728/629255183796535296/image0.gif",
+        "Homer wearing a suit and sitting at the front of one of Springfield Elementary’s classrooms. He’s holding a book, and his expression is looking a little vacant of intelligence as he says, ‘Well, Webster’s Dictionary defines a wedding as, “the process of removing weeds from one’s garden.”")
+    ]
+
+
 def marry(client, message):
     if len(message.mentions) == 0:
         raise MarriageException(
@@ -22,7 +41,10 @@ def marry(client, message):
         raise MarriageException(
             "Woah, slow down! Celebrate your marriages "
             "one at a time.")
+
     msg = ""
+    embed = None
+
     proposer = message.author
     proposer_id = proposer.id
     partner = message.mentions[0]
@@ -30,6 +52,8 @@ def marry(client, message):
     times_married = 0
     marriage_id = "%d|%d" % (
         min(proposer_id, partner_id), max(proposer_id, partner_id))
+
+    tenth_marriage = False
 
     # sigmabot auto accepts
     if partner_id == STUFFLEBOT_ID:
@@ -39,6 +63,8 @@ def marry(client, message):
             marriage_info[marriage_id]["times_married"] = times_married + 1
             msg = "I'm very happy to remarry you! " \
                   "We are now married %d times." % (times_married + 1)
+            if times_married + 1 == 10:
+                tenth_marriage = True
         else:
             marriage_info[marriage_id] = {
                 "times_married": 1
@@ -54,6 +80,8 @@ def marry(client, message):
             marriage_info[marriage_id]["times_married"] = times_married + 1
             msg = "You renew your vows! You are now married %d times. " \
                   "Congratulations!! :tada:" % (times_married + 1)
+            if times_married + 1 == 10:
+                tenth_marriage = True
         else:
             # First marriage
             marriage_info[marriage_id] = {
@@ -61,6 +89,10 @@ def marry(client, message):
             }
             msg = "Congratulations to %s and %s—the newly weds!! " \
                   ":heart::heart::heart:" % (proposer.mention, partner.mention)
+            embed = get_random_embed_same_quote(
+                msg,
+                newlywed_gifs,
+                15761808)
         proposals[proposer_id].remove(partner_id)
 
     # This is a reproposal that hasn't been accepted yet
@@ -83,7 +115,15 @@ def marry(client, message):
               "To accept this proposal, type '~marry %s'." % (
                   proposer.mention, partner.mention, proposer.mention)
 
-    return msg
+    if tenth_marriage:
+        tenth_gif_link = "https://cdn.discordapp.com/attachments/565884495023177728/629254720393052161/image0.gif"
+        tenth_gif_caption = "The Simpsons: A young Homer and a young, pregnant Marge after their shotgun wedding. They are being handed their wedding certificate and the officiant is saying, “The tenth wedding is on the house.”"
+        embed = get_random_embed_same_quote(
+            msg,
+            [(tenth_gif_link, tenth_gif_caption)],
+            15761808)
+
+    return (embed, msg)
 
 
 def get_heart_string(client, times_married, emojis):
