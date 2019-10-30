@@ -1190,6 +1190,21 @@ async def on_message(message):
                 return
 
     try:
+        # Add bananalion to everything wolven says in the writing server
+        if user.id == 593530774104309790 and guild_id == RED_GUILD_ID:
+            banana_lion = client.get_emoji(564830356977483804)
+            await message.add_reaction(banana_lion)
+        # Add banana badger to everything Ava says in the writing server
+        if user.id == 516122981156782091 and guild_id == RED_GUILD_ID:
+            banana_bad = client.get_emoji(565106770020925451)
+            await message.add_reaction(banana_bad)
+        if user.id == STUFFLE_ID and guild_id == TEST_GUILD_ID:
+            sleeping_cat = client.get_emoji(611975176799780864)
+            await message.add_reaction(sleeping_cat)
+    except Exception as ex:
+        print(str(ex))
+
+    try:
         # msg will be overwritten if @sigmabot is an argument to another command
         if client.user.mentioned_in(message) and message.mention_everyone is False:
             random_person = get_random_person(user)
@@ -1479,15 +1494,6 @@ async def on_message(message):
 
     if msg:
         await channel.send(msg.format(message))
-
-    # Add bananalion to everything wolven says in the writing server
-    if user.id == 593530774104309790 and guild_id == RED_GUILD_ID:
-        banana_lion = client.get_emoji(564830356977483804)
-        await message.add_reaction(banana_lion)
-    # Add banana badger to everything Ava says in the writing server
-    if user.id == 516122981156782091 and guild_id == RED_GUILD_ID:
-        banana_bad = client.get_emoji(565106770020925451)
-        await message.add_reaction(banana_bad)
 
     sorted_houses = get_sorted_houses()
     first_place_house, first_place_score = sorted_houses[0]
