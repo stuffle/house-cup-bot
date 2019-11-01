@@ -965,6 +965,7 @@ def make_backup(when):
 
 def time_left():
     now = datetime.datetime.now(datetime.timezone.utc)
+    _, days_in_month = monthrange(now.year, now.month)
     winnings_date = datetime.datetime(
         now.year, now.month, days_in_month,
         23, 59, 0, 0, datetime.timezone.utc)
@@ -1484,11 +1485,12 @@ async def on_message(message):
     except (HouseCupException, mod.HouseCupException,
             MarriageException, PactException) as ex:
         msg = "Error: " + str(ex)
-        print(user.name + ": " + str(ex))
+        print(user.name + ": " + str(ex) + "\nMessage: " + text)
     except Exception as ex:
         msg = "Oh no! Something went wrong and I couldn't complete your "\
               " command. I'm so sorry! :sob: Ping stuffle if you need " \
               "help."
+        print(user.name + ": " + str(ex) + "\nMessage: " + text)
         await channel.send(msg.format(message))
         raise(ex)
 
