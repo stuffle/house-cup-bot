@@ -368,12 +368,9 @@ async def clear_channels(client, message=None):
             "This could take a while.")
 
     channels_to_clear = [
-        # COS, #tea-and-hugs
-        (COS_GUILD_ID, 595247008340508683),
-        # COS, snap-snap
-        (COS_GUILD_ID, 595247137898627082),
-        # COS, feel-good
-        (COS_GUILD_ID, 595247070793826386),
+        (COS_GUILD_ID, TEA_AND_HUGS),
+        (COS_GUILD_ID, SNAP_SNAP),
+        (COS_GUILD_ID, FEEL_GOOD),
         (COS_GUILD_ID, SANITY_CHECKING),
         (COS_GUILD_ID, MOD_PINGS),
         (COS_GUILD_ID, HALL_MONITORS),

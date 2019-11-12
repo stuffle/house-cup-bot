@@ -140,7 +140,7 @@ def hug(hugger, mentions, text):
         ("https://cdn.discordapp.com/attachments/592480821890514944/594468549779521536/image0.gif",
             "Two dogs sit happily side by side when one suddenly grabs the other in a tight hug."),
         ("https://cdn.discordapp.com/attachments/592480821890514944/594468330811817985/image0.gif",
-            "A chicken walks into the waiting arms of a toddler, who embraces it fully."),
+            "A chicken walks into the waiting arms of a preschooler, who embraces it fully."),
         ("https://thumbs.gfycat.com/EachAridBellfrog-size_restricted.gif",
             "A duck with drawn-on stick figure arms hugs a dog, rubbing its hand nub through the fur. Then, with its “hand” still on the dog, they walk away together."),
         ("https://cdn.discordapp.com/attachments/592480821890514944/594466674216927232/image0.gif",

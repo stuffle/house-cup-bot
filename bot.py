@@ -1529,6 +1529,8 @@ async def on_ready():
     print(client.user.name)
     print(client.user.id)
     print('------')
+    game = discord.Game("~help")
+    await client.change_presence(activity=game)
 
 
 async def run_winnings():
