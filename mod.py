@@ -346,7 +346,6 @@ async def delete_history(client, message):
         try:
             await channel.purge(
                 limit=None,
-                after=member.joined_at,
                 check=lambda msg: msg.author.id == member.id)
         except Exception:
             print(Exception)
