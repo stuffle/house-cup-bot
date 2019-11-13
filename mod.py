@@ -60,6 +60,10 @@ async def mod_message(client, message):
     guild_id = message.guild.id
     msg = ""
 
+    # Do not mod messages from bots
+    if message.author.bot:
+        return msg
+
     # Do not allow spoiler tags outside of spoilers
     spoilers_allowed = [
         SPOILERS_CHANNEL_ID, SANITY_CHECKING, MOD_MINUTES, SHOP_TALK,  # COS

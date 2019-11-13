@@ -1599,5 +1599,3 @@ if __name__ == '__main__':
 
     scheduler.start()
     client.run(token)
-
-# TODO: Custom emoji
