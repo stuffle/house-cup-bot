@@ -111,9 +111,9 @@ def marry(client, message):
             proposals[partner_id].append(proposer_id)
         else:
             proposals[partner_id] = [proposer_id]
-        msg = "%s has proposed to %s!!!\n\n" \
+        msg = "%s has proposed!!!\n\n" \
               "To accept this proposal, type '~marry %s'." % (
-                  proposer.mention, partner.mention, proposer.mention)
+                  proposer.mention, proposer.mention)
 
     if tenth_marriage:
         tenth_gif_link = "https://cdn.discordapp.com/attachments/565884495023177728/629254720393052161/image0.gif"
