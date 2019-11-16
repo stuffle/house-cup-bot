@@ -1199,9 +1199,6 @@ async def on_message(message):
         if user.id == 516122981156782091 and guild_id == RED_GUILD_ID:
             banana_bad = client.get_emoji(565106770020925451)
             await message.add_reaction(banana_bad)
-        if user.id == STUFFLE_ID and guild_id == TEST_GUILD_ID:
-            sleeping_cat = client.get_emoji(611975176799780864)
-            await message.add_reaction(sleeping_cat)
     except Exception as ex:
         print(str(ex))
 

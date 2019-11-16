@@ -218,7 +218,7 @@ def help_command(message, prefix):
         else:
             embed.add_field(
                 name="Server Management Commands",
-                value="`deletehistory`, `clearchannelnow`",
+                value="`deletehistory`",
                 inline=False)
     elif arg == "award":
         msg = "Mods only: Award points to someone with a mention and the " \
