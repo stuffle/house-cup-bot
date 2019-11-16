@@ -1250,6 +1250,12 @@ async def on_message(message):
                 "for %s or a list of all commands." % (command, command)
             )
 
+        fun_house = GRYFFINDOR
+        try:
+            fun_house = get_house(user)
+        except Exception:
+            pass
+
         argumentless_commands = [
             "join", "daily", "post", "beta", "workshop", "standings",
             "exercise"]
@@ -1406,28 +1412,23 @@ async def on_message(message):
 
         # For fun commands
         elif text.startswith("dumbledore"):
-            house = get_house(user)
-            embed = dumbledore(house, mention)
+            embed = dumbledore(fun_house, mention)
             await channel.send(embed=embed)
             return
         elif text.startswith("snape"):
-            house = get_house(user)
-            embed = snape(house, mention)
+            embed = snape(fun_house, mention)
             await channel.send(embed=embed)
             return
         elif text.startswith("hermione"):
-            house = get_house(user)
-            embed = hermione(house, mention)
+            embed = hermione(fun_house, mention)
             await channel.send(embed=embed)
             return
         elif text.startswith("ron"):
-            house = get_house(user)
-            msg = ron(house)
+            msg = ron(fun_house)
         elif text.startswith("harry"):
             msg = harry()
         elif text.startswith("mcgonagall"):
-            house = get_house(user)
-            embed = mcgonagall(house, mention)
+            embed = mcgonagall(fun_house, mention)
             await channel.send(embed=embed)
             return
         elif text.startswith("sneak"):
