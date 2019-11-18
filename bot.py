@@ -1201,6 +1201,8 @@ async def on_message(message):
             await message.add_reaction(banana_bad)
     except Exception as ex:
         print(str(ex))
+        print("Caught exception in %s server and %s channel" % (message.guild.name, message.channel.name))
+
 
     try:
         # msg will be overwritten if @sigmabot is an argument to another command
@@ -1490,7 +1492,8 @@ async def on_message(message):
               "help."
         print(user.name + ": " + str(ex) + "\nMessage: " + text)
         await channel.send(msg.format(message))
-        raise(ex)
+        print("Caught exception in %s server and %s channel" % (message.guild.name, message.channel.name))
+        print(str(ex))
 
     if msg:
         await channel.send(msg.format(message))
