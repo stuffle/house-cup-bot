@@ -1358,8 +1358,15 @@ async def on_message(message):
             msg = await unwelcome(client)
         elif text.startswith("clearchannels"):
             msg = await clear_channels(client, message)
+        elif text.startswith("deleteallhistory"):
+            msg = await delete_history(client, message, True)
+        elif text.startswith("deletesomehistory"):
+            msg = await delete_history(client, message, False)
         elif text.startswith("deletehistory"):
-            msg = await delete_history(client, message)
+            msg = "Please use `~deleteallhistory` or `~deletesomehistory`.\n\n" \
+                  "`~deleteallhistory` deletes every message by the person it's being run on.\n" \
+                  "`~deletesomehistory` does not delete pinned messages or messages in channels " \
+                  "with `~deletesomehistory exempt` in the channel topic."
         elif text.startswith("clearchannelnow"):
             msg = await clear_channel_now(client, message)
         elif text.startswith("captionshame"):

@@ -330,7 +330,9 @@ async def unwelcome(client):
     return msg
 
 
-async def delete_history(client, message):
+async def delete_history(client, message, all_history=True):
+    topic_keyword = "~deletesomehistory exempt"
+
     channel = message.channel
     if not is_mod(message.author, channel):
         raise HouseCupException("Only mods may run this command.")
@@ -340,19 +342,35 @@ async def delete_history(client, message):
             "Mention one user to delete their history.")
     member = message.mentions[0]
     mention = member.mention
+    print("Running deletehistory for %s" % mention)
+
+    command_str = "all"
+    if not all_history:
+        command_str = "some"
+    explanation_str = "This will delete *every* message by %s." % mention
+    if not all_history:
+        explanation_str = "This will delete every message by %s, except messages that are pinned or in channels with `%s` in the topic." % (
+            mention, topic_keyword)
 
     await channel.send(
-        "Running delete history for %s. "
+        "Running delete %s history for %s. %s\n"
         "I'll let you know when it's complete. "
-        "This could take a while." % mention)
+        "This could take a while." % (
+            command_str, mention, explanation_str))
 
     for channel in message.guild.text_channels:
-        try:
-            await channel.purge(
-                limit=None,
-                check=lambda msg: msg.author.id == member.id)
-        except Exception:
-            print(Exception)
+        save_in_delete_some = channel.topic and (topic_keyword in channel.topic)
+        if all_history or not save_in_delete_some:
+            try:
+                delete_check = lambda msg: msg.author.id == member.id
+                if not all_history:
+                    delete_check = lambda msg: msg.author.id == member.id and not msg.pinned
+                await channel.purge(
+                    limit=None,
+                    check=delete_check)
+            except Exception as ex:
+                print("Unable to purge %s." % channel.name)
+                print(str(ex))
     print("Deleted history for %s" % member.name)
     msg = "Finished running delete history for %s." % mention
     return msg

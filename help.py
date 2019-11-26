@@ -213,12 +213,12 @@ def help_command(message, prefix):
         if guild_id in COS_SERVERS:
             embed.add_field(
                 name="Server Management Commands",
-                value="`deletehistory`, `clearchannelnow`, `imprison`, `showimprisoned`, `caption`, `captionshame`",
+                value="`deleteallhistory`, `deletesomehistory`, `clearchannelnow`, `imprison`, `showimprisoned`, `caption`, `captionshame`",
                 inline=False)
         else:
             embed.add_field(
                 name="Server Management Commands",
-                value="`deletehistory`",
+                value="`deleteallhistory`, `deletesomehistory`",
                 inline=False)
     elif arg == "award":
         msg = "Mods only: Award points to someone with a mention and the " \
@@ -287,9 +287,27 @@ def help_command(message, prefix):
             title="Unwelcome Help",
             color=COLOR,
             description=msg)
-    elif arg == "deletehistory":
+    elif arg == "deleteallhistory":
         msg = "Delete every message by the mentioned person in the server. " \
-              "\n\n Example `%sdeletehistory @person`" % prefix
+              "\n\n Example `%sdeleteallhistory @person`" % prefix
+        embed = discord.Embed(
+            title="Delete All History Help",
+            color=COLOR,
+            description=msg)
+    elif arg == "deletesomehistory":
+        msg = "Delete every message by the mentioned person in the server except " \
+              "pinned messages or messages in channels " \
+              "with `~deletesomehistory exempt` in the channel topic." \
+              "\n\n Example `%sdeletesomehistory @person`" % prefix
+        embed = discord.Embed(
+            title="Delete Some History Help",
+            color=COLOR,
+            description=msg)
+    elif arg == "deletehistory":
+        msg = "Please use `~deleteallhistory` or `~deletesomehistory`.\n\n" \
+              "`~deleteallhistory` deletes every message by the person it's being run on.\n" \
+              "`~deletesomehistory` does not delete pinned messages or messages in channels " \
+              "with `~deletesomehistory exempt` in the channel topic."
         embed = discord.Embed(
             title="Delete History Help",
             color=COLOR,
