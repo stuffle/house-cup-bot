@@ -1197,17 +1197,22 @@ async def on_message(message):
         pass
 
     try:
-        # Add bananalion to everything wolven says in the writing server
-        if user.id == 593530774104309790 and guild_id == RED_GUILD_ID:
-            banana_lion = client.get_emoji(564830356977483804)
-            await message.add_reaction(banana_lion)
-        # Add banana badger to everything Ava says in the writing server
-        if user.id == 516122981156782091 and guild_id == RED_GUILD_ID:
-            banana_bad = client.get_emoji(565106770020925451)
-            await message.add_reaction(banana_bad)
-            if fun_house == GRYFFINDOR:
-                banana_harry = client.get_emoji(650494697076293634)
-                await message.add_reaction(banana_harry)
+        if guild_id == RED_GUILD_ID:
+            # Add bananalion to everything wolven says in the writing server
+            if user.id == 593530774104309790:
+                banana_lion = client.get_emoji(564830356977483804)
+                await message.add_reaction(banana_lion)
+            # Add banana badger to everything Ava says in the writing server
+            if user.id == 516122981156782091:
+                banana_bad = client.get_emoji(565106770020925451)
+                await message.add_reaction(banana_bad)
+                if fun_house == GRYFFINDOR:
+                    kawaii_harry = client.get_emoji(507673949132423171)
+                    await message.add_reaction(kawaii_harry)
+            # Kit
+            if user.id == 629163659117068289:
+                gay_elmo = client.get_emoji(644734911227494432)
+                await message.add_reaction(gay_elmo)
     except Exception as ex:
         print(str(ex))
         print("Caught exception in %s server and %s channel" % (message.guild.name, message.channel.name))
