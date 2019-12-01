@@ -1190,6 +1190,12 @@ async def on_message(message):
                 await channel.send(modded.format(message))
                 return
 
+    fun_house = GRYFFINDOR
+    try:
+        fun_house = get_house(user)
+    except Exception:
+        pass
+
     try:
         # Add bananalion to everything wolven says in the writing server
         if user.id == 593530774104309790 and guild_id == RED_GUILD_ID:
@@ -1199,6 +1205,9 @@ async def on_message(message):
         if user.id == 516122981156782091 and guild_id == RED_GUILD_ID:
             banana_bad = client.get_emoji(565106770020925451)
             await message.add_reaction(banana_bad)
+            if fun_house == GRYFFINDOR:
+                banana_harry = client.get_emoji(650494697076293634)
+                await message.add_reaction(banana_harry)
     except Exception as ex:
         print(str(ex))
         print("Caught exception in %s server and %s channel" % (message.guild.name, message.channel.name))
@@ -1248,12 +1257,6 @@ async def on_message(message):
                 "Use `~help %s` or `~help` to see the help information "
                 "for %s or a list of all commands." % (command, command)
             )
-
-        fun_house = GRYFFINDOR
-        try:
-            fun_house = get_house(user)
-        except Exception:
-            pass
 
         argumentless_commands = [
             "join", "daily", "post", "beta", "workshop", "standings",
