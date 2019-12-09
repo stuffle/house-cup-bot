@@ -312,7 +312,7 @@ async def unwelcome(client):
     if not guild:
         return "I'm not in that guild."
     welcome_role = guild.get_role(welcome_id)
-    boot_msg = "Hi! Sorry to kick you out of the server, but you haven’t chosen a House role in the week we gave you :frowning: If you’d like to come back to the server, here’s an invite link: https://discord.gg/BQD87kS   Please don’t forget this time, and thank you!"
+    boot_msg = "Hi! Sorry to kick you out of the server, but you haven’t chosen a House role in the week we gave you :frowning: If you’d like to come back to the server, here’s an invite link: https://discord.gg/H8NJek9   Please don’t forget this time, and thank you!"
 
     for member in welcome_role.members:
         joined = utc.localize(member.joined_at)
