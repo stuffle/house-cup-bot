@@ -319,9 +319,9 @@ def log_score(text, user_id):
                 "like `" + PREFIX + "art 10`")
         amount = int(args[2])
         new_art_total = participants[user_id][ART] + amount
-        if amount not in [5, 10, 15, 20]:
+        if amount > 20:
             raise HouseCupException(
-                "The amount of art points must be 5, 10, 15, or 20")
+                "The amount of art points must be less than 20")
         else:
             msg = "%d points to %s! Thank you for sharing your creation. " \
                   ":art:" % (amount, house)
