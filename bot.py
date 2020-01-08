@@ -1500,7 +1500,6 @@ async def on_message(message):
     except (HouseCupException, mod.HouseCupException,
             MarriageException, PactException) as ex:
         msg = "Error: " + str(ex)
-        print(user.name + ": " + str(ex) + "\nMessage: " + text)
     except Exception as ex:
         msg = "Oh no! Something went wrong and I couldn't complete your "\
               " command. I'm so sorry! :sob: Ping stuffle if you need " \

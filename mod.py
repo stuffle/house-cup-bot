@@ -301,7 +301,6 @@ async def pick_winner(text, client):
 
 
 async def unwelcome(client):
-    print("Running unwelcome")
     msg = "Unwelcoming complete!!"
     now = datetime.datetime.now(datetime.timezone.utc)
     week_ago = now - datetime.timedelta(days=7)
@@ -377,7 +376,6 @@ async def delete_history(client, message, all_history=True):
 
 
 async def clear_channels(client, message=None):
-    print("Clearing channels")
 
     if message:
         channel = message.channel
