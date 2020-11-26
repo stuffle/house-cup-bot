@@ -638,11 +638,11 @@ def general_help(prefix, guild_id):
                   "Logging Points: `daily`, `post`, `beta`, `art`, `comment`, `workshop`, `exercise`, `excred`, `wc` (total), `wc add`, `remove`, `sneak`\n"
                   "Viewing Points: `points`, `standings`, `housepoints`, `leaderboard`",
             inline=False)
+        embed.add_field(
+            name="Marriage Commands:",
+            value="`marry`, `divorce`, `marriages`",
+            inline=False)
 
-    embed.add_field(
-        name="Marriage Commands:",
-        value="`marry`, `divorce`, `marriages`",
-        inline=False)
     embed.add_field(
         name="Pact Commands:",
         value="Managing Pacts: `formpact`, `fulfill`, `acceptfailure`\n" \

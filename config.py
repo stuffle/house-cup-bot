@@ -24,7 +24,7 @@ COS/Red Writing Hood only things:
 -Kink, whenshouldtheyfuck
 """
 
-COS_SERVERS = [COS_GUILD_ID, RED_GUILD_ID, TEST_GUILD_ID]
+COS_SERVERS = [COS_GUILD_ID, RED_GUILD_ID]
 COS_EXCLUSIVE = [
     "join", "leave", "actuallyleave", "time",
     "log", "daily", "post", "art", "beta", "comment",
