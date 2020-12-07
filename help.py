@@ -541,6 +541,31 @@ def help_command(message, prefix):
             color = COLOR,
             description=msg)
 
+    # Identity Commands
+    elif arg == "whois":
+        msg = "View the identity of someone who has been registered with `~identify`. " \
+              "This function takes either a user ID or a mention.\n" \
+              "You can get a person's user ID by turning on Discord's developer mode. " \
+              "Further instructions available here: " \
+              "https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-\n" \
+              "This command is private to CSUA servers." \
+              "\n\nExamples: `~whois USER_ID`, `~whois @person`"
+        embed = discord.Embed(
+            title="Whois Help",
+            color=COLOR,
+            description=msg)
+    elif arg == "identify":
+        msg = "Set someone's identity so that it can be looked up with `~whois`. " \
+              "This command is private to CSUA servers. " \
+              "Be informative enough that people can actually figure out who you are. " \
+              "Please provide a mention as the first argument. " \
+              "\n\nExamples: `~identify @stufflebear Mary, og CSUA, class of 2013`\n" \
+              "`~identify @me Name, X's friend from Berkeley who you might have met at CSUA parties`"
+        embed = discord.Embed(
+            title="Identify Help",
+            color=COLOR,
+            description=msg)
+
     # Writing Commands
     elif arg == "prompt":
         msg = "Get a randomly generated prompt. Example: `%sprompt`" \
@@ -642,6 +667,13 @@ def general_help(prefix, guild_id):
             name="Marriage Commands:",
             value="`marry`, `divorce`, `marriages`",
             inline=False)
+
+    if guild_id in CSUA_SERVERS:
+        embed.add_field(
+            name="Identity Commands:",
+            value="`whois`, `identify`",
+            inline=False)
+
 
     embed.add_field(
         name="Pact Commands:",

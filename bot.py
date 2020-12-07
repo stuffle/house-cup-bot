@@ -21,9 +21,11 @@ from marriages import *
 from pact import *
 from constants import *
 from config import *
+from whois import *
 import marriages
 import mod
 import pact
+import whois
 
 
 IS_TEST_ENV = os.environ.get("IS_TEST_ENV")
@@ -57,6 +59,7 @@ def load_participants():
     with open(DATA_FILE, 'rb') as f:
         data = pickle.load(f)
         servers = data["servers"]
+        whois.members = data["members"]
         participants = data["participants"]
         mod.imprisoned = data["imprisoned"]
         mod.voting = data["voting"]
@@ -72,6 +75,7 @@ def save_participants():
         data = {
             "participants": participants,
             "servers": servers,
+            "members": whois.members,
             "imprisoned": mod.imprisoned,
             "voting": mod.voting,
             "proposals": marriages.proposals,
@@ -999,7 +1003,6 @@ async def wrestle(hugger, message):
         "mud",
         "jelly",
         "icing",
-        "blood",
         "melted chocolate",
         "soap",
         "chili"
@@ -1252,6 +1255,13 @@ async def on_message(message):
                     "Talk to stuffle if you're interested in bringing it here."
                 )
 
+        if guild_id not in CSUA_SERVERS:
+            if command in CSUA_EXCLUSIVE:
+                raise HouseCupException(
+                    "Sorry, but this command is only available "
+                    "in select servers. "
+                )
+
         if text.startswith("help"):
             embed = help_command(message, PREFIX)
             await channel.send(embed=embed)
@@ -1424,6 +1434,13 @@ async def on_message(message):
         elif text.startswith("failed"):
             msg = see_pacts(client, message, type="failed")
 
+        # Members Directory
+        elif text.startswith("whois"):
+            msg = whois_lookup(client, message)
+        elif text.startswith("identify"):
+            msg = set_identity(client, message)
+            save_participants()
+
         # For fun commands
         elif text.startswith("dumbledore"):
             embed = dumbledore(fun_house, mention)
@@ -1498,16 +1515,14 @@ async def on_message(message):
             msg = "%s: %s" % (mention, i_love_you(random_person))
 
     except (HouseCupException, mod.HouseCupException,
-            MarriageException, PactException) as ex:
+            MarriageException, PactException, WhoisException) as ex:
         msg = "Error: " + str(ex)
     except Exception as ex:
         msg = "Oh no! Something went wrong and I couldn't complete your "\
               " command. I'm so sorry! :sob: Ping stuffle if you need " \
               "help."
-        print(user.name + ": " + str(ex) + "\nMessage: " + text)
-        await channel.send(msg.format(message))
+        print(user.name + ": " + repr(ex) + "\nMessage: " + text)
         print("Caught exception in %s server and %s channel" % (message.guild.name, message.channel.name))
-        print(str(ex))
 
     if msg:
         await channel.send(msg.format(message))

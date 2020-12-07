@@ -35,3 +35,6 @@ COS_EXCLUSIVE = [
     "startmonitoring", "stopmonitoring", "showmonitoring",
     "unwelcome", "clearchannels", "showimprisoned", "imprison", "clearchannelnow",
     "caption", "captionshame"]
+
+CSUA_SERVERS = [CSUA_GUILD_ID, TEST_GUILD_ID]
+CSUA_EXCLUSIVE = ["whois", "identify"]

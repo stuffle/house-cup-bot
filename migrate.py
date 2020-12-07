@@ -34,6 +34,7 @@ def load_old_participants():
 def save_participants():
     with open(DATA_FILE, 'wb') as f:
         data = {
+            "members": {},
             "participants": participants,
             "servers": servers,
             "imprisoned": mod.imprisoned,
@@ -48,13 +49,5 @@ def save_participants():
 
 
 load_old_participants()
-
-backup_file = "/home/marystufflebeam/house-cup-bot/backups/data_backup_8_20_2019.json"
-with open(backup_file, 'rb') as f:
-    data = pickle.load(f)
-    locked_up = data["imprisoned"]
-    print(locked_up)
-    for k, v in locked_up.items():
-        mod.imprisoned[k] = v
 
 save_participants()
