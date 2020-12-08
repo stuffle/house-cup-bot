@@ -31,7 +31,7 @@ async def whois_lookup(client, message):
             "the first word in their display name, their user ID, or "
             "their @mention.\n%s" % whois_example)
 
-    person = args[1]
+    person = args[1].lower()
     user_id = 0
     mentions = message.mentions
     matched_names = 0
@@ -47,7 +47,7 @@ async def whois_lookup(client, message):
         # See if the argument matches the first word in someone's name
         members_of_guild = await message.guild.fetch_members().flatten()
         for m in members_of_guild:
-            first_name = m.display_name.split(" ")[0]
+            first_name = m.display_name.split(" ")[0].lower()
             if first_name == person:
                 user_id = m.id
                 matched_names += 1
