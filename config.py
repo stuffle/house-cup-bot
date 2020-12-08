@@ -37,4 +37,5 @@ COS_EXCLUSIVE = [
     "caption", "captionshame"]
 
 CSUA_SERVERS = [CSUA_GUILD_ID, TEST_GUILD_ID]
+CSUA_PUBLIC_CHANNELS = [CSUA_WELCOME_CHANNEL_ID]
 CSUA_EXCLUSIVE = ["whois", "identify"]

@@ -2,6 +2,7 @@ import discord
 import time
 
 from constants import *
+from config import *
 
 
 # user_id: {identity: "", set_by: user_id}
@@ -17,6 +18,12 @@ def whois_lookup(client, message):
     args = text.split()
     msg = ""
     whois_example = "Example: `~whois @stufflebear`"
+
+    if message.channel.id in CSUA_PUBLIC_CHANNELS:
+        raise WhoisException(
+            "I won't reveal private CSUA information in public channels. "
+            "Please ask me again in a private channel."
+            )
 
     if len(args) != 2:
         raise WhoisException(
@@ -106,5 +113,8 @@ def set_identity(client, message):
 
     if member.id == STUFFLEBOT_ID:
         msg = ":pikachu_face: Is that all I am to you?"
+
+    if message.channel.id in CSUA_PUBLIC_CHANNELS:
+        msg = "%s I also want to warn you that this is a potentially public channel. If your identity is private, you may want to delete both your last message and this one." % msg
 
     return msg
