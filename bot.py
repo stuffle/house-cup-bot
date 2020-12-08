@@ -1200,6 +1200,19 @@ async def on_message(message):
         pass
 
     try:
+        if guild_id == CSUA_GUILD_ID and ("yabish" in text or "ya bish" in text):
+            await message.add_reaction("🇾")
+            await message.add_reaction("🇦")
+            await message.add_reaction("🅱")
+            await message.add_reaction("🇮")
+            await message.add_reaction("🇸")
+            await message.add_reaction("🇭")
+            await message.add_reaction("‼️")
+    except Exception as ex:
+        print(str(ex))
+        print("Caught exception in %s server and %s channel" % (message.guild.name, message.channel.name))
+
+    try:
         if guild_id == RED_GUILD_ID:
             # Add bananalion to everything wolven says in the writing server
             if user.id == 593530774104309790:
