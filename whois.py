@@ -13,11 +13,11 @@ class WhoisException(Exception):
     pass
 
 
-def whois_lookup(client, message):
+async def whois_lookup(client, message):
     text = message.content
     args = text.split()
     msg = ""
-    whois_example = "Example: `~whois @stufflebear`"
+    whois_example = "Examples: `~whois @stufflebear`, `whois stufflebear`, `whois 438450978690433024`"
 
     if message.channel.id in CSUA_PUBLIC_CHANNELS:
         raise WhoisException(
@@ -27,12 +27,14 @@ def whois_lookup(client, message):
 
     if len(args) != 2:
         raise WhoisException(
-            "Please look people up one at a time, using their user id or "
-            "mention.\n%s" % whois_example)
+            "Please look people up one at a time, using "
+            "the first word in their display name, their user ID, or "
+            "their @mention.\n%s" % whois_example)
 
     person = args[1]
     user_id = 0
     mentions = message.mentions
+    matched_names = 0
 
     # Given a mention
     if len(mentions) == 1:
@@ -40,11 +42,19 @@ def whois_lookup(client, message):
     # Given the user ID
     elif person.isdigit():
         user_id = int(person)
-        # TODO: If I add in lookup by name, a person's name could be an int
+        # TODO: Edge case I'm too lazy to add: if someone's nickname is a digit
     else:
-        raise WhoisException(
-            "To look up who some is, call this function with either "
-            "the mention or user id of that person.\n%s" % whois_example)
+        # See if the argument matches the first word in someone's name
+        members_of_guild = await message.guild.fetch_members().flatten()
+        for m in members_of_guild:
+            first_name = m.display_name.split(" ")[0]
+            if first_name == person:
+                user_id = m.id
+                matched_names += 1
+        if matched_names > 1:
+            raise WhoisException(
+                "More than one person has that name on display."
+                " You'll have to look them up by either user ID or a mention.")
 
     if user_id not in members:
         if user_id == message.author.id:

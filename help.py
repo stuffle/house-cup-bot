@@ -544,12 +544,12 @@ def help_command(message, prefix):
     # Identity Commands
     elif arg == "whois":
         msg = "View the identity of someone who has been registered with `~identify`. " \
-              "This function takes either a user ID or a mention.\n" \
+              "This function takes either the first word of a display name, a user ID or a mention.\n" \
               "You can get a person's user ID by turning on Discord's developer mode. " \
               "Further instructions available here: " \
               "https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-\n" \
               "This command is private to CSUA servers." \
-              "\n\nExamples: `~whois USER_ID`, `~whois @person`"
+              "\n\nExamples: `~whois USER_ID`, `~whois @person`, `~whois name`"
         embed = discord.Embed(
             title="Whois Help",
             color=COLOR,
