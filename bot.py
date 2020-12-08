@@ -1450,7 +1450,7 @@ async def on_message(message):
         # Members Directory
         elif text.startswith("whois"):
             msg = whois_lookup(client, message)
-        elif text.startswith("identify"):
+        elif text.startswith("identify") or text.startswith("identity"):
             msg = set_identity(client, message)
             save_participants()
 
