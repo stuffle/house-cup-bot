@@ -22,6 +22,7 @@ from pact import *
 from constants import *
 from config import *
 from whois import *
+from csua import *
 import marriages
 import mod
 import pact
@@ -1200,14 +1201,8 @@ async def on_message(message):
         pass
 
     try:
-        if guild_id == CSUA_GUILD_ID and ("yabish" in text or "ya bish" in text):
-            await message.add_reaction("🇾")
-            await message.add_reaction("🇦")
-            await message.add_reaction("🅱")
-            await message.add_reaction("🇮")
-            await message.add_reaction("🇸")
-            await message.add_reaction("🇭")
-            await message.add_reaction("‼️")
+        if guild_id in CSUA_SERVERS:
+            await parse_for_lols(message)
     except Exception as ex:
         print(str(ex))
         print("Caught exception in %s server and %s channel" % (message.guild.name, message.channel.name))
