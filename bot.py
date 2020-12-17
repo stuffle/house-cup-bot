@@ -1485,6 +1485,8 @@ async def on_message(message):
             embed = cheer(user.mention, message.mentions, text)
             await channel.send(embed=embed)
             return
+        elif text.startswith("cvst") or text.startswith("covidtime"):
+            msg = covid_standard_time()
         elif text.startswith("kidnap"):
             embed = kidnap(user.mention, message.mentions, text)
             await channel.send(embed=embed)
