@@ -10,6 +10,18 @@ import datetime
 from humor_commands import *
 from constants import *
 
+def covid_standard_time():
+    """
+    Prints the number of days since 1 March 2020. With thanks to https://github.com/brasstax/Silva.
+    """
+    now = datetime.datetime.now(datetime.timezone.utc)
+    delta = datetime.now(datetime.timezone.utc).date() - datetime.date(2020, 3, 1)
+    days = delta.days
+    inflections = ["th", "st", "nd", "rd"] # https://stackoverflow.com/a/52045942
+    inflection = inflections[0]
+    if days % 10 in [1, 2, 3] and days not in [11, 12, 13]:
+        inflection = inflections[days % 10]
+    return f"Today is {now.strftime('%A')}, March {days}{inflection} UTC, 2020."
 
 def get_random_embed_same_quote(quote, gif_and_caption, colour):
     """
