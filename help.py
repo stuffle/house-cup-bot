@@ -632,6 +632,12 @@ def help_command(message, prefix):
             title="Madness Help",
             color=COLOR,
             description=msg)
+    elif arg == "cvst" or arg == "covidtime":
+        msg = "Displays the number of days since 1 March 2020.\n\n"
+        embed = discord.Embed(
+            title="CVST Help",
+            color=COLOR,
+            description=msg)
 
     elif embed is None:
         msg = "Sorry! This command is unrecognized. View the general help " \
@@ -682,7 +688,7 @@ def general_help(prefix, guild_id):
         inline=False)
     embed.add_field(
         name="Action Commands:",
-        value="`hug`, `cheer`, `kidnap`, `pillage`, `wrestle`",
+        value="`cvst`, `hug`, `cheer`, `kidnap`, `pillage`, `wrestle`",
         inline=False)
     embed.add_field(
         name="Harry Potter Commands:",
