@@ -633,9 +633,10 @@ def help_command(message, prefix):
             color=COLOR,
             description=msg)
     elif arg == "cvst" or arg == "covidtime":
-        msg = "Displays the number of days since 1 March 2020.\n\n"
+        msg = "Displays the number of days since 1 March 2020.\n\n" \
+              "Examples: `%scvst` or `%scovidtime`" % (prefix, prefix)
         embed = discord.Embed(
-            title="CVST Help",
+            title="Covid Standard Time Help",
             color=COLOR,
             description=msg)
 
