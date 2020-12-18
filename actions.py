@@ -15,7 +15,7 @@ def covid_standard_time():
     Prints the number of days since 1 March 2020. With thanks to https://github.com/brasstax/Silva.
     """
     now = datetime.datetime.now(datetime.timezone.utc)
-    delta = datetime.now(datetime.timezone.utc).date() - datetime.date(2020, 3, 1)
+    delta = now.date() - datetime.date(2020, 3, 1)
     days = delta.days
     inflections = ["th", "st", "nd", "rd"] # https://stackoverflow.com/a/52045942
     inflection = inflections[0]
