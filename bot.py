@@ -1202,7 +1202,7 @@ async def on_message(message):
 
     try:
         if guild_id in CSUA_SERVERS:
-            await parse_for_lols(message)
+            await parse_for_lols(client, message)
     except Exception as ex:
         print(str(ex))
         print("Caught exception in %s server and %s channel" % (message.guild.name, message.channel.name))
@@ -1246,7 +1246,7 @@ async def on_message(message):
                 "Please communicate with me in a server we share.")
 
         # Ignore all messages not directed at bot unless it was a mention
-        if not message.content.startswith(PREFIX) and msg == "":
+        if not (message.content.startswith(PREFIX) or message.content.startswith("-")) and msg == "":
             return
 
         text = text[1:]
