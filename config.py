@@ -33,7 +33,7 @@ COS_EXCLUSIVE = [
     "sneak",
     "award", "deduct", "pingeveryone", "winnings",
     "startmonitoring", "stopmonitoring", "showmonitoring",
-    "unwelcome", "clearchannels", "showimprisoned", "imprison", "clearchannelnow",
+    "unwelcome", "clearchannels", "showimprisoned", "imprison",
     "caption", "captionshame"]
 
 CSUA_SERVERS = [CSUA_GUILD_ID, TEST_GUILD_ID]
