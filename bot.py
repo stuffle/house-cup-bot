@@ -917,7 +917,7 @@ def winnings():
         top_member, points = sorted_participants[0]
         top_member_mentions = []
         for member, p in sorted_participants:
-            if p == points:
+            if p == points and points != 0:
                 top_member_mentions.append(member["mention"])
         top_string = ", ".join(top_member_mentions)
         category_name = category.capitalize()
