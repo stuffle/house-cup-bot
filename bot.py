@@ -1359,9 +1359,9 @@ async def on_message(message):
         elif text.startswith("pingeveryone"):
             msg = ping_everyone(user, message)
         elif text.startswith("winnings"):
-            if user.id not in [478970983089438760, 438450978690433024]:
+            if user.id not in [478970983089438760, 438450978690433024, 505768851389022221, 434734253901742101]:
                 raise HouseCupException(
-                    "Only Stuffle and Red can declare the winners "
+                    "Only Stuffle, Caty, and Envy can declare the winners "
                     "and restart the House Cup.")
             msg1, msg2 = winnings()
             print(msg1)
